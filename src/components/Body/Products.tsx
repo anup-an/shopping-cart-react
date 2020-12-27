@@ -14,7 +14,7 @@ interface IProps {
 const Products: React.FC<IProps> = ({ products }): JSX.Element => {
     return (
         <div>
-            <ul className="grid grid-cols-4 gap-10 w-full border p-2 text-sm">
+            <ul className="grid grid-cols-4 gap-10 w-full p-2 text-sm">
                 {products?.map((product) => (
                     <li key={product.id} className="border shadow p-2">
                         <div>
