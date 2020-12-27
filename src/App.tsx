@@ -1,10 +1,41 @@
 import React from 'react';
-import Body from './components/body';
-import Footer from './components/footer';
-import Header from './components/header';
+import Body from './components/Body';
+import Footer from './components/Footer';
+import Header from './components/Header';
+import data from "./data.json";
+  interface IProps{
+      products?: IProduct[];
+      size?: string;
+      sort?: string;
+  }
 
-class App extends React.Component {
+  interface IProduct {
+    id: string;
+    title: string;
+    image: string;
+    description: string;
+    price: number;
+    availableSizes: string[];
+  }
+  
+  interface IState {
+    products: IProduct[];
+    size: string;
+    sort:string;
+  }
+
+
+class App extends React.Component <IProps, IState> {
+    constructor(props: IProps){
+        super(props);
+        this.state = {
+            products: data.products,
+            size: "",
+            sort: "",
+        };
+    }
     render() {
+        const {products} = this.state;
         return (
             <div className="flex flex-col">
                 <div>
@@ -12,7 +43,7 @@ class App extends React.Component {
                 </div>
                 <div>
 
-                <Body />
+                <Body products={products}/>
                 </div>
                 <div>
 
