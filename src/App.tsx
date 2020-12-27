@@ -1,7 +1,7 @@
 import React from 'react';
-import Body from './components/Body';
-import Footer from './components/Footer';
-import Header from './components/Header';
+import Body from './components/body';
+import Footer from './components/footer';
+import Header from './components/header';
 import data from "./data.json";
   interface IProps{
       products?: IProduct[];
