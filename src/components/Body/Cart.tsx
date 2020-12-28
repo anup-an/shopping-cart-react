@@ -37,7 +37,7 @@ const Cart: React.FC<IProps> = ({ cartItems, removeFromCart }) => {
                 {cartItems.map((item) => (
                     <li key={item.id} className="flex flex-row items-center space-x-2">
                         <div className="flex flex-row justify-between border shadow  p-2 items-center text-sm space-x-2">
-                            <img className="w-20 h-16" src={`${item.image}`} alt={`${item.title}`} />
+                            <img className="w-20 h-auto" src={`${item.image}`} alt={`${item.title}`} />
                             <div>{item.title}</div>
                             <div>
                                 {item.count} x ${item.price}
