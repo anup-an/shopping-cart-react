@@ -35,7 +35,16 @@ interface IState {
     count: number;
     size: string;
     sort: string;
-    cartItems: IProduct[];
+    cartItems: ICart[];
+}
+
+interface IOrder {
+    name: string;
+    email: string;
+    address: string;
+    postalcode: string;
+    city: string;
+    country: string;
 }
 
 class App extends React.Component<IProps, IState> {
@@ -46,7 +55,7 @@ class App extends React.Component<IProps, IState> {
             count: data.products.length,
             size: '',
             sort: '',
-            cartItems: [],
+            cartItems: JSON.parse(localStorage.getItem('cartItems') || '[]'),
         };
     }
 
@@ -98,11 +107,17 @@ class App extends React.Component<IProps, IState> {
         }
 
         this.setState({ cartItems });
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
     };
 
     removeFromCart = (item: ICart): void => {
         const { cartItems } = this.state;
         this.setState({ cartItems: cartItems.filter((product) => product.id !== item.id) });
+        localStorage.setItem('cartItems', JSON.stringify(cartItems.filter((product) => product.id !== item.id)));
+    };
+
+    createOrder = (order: IOrder): void => {
+        console.log(order);
     };
 
     render(): JSX.Element {
@@ -123,6 +138,7 @@ class App extends React.Component<IProps, IState> {
                         filterBySize={this.filterBySize}
                         addToCart={this.addToCart}
                         removeFromCart={this.removeFromCart}
+                        createOrder={this.createOrder}
                         cartItems={cartItems}
                     />
                 </div>
