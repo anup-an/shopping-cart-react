@@ -3,6 +3,15 @@ import Cart from './Cart';
 import Filter from './Filter';
 import Products from './Products';
 
+interface IOrder {
+    name: string;
+    email: string;
+    address: string;
+    postalcode: string;
+    city: string;
+    country: string;
+}
+
 interface IProps {
     products?: IProduct[];
     count?: number;
@@ -12,6 +21,7 @@ interface IProps {
     filterBySize: (event: React.ChangeEvent<HTMLSelectElement>) => void;
     addToCart: (product: IProduct) => void;
     removeFromCart: (item: ICart) => void;
+    createOrder: (order: IOrder) => void;
     cartItems: ICart[];
 }
 
@@ -44,6 +54,7 @@ const Body: React.FC<IProps> = ({
     filterBySize,
     addToCart,
     removeFromCart,
+    createOrder,
     cartItems,
 }): JSX.Element => {
     return (
@@ -63,7 +74,7 @@ const Body: React.FC<IProps> = ({
                 </div>
             </div>
             <div className="w-1/4">
-                <Cart cartItems={cartItems} removeFromCart={removeFromCart} />
+                <Cart cartItems={cartItems} removeFromCart={removeFromCart} createOrder={createOrder} />
             </div>
         </div>
     );
