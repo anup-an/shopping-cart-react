@@ -1,17 +1,23 @@
 import React from 'react';
-
 import Body from './components/Body';
-
 import Footer from './components/Footer';
-
 import Header from './components/Header';
-
 import data from './data.json';
 
 interface IProps {
     products?: IProduct[];
     size?: string;
     sort?: string;
+}
+
+interface ICart {
+    id: string;
+    title: string;
+    image: string;
+    description: string;
+    price: number;
+    availableSizes: string[];
+    count?: number;
 }
 
 interface IProduct {
@@ -21,6 +27,7 @@ interface IProduct {
     description: string;
     price: number;
     availableSizes: string[];
+    count?: number;
 }
 
 interface IState {
@@ -28,6 +35,7 @@ interface IState {
     count: number;
     size: string;
     sort: string;
+    cartItems: IProduct[];
 }
 
 class App extends React.Component<IProps, IState> {
@@ -38,6 +46,7 @@ class App extends React.Component<IProps, IState> {
             count: data.products.length,
             size: '',
             sort: '',
+            cartItems: [],
         };
     }
 
@@ -63,7 +72,10 @@ class App extends React.Component<IProps, IState> {
 
     filterBySize = (event: React.ChangeEvent<HTMLSelectElement>): void => {
         if (event.target.value === 'ALL') {
-            this.setState({ products: data.products });
+            this.setState({
+                size: event.target.value,
+                products: data.products,
+            });
         } else {
             this.setState({
                 size: event.target.value,
@@ -72,8 +84,29 @@ class App extends React.Component<IProps, IState> {
         }
     };
 
+    addToCart = (product: IProduct): void => {
+        const { cartItems } = this.state;
+        if (cartItems.length === 0) {
+            cartItems.push({ ...product, count: 1 });
+        } else if (cartItems.length !== 0) {
+            const cart = cartItems.find((item) => item.id === product.id);
+            if (cart && cart.count) {
+                cartItems[cartItems.indexOf(cart)].count = cart.count + 1;
+            } else if (!cart) {
+                cartItems.push({ ...product, count: 1 });
+            }
+        }
+
+        this.setState({ cartItems });
+    };
+
+    removeFromCart = (item: ICart): void => {
+        const { cartItems } = this.state;
+        this.setState({ cartItems: cartItems.filter((product) => product.id !== item.id) });
+    };
+
     render(): JSX.Element {
-        const { products, count, sort, size } = this.state;
+        const { products, count, sort, size, cartItems } = this.state;
 
         return (
             <div className="flex flex-col">
@@ -88,6 +121,9 @@ class App extends React.Component<IProps, IState> {
                         size={size}
                         sortByPrice={this.sortByPrice}
                         filterBySize={this.filterBySize}
+                        addToCart={this.addToCart}
+                        removeFromCart={this.removeFromCart}
+                        cartItems={cartItems}
                     />
                 </div>
                 <div>

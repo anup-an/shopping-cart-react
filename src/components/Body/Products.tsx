@@ -7,13 +7,21 @@ interface IProduct {
     description: string;
     price: number;
     availableSizes: string[];
+    count?: number;
 }
 interface IProps {
     products?: IProduct[];
+    count?: number;
+    size?: string;
+    sort?: string;
+    sortByPrice?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    filterBySize?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    addToCart: (product: IProduct) => void;
+    cartItems?: IProduct[];
 }
-const Products: React.FC<IProps> = ({ products }): JSX.Element => {
+const Products: React.FC<IProps> = ({ products, addToCart }): JSX.Element => {
     return (
-        <div>
+        <div className="mt-2 mx-2">
             <ul className="grid grid-cols-4 gap-10 w-full p-2 text-sm">
                 {products?.map((product) => (
                     <li key={product.id} className="border shadow p-2">
@@ -23,6 +31,7 @@ const Products: React.FC<IProps> = ({ products }): JSX.Element => {
                             <div className="flex flex-row justify-between mt-2">
                                 <div>€{product.price}</div>
                                 <button
+                                    onClick={() => addToCart(product)}
                                     type="button"
                                     className="bg-blue-400 hover:bg-blue-700 text-white border rounded px-1 w-7 h-7"
                                 >

@@ -1,4 +1,5 @@
 import React from 'react';
+import Cart from './Cart';
 import Filter from './Filter';
 import Products from './Products';
 
@@ -9,6 +10,19 @@ interface IProps {
     sort?: string;
     sortByPrice: (event: React.ChangeEvent<HTMLSelectElement>) => void;
     filterBySize: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    addToCart: (product: IProduct) => void;
+    removeFromCart: (item: ICart) => void;
+    cartItems: ICart[];
+}
+
+interface ICart {
+    id: string;
+    title: string;
+    image: string;
+    description: string;
+    price: number;
+    availableSizes: string[];
+    count?: number;
 }
 
 interface IProduct {
@@ -18,9 +32,20 @@ interface IProduct {
     description: string;
     price: number;
     availableSizes: string[];
+    count?: number;
 }
 
-const Body: React.FC<IProps> = ({ products, count, size, sort, sortByPrice, filterBySize }): JSX.Element => {
+const Body: React.FC<IProps> = ({
+    products,
+    count,
+    size,
+    sort,
+    sortByPrice,
+    filterBySize,
+    addToCart,
+    removeFromCart,
+    cartItems,
+}): JSX.Element => {
     return (
         <div className="flex flex-row justify-between w-full">
             <div className="w-3/4">
@@ -33,11 +58,13 @@ const Body: React.FC<IProps> = ({ products, count, size, sort, sortByPrice, filt
                         filterBySize={filterBySize}
                     />
                 </div>
-                <div className="mt-2">
-                    <Products products={products} />
+                <div className="mt-4 border-t-2 mx-4">
+                    <Products products={products} addToCart={addToCart} />
                 </div>
             </div>
-            <div className="w-1/4">Cart Items</div>
+            <div className="w-1/4">
+                <Cart cartItems={cartItems} removeFromCart={removeFromCart} />
+            </div>
         </div>
     );
 };
