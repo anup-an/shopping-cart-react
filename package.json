@@ -47,6 +47,8 @@
     "eslint": "^7.16.0",
     "eslint-config-airbnb-typescript-prettier": "^4.1.0",
     "prettier": "^2.2.1",
+    "react-awesome-reveal": "^3.5.1",
+    "react-reveal": "^1.2.2",
     "typescript": "^4.1.3"
   }
 }
