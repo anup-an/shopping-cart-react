@@ -1,4 +1,6 @@
 import React from 'react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Slide } from 'react-awesome-reveal';
 import Checkout from './Checkout';
 
 interface IProduct {
@@ -58,34 +60,41 @@ class Cart extends React.Component<IProps, IState> {
                 </div>
                 <ul className="mx-5 flex flex-col space-y-4 text-sm mt-4">
                     {cartItems.map((item) => (
-                        <li key={item.id} className="flex flex-row items-center space-x-2">
-                            <div className="flex flex-row justify-between border shadow  p-2 items-center text-sm space-x-2">
-                                <img className="w-20 h-auto" src={`${item.image}`} alt={`${item.title}`} />
-                                <div>{item.title}</div>
-                                <div>
-                                    {item.count} x ${item.price}
-                                </div>
-                            </div>
-                            <button onClick={() => removeFromCart(item)} type="button">
-                                <svg
-                                    className="w-6 h-6 text-red-400"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        <Slide direction="right" key={item.id}>
+                            <li key={item.id} className="flex flex-row items-center space-x-2">
+                                <div className="flex flex-row justify-between border shadow  p-2 items-center text-sm space-x-2">
+                                    <img
+                                        className="w-20 h-auto"
+                                        loading="eager"
+                                        src={`${item.image}`}
+                                        alt={`${item.title}`}
                                     />
-                                </svg>
-                            </button>
-                        </li>
+                                    <div>{item.title}</div>
+                                    <div>
+                                        {item.count} x ${item.price}
+                                    </div>
+                                </div>
+                                <button onClick={() => removeFromCart(item)} type="button">
+                                    <svg
+                                        className="w-6 h-6 text-red-400"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                        />
+                                    </svg>
+                                </button>
+                            </li>
+                        </Slide>
                     ))}
                 </ul>
-                {cartItems.length !== 0 ? (
+                {cartItems.length > 0 ? (
                     <div className="flex flex-row justify-between items-center mx-5 mt-10">
                         <div>
                             Total: $
@@ -106,11 +115,7 @@ class Cart extends React.Component<IProps, IState> {
                 ) : (
                     ''
                 )}
-                {showCheckout === true && cartItems.length !== 0 ? (
-                    <Checkout cartItems={cartItems} createOrder={createOrder} />
-                ) : (
-                    ''
-                )}
+                {showCheckout === true ? <Checkout cartItems={cartItems} createOrder={createOrder} /> : ''}
             </div>
         );
     }

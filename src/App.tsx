@@ -1,6 +1,6 @@
 import React from 'react';
 import Body from './components/Body';
-import Footer from './components/Footer';
+// import Footer from './components/Footer';
 import Header from './components/Header';
 import data from './data.json';
 
@@ -142,9 +142,9 @@ class App extends React.Component<IProps, IState> {
                         cartItems={cartItems}
                     />
                 </div>
-                <div>
+                {/* <div>
                     <Footer />
-                </div>
+                </div> */}
             </div>
         );
     }
