@@ -24,15 +24,16 @@ const ProductDetails: React.FC<IProps> = ({ product, addToCart }) => {
                     <div className="flex flex-col space-y-6">
                         <div className="text-lg font-bold">{product?.title}</div>
                         <div>{product?.description}</div>
-                        <div className="flex flex-row justify-between">
-                            <div className="flex flex-row space-x-2 items-center">
-                                <div className="text-md">Available Sizes:</div>
-                                {product?.availableSizes.map((size) => (
-                                    <div key={size} className="p-2 text-xl border bg-gray-200 w-14 text-center">
-                                        {size}
-                                    </div>
-                                ))}
-                            </div>
+                        <div className="flex flex-row space-x-2 items-center">
+                            <div className="text-md">Available Sizes:</div>
+                            {product?.availableSizes.map((size) => (
+                                <div key={size} className="p-2 text-xl border bg-gray-200 w-14 text-center">
+                                    {size}
+                                </div>
+                            ))}
+                        </div>
+                        <div className="flex flex-row justify-between items-center">
+                            <div>Price: {product.price}€</div>
 
                             <button
                                 type="button"
