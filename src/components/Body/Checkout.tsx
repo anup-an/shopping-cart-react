@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unused-state */
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { Slide } from 'react-awesome-reveal';
+import { Fade } from 'react-awesome-reveal';
 
 interface IProps {
     cartItems: ICart[];
@@ -73,8 +73,13 @@ class Checkout extends React.Component<IProps, IState> {
 
     render(): JSX.Element {
         return (
-            <div className="mx-5 p-2 mt-4">
-                <Slide direction="right">
+            <div className="mx-5 p-2">
+                <Fade>
+                    <div className="text-2xl font-medium text-center text-blue-500">Checkout Form</div>
+                    <div className="text-center text-sm mb-4">
+                        {' '}
+                        (Fill in the details and click submit to place order)
+                    </div>
                     <form className="flex flex-col space-y-4" onSubmit={this.generateOrder}>
                         <div>
                             <label htmlFor="name" className=" flex flex-col">
@@ -85,7 +90,7 @@ class Checkout extends React.Component<IProps, IState> {
                                     id="name"
                                     name="name"
                                     placeholder="Type here"
-                                    className="w-full p-2 border rounded"
+                                    className="p-2 border rounded"
                                     required
                                     onChange={this.handleInput}
                                 />
@@ -100,7 +105,7 @@ class Checkout extends React.Component<IProps, IState> {
                                     id="email"
                                     name="email"
                                     placeholder="Type here"
-                                    className="w-full p-2 border rounded"
+                                    className="p-2 border rounded"
                                     required
                                     onChange={this.handleInput}
                                 />
@@ -116,7 +121,7 @@ class Checkout extends React.Component<IProps, IState> {
                                     name="address"
                                     required
                                     placeholder="Type here"
-                                    className="w-full p-2 border rounded"
+                                    className="p-2 border rounded"
                                     onChange={this.handleInput}
                                 />
                             </label>
@@ -130,7 +135,7 @@ class Checkout extends React.Component<IProps, IState> {
                                     id="postalcode"
                                     name="postalcode"
                                     placeholder="Type here"
-                                    className="w-full p-2 border rounded"
+                                    className="p-2 border rounded"
                                     required
                                     onChange={this.handleInput}
                                 />
@@ -145,7 +150,7 @@ class Checkout extends React.Component<IProps, IState> {
                                     id="city"
                                     name="city"
                                     placeholder="Type here"
-                                    className="w-full p-2 border rounded"
+                                    className="p-2 border rounded"
                                     required
                                     onChange={this.handleInput}
                                 />
@@ -161,19 +166,21 @@ class Checkout extends React.Component<IProps, IState> {
                                     name="country"
                                     required
                                     placeholder="Type here"
-                                    className="w-full p-2 border rounded"
+                                    className="p-2 border rounded"
                                     onChange={this.handleInput}
                                 />
                             </label>
                         </div>
-                        <button
-                            type="submit"
-                            className="w-full p-2 bg-blue-400 hover:bg-blue-800 text-white border rounded"
-                        >
-                            Submit
-                        </button>
+                        <div className="pb-2 pt-2 flex justify-center">
+                            <button
+                                type="submit"
+                                className="p-2 bg-blue-400 hover:bg-blue-800 text-white border rounded"
+                            >
+                                Order
+                            </button>
+                        </div>
                     </form>
-                </Slide>
+                </Fade>
             </div>
         );
     }

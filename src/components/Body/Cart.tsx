@@ -1,7 +1,10 @@
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Slide } from 'react-awesome-reveal';
+import Modal from 'react-modal';
 import Checkout from './Checkout';
+
+Modal.setAppElement('#root');
 
 interface IProduct {
     id: string;
@@ -42,17 +45,25 @@ interface IOrder {
 }
 
 interface IState {
-    showCheckout: boolean;
+    isOpen: boolean;
 }
 class Cart extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
-        this.state = { showCheckout: false };
+        this.state = { isOpen: false };
     }
+
+    closeModal = (): void => {
+        this.setState({ isOpen: false });
+    };
+
+    openModal = (): void => {
+        this.setState({ isOpen: true });
+    };
 
     render(): JSX.Element {
         const { cartItems, removeFromCart, createOrder } = this.props;
-        const { showCheckout } = this.state;
+        const { isOpen } = this.state;
         return (
             <div className="flex flex-col">
                 <div className="flex flex-row justify-center h-16 items-center border-b-2 mx-4">
@@ -103,9 +114,7 @@ class Cart extends React.Component<IProps, IState> {
                                 .reduce((accumulator, currentValue) => accumulator + currentValue)}
                         </div>
                         <button
-                            onClick={() => {
-                                this.setState({ showCheckout: true });
-                            }}
+                            onClick={this.openModal}
                             className="bg-blue-400 hover:bg-blue-800 border rounded text-white p-2"
                             type="button"
                         >
@@ -115,7 +124,36 @@ class Cart extends React.Component<IProps, IState> {
                 ) : (
                     ''
                 )}
-                {showCheckout === true ? <Checkout cartItems={cartItems} createOrder={createOrder} /> : ''}
+                <div>
+                    <Modal
+                        isOpen={isOpen}
+                        onRequestClose={this.closeModal}
+                        overlayClassName="fixed inset-0 flex justify-center items-center bg-blue-800 bg-opacity-75"
+                        className="relative bg-white overflow-y-auto rounded-lg focus:outline-none"
+                    >
+                        <div className="p-1">
+                            <div className="flex justify-end">
+                                <button onClick={this.closeModal} type="button">
+                                    <svg
+                                        className="w-6 h-6"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth="2"
+                                            d="M6 18L18 6M6 6l12 12"
+                                        />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        <Checkout cartItems={cartItems} createOrder={createOrder} />
+                    </Modal>
+                </div>
             </div>
         );
     }
