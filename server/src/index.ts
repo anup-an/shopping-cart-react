@@ -1,20 +1,24 @@
 import express from 'express';
-import bodyParser from 'body-parser';
+import { Request, Response } from 'express';
 import mongoose from 'mongoose';
-import shortid from 'shortid';
+import { uuid } from 'uuidv4';
+import routes from './routes';
 
 const app = express();
-app.use(bodyParser);
-mongoose.connect('mongodb: //localhost/shopping-cart-db', {
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+
+
+mongoose.connect('mongodb://localhost/shopping-cart-db', {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,
 });
 
-const Product = mongoose.model(
+export const Product = mongoose.model(
     'products',
     new mongoose.Schema({
-        id: { type: shortid.generate },
+        _id: { type: String, default: uuid },
         title: String,
         description: String,
         image: String,
@@ -23,23 +27,10 @@ const Product = mongoose.model(
     }),
 );
 
-app.get('/api/products', async (req, res) => {
-    const products = await Product.find({});
-    res.send(products);
-});
-
-app.post('/api/products', async (req, res) => {
-    const newProduct = new Product(req.body);
-    const savedProduct = await newProduct.save();
-    res.send(savedProduct);
-});
-
-app.delete('api/products/:id', async (req, res) => {
-    const deletedProduct = await Product.findByIdAndDelete(req.params.id);
-    res.send(deletedProduct);
-});
+app.get('/', (req: Request, res: Response) => res.send('This is the server homepage'));
+app.use(routes());
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
-    console.log(`Listening to http://localhost${port}`);
+    console.log(`Listening to http://localhost:${port}`);
 });
