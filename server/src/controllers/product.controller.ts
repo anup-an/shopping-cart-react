@@ -1,5 +1,3 @@
-import { uuid } from "uuidv4";
-import mongoose from 'mongoose';
 import { Request, Response } from 'express';
 import { Product } from "..";
 
