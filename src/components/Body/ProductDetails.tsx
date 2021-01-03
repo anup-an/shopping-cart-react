@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface IProduct {
-    id: string;
+    _id: string;
     title: string;
     image: string;
     description: string;
@@ -12,10 +12,9 @@ interface IProduct {
 
 interface IProps {
     product: IProduct | null;
-    addToCart: (product: IProduct) => void;
 }
 
-const ProductDetails: React.FC<IProps> = ({ product, addToCart }) => {
+const ProductDetails: React.FC<IProps> = ({ product }) => {
     return (
         <div>
             {product ? (
@@ -37,7 +36,6 @@ const ProductDetails: React.FC<IProps> = ({ product, addToCart }) => {
 
                             <button
                                 type="button"
-                                onClick={() => addToCart(product)}
                                 className="bg-blue-400 hover:bg-blue-800 text-white p-2 border rounded"
                             >
                                 Add to Cart
