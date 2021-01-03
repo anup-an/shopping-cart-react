@@ -17,8 +17,6 @@ interface IProps {
     count?: number;
     size?: string;
     sort?: string;
-    sortByPrice: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-    filterBySize: (event: React.ChangeEvent<HTMLSelectElement>) => void;
     addToCart: (product: IProduct) => void;
     removeFromCart: (item: ICart) => void;
     createOrder: (order: IOrder) => void;
@@ -45,32 +43,15 @@ interface IProduct {
     count?: number;
 }
 
-const Body: React.FC<IProps> = ({
-    products,
-    count,
-    size,
-    sort,
-    sortByPrice,
-    filterBySize,
-    addToCart,
-    removeFromCart,
-    createOrder,
-    cartItems,
-}): JSX.Element => {
+const Body: React.FC<IProps> = ({ removeFromCart, createOrder, cartItems }): JSX.Element => {
     return (
         <div className="flex flex-row justify-between w-full">
             <div className="w-3/4">
                 <div className="mx-10 mt-4">
-                    <Filter
-                        count={count}
-                        size={size}
-                        sort={sort}
-                        sortByPrice={sortByPrice}
-                        filterBySize={filterBySize}
-                    />
+                    <Filter />
                 </div>
                 <div className="mt-4 border-t-2 mx-4">
-                    <Products products={products} addToCart={addToCart} />
+                    <Products />
                 </div>
             </div>
             <div className="w-1/4">

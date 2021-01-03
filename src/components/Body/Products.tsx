@@ -1,13 +1,17 @@
+/* eslint-disable no-underscore-dangle */
+import { connect } from 'react-redux';
 import React from 'react';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Slide, Zoom } from 'react-awesome-reveal';
 import Modal from 'react-modal';
+import { fetchProducts } from '../../actions/productAction';
 import ProductDetails from './ProductDetails';
+import { AppState } from '../../store';
 
 Modal.setAppElement('#root');
 
 interface IProduct {
-    id: string;
+    _id: string;
     title: string;
     image: string;
     description: string;
@@ -17,13 +21,7 @@ interface IProduct {
 }
 interface IProps {
     products?: IProduct[];
-    count?: number;
-    size?: string;
-    sort?: string;
-    sortByPrice?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-    filterBySize?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-    addToCart: (product: IProduct) => void;
-    cartItems?: IProduct[];
+    filteredItems?: IProduct[];
 }
 
 interface IState {
@@ -36,6 +34,10 @@ class Products extends React.Component<IProps, IState> {
         this.state = { isOpen: false, modalProduct: null };
     }
 
+    componentDidMount() {
+        fetchProducts();
+    }
+
     closeModal = (): void => {
         this.setState({ isOpen: false });
     };
@@ -45,14 +47,15 @@ class Products extends React.Component<IProps, IState> {
     };
 
     render(): JSX.Element {
-        const { products, addToCart } = this.props;
+        const { filteredItems } = this.props;
         const { isOpen, modalProduct } = this.state;
+        console.log(filteredItems);
         return (
             <div className="mt-2 mx-2">
                 <Slide direction="up">
                     <ul className="grid grid-cols-4 gap-10 w-full p-2 text-sm">
-                        {products?.map((product) => (
-                            <li key={product.id} className="border shadow p-2">
+                        {filteredItems?.map((product) => (
+                            <li key={product._id} className="border shadow p-2">
                                 <div>
                                     <button type="button" onClick={() => this.openModal(product)}>
                                         <img src={`${product.image}`} loading="eager" alt={`${product.title}`} />
@@ -62,7 +65,6 @@ class Products extends React.Component<IProps, IState> {
                                     <div className="flex flex-row justify-between mt-2">
                                         <div>€{product.price}</div>
                                         <button
-                                            onClick={() => addToCart(product)}
                                             type="button"
                                             className="bg-blue-400 hover:bg-blue-700 text-white border rounded px-1 w-7 h-7"
                                         >
@@ -110,7 +112,7 @@ class Products extends React.Component<IProps, IState> {
                                             </div>
                                         </div>
                                         <Zoom>
-                                            <ProductDetails product={modalProduct} addToCart={addToCart} />
+                                            <ProductDetails product={modalProduct} />
                                         </Zoom>
                                     </Modal>
                                 </div>
@@ -123,4 +125,14 @@ class Products extends React.Component<IProps, IState> {
     }
 }
 
-export default Products;
+interface StateProps {
+    products: IProduct[];
+    filteredItems: IProduct[];
+}
+
+const mapStateToProps = (state: AppState): StateProps => ({
+    products: state.products.items,
+    filteredItems: state.products.filteredItems,
+});
+
+export default connect(mapStateToProps, fetchProducts)(Products);
