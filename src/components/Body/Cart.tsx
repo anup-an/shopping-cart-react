@@ -1,52 +1,34 @@
 import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Slide } from 'react-awesome-reveal';
 import Modal from 'react-modal';
-import Checkout from './Checkout';
+import { connect } from 'react-redux';
+import { removeFromCart } from '../../actions/cartAction';
+import { AppState } from '../../store';
 
 Modal.setAppElement('#root');
 
-interface IProduct {
-    id: string;
-    title: string;
-    image: string;
-    description: string;
-    price: number;
-    availableSizes: string[];
-}
-
-interface ICart {
-    id: string;
+type ICart = {
+    _id: string;
     title: string;
     image: string;
     description: string;
     price: number;
     availableSizes: string[];
     count?: number;
-}
+};
 
-interface IProps {
-    products?: IProduct[];
-    count?: number;
-    size?: string;
-    sort?: string;
+type IProps = {
     cartItems: ICart[];
-    removeFromCart: (item: ICart) => void;
-    createOrder: (order: IOrder) => void;
+    actions: Actions;
+};
+
+type Actions = {
+    removeFromCart: (cartItems: ICart[], item: ICart) => Promise<void>;
 }
 
-interface IOrder {
-    name: string;
-    email: string;
-    address: string;
-    postalcode: string;
-    city: string;
-    country: string;
-}
-
-interface IState {
+type IState = {
     isOpen: boolean;
-}
+};
 class Cart extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
@@ -61,8 +43,12 @@ class Cart extends React.Component<IProps, IState> {
         this.setState({ isOpen: true });
     };
 
+    handleRemoveFromCart = (item: ICart) => {
+        this.props.actions.removeFromCart(this.props.cartItems, item);
+    }
+
     render(): JSX.Element {
-        const { cartItems, removeFromCart, createOrder } = this.props;
+        const { cartItems } = this.props;
         const { isOpen } = this.state;
         return (
             <div className="flex flex-col">
@@ -71,8 +57,8 @@ class Cart extends React.Component<IProps, IState> {
                 </div>
                 <ul className="mx-5 flex flex-col space-y-4 text-sm mt-4">
                     {cartItems.map((item) => (
-                        <Slide direction="right" key={item.id}>
-                            <li key={item.id} className="flex flex-row items-center space-x-2">
+                        <Slide direction="right" key={item._id}>
+                            <li key={item._id} className="flex flex-row items-center space-x-2">
                                 <div className="flex flex-row justify-between border shadow  p-2 items-center text-sm space-x-2">
                                     <img
                                         className="w-20 h-auto"
@@ -85,7 +71,8 @@ class Cart extends React.Component<IProps, IState> {
                                         {item.count} x ${item.price}
                                     </div>
                                 </div>
-                                <button onClick={() => removeFromCart(item)} type="button">
+                                <button onClick={() => this.handleRemoveFromCart(item)} type="button">
+                                    
                                     <svg
                                         className="w-6 h-6 text-red-400"
                                         xmlns="http://www.w3.org/2000/svg"
@@ -151,7 +138,8 @@ class Cart extends React.Component<IProps, IState> {
                                 </button>
                             </div>
                         </div>
-                        <Checkout cartItems={cartItems} createOrder={createOrder} />
+                        {/*                         <Checkout />
+                         */}{' '}
                     </Modal>
                 </div>
             </div>
@@ -159,4 +147,21 @@ class Cart extends React.Component<IProps, IState> {
     }
 }
 
-export default Cart;
+interface StateProps {
+    cartItems: ICart[];
+    count: number;
+}
+
+const mapStateToProps = (state: AppState): StateProps => ({
+    cartItems: state.cartProducts.cartItems,
+    count: state.cartProducts.count,
+});
+
+const mapDispatchToProps = (dispatch: any): {actions: Actions} => ({
+    actions: {
+        removeFromCart: (cartItems: ICart[], item: ICart) => dispatch(removeFromCart(cartItems, item)),
+    }
+}
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

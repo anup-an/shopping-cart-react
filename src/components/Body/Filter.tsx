@@ -1,10 +1,9 @@
 /* eslint-disable react/prefer-stateless-function */
 import { connect } from 'react-redux';
 import React from 'react';
-import { Dispatch, bindActionCreators, AnyAction } from 'redux';
-import * as ProductActions from '../../actions/productAction';
-import { IProduct, ProductsActionTypes } from '../../ActionTypes';
+import { IProduct } from '../../ActionTypes';
 import { AppState } from '../../store';
+import { filterProducts, sortProducts } from '../../actions/productAction';
 
 interface IProps {
     items: IProduct[];
@@ -12,23 +11,41 @@ interface IProps {
     size: string;
     filteredItems: IProduct[];
     sortedItems: IProduct[];
-    filterProducts: (size: string, products: IProduct[]) => (dispatch: Dispatch<ProductsActionTypes>) => Promise<void>;
-    sortProducts: (sort: string, products: IProduct[]) => (dispatch: Dispatch<ProductsActionTypes>) => Promise<void>;
+    actions: Actions;
 }
 
-class Filter extends React.Component<IProps> {
+interface Actions {
+    filterProducts: (size: string, products: IProduct[]) => Promise<void>;
+    sortProducts: (sort: string, products: IProduct[]) => Promise<void>;
+}
+
+class Filter extends React.Component<IProps, IProduct> {
+    constructor(props: IProps) {
+        super(props);
+    }
+
+    handlesort = (sort: string): void => {
+
+        this.props.actions.sortProducts(sort, this.props.filteredItems);
+    }
+
+    handleFilter = (size:string): void => {
+        console.log(this.props.sortedItems)
+        this.props.actions.filterProducts(size, this.props.items);
+    }
+
+
     render(): JSX.Element {
-        const { sort, size, items, filteredItems, filterProducts, sortProducts } = this.props;
+        const { sort, size, items, actions, filteredItems } = this.props;
         return (
             <div className="flex flex-row justify-between items-center">
                 <div> {filteredItems.length} Products</div>
                 <div>
                     Sort By Price{' '}
                     <select
-                        // eslint-disable-next-line react/destructuring-assignment
                         value={sort}
                         className="border rounded p-1 border-gray-300"
-                        onChange={(e) => sortProducts(e.target.value, filteredItems)}
+                        onChange={(e) => this.handlesort(e.target.value)}
                     >
                         <option key="Newest" value="Newest">
                             {' '}
@@ -47,7 +64,7 @@ class Filter extends React.Component<IProps> {
                     <select
                         value={size}
                         className="border rounded p-1 border-gray-300"
-                        onChange={(e) => filterProducts(e.target.value, items)}
+                        onChange={(e) => this.handleFilter(e.target.value)}
                     >
                         <option value="ALL">ALL</option>
                         <option value="S">S</option>
@@ -78,13 +95,11 @@ const mapStateToProps = (state: AppState): StateProps => ({
     size: state.products.size,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => {
-    return bindActionCreators(
-        {
-            ...ProductActions,
-        },
-        dispatch,
-    );
-};
+const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
+    actions: {
+        filterProducts: (size: string, products: IProduct[]) => dispatch(filterProducts(size, products)),
+        sortProducts: (sort: string, products: IProduct[]) => dispatch(sortProducts(sort, products)),
+    },
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);

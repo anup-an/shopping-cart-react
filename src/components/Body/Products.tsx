@@ -1,16 +1,17 @@
 /* eslint-disable no-underscore-dangle */
 import { connect } from 'react-redux';
 import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Slide, Zoom } from 'react-awesome-reveal';
 import Modal from 'react-modal';
-import { fetchProducts } from '../../actions/productAction';
 import ProductDetails from './ProductDetails';
 import { AppState } from '../../store';
+import { ICart } from '../../ActionTypes';
+import { addToCart } from '../../actions/cartAction';
+import { fetchProducts } from '../../actions/productAction';
 
 Modal.setAppElement('#root');
 
-interface IProduct {
+type IProduct = {
     _id: string;
     title: string;
     image: string;
@@ -18,16 +19,21 @@ interface IProduct {
     price: number;
     availableSizes: string[];
     count?: number;
-}
-interface IProps {
-    products?: IProduct[];
-    filteredItems?: IProduct[];
-}
+};
+type IProps = {
+    cartItems: ICart[];
+    filteredItems: IProduct[];
+    actions: Actions;
+};
 
-interface IState {
+type Actions = {
+    fetchProducts: () => Promise<void>;
+    addToCart: (cartItems: ICart[], product: IProduct) => Promise<void>;
+}
+type IState = {
     isOpen: boolean;
     modalProduct: IProduct | null;
-}
+};
 class Products extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
@@ -35,7 +41,8 @@ class Products extends React.Component<IProps, IState> {
     }
 
     componentDidMount() {
-        fetchProducts();
+        console.log('List of products');
+        this.props.actions.fetchProducts();
     }
 
     closeModal = (): void => {
@@ -46,10 +53,14 @@ class Products extends React.Component<IProps, IState> {
         this.setState({ isOpen: true, modalProduct: product });
     };
 
+    handleAddToCart = (product: IProduct) => {
+        this.props.actions.addToCart(this.props.cartItems, product);
+
+    }
+
     render(): JSX.Element {
         const { filteredItems } = this.props;
         const { isOpen, modalProduct } = this.state;
-        console.log(filteredItems);
         return (
             <div className="mt-2 mx-2">
                 <Slide direction="up">
@@ -65,6 +76,7 @@ class Products extends React.Component<IProps, IState> {
                                     <div className="flex flex-row justify-between mt-2">
                                         <div>€{product.price}</div>
                                         <button
+                                            onClick={() => this.handleAddToCart(product)}
                                             type="button"
                                             className="bg-blue-400 hover:bg-blue-700 text-white border rounded px-1 w-7 h-7"
                                         >
@@ -126,13 +138,20 @@ class Products extends React.Component<IProps, IState> {
 }
 
 interface StateProps {
-    products: IProduct[];
     filteredItems: IProduct[];
+    cartItems: ICart[];
 }
 
 const mapStateToProps = (state: AppState): StateProps => ({
-    products: state.products.items,
     filteredItems: state.products.filteredItems,
+    cartItems: state.cartProducts.cartItems,
 });
 
-export default connect(mapStateToProps, fetchProducts)(Products);
+const mapDispatchToProps = (dispatch: any): { actions: Actions }  => ({
+    actions: {
+        fetchProducts: () => dispatch(fetchProducts()),
+        addToCart: (cartItems: ICart[], product: IProduct) => dispatch(addToCart(cartItems, product)),
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Products);

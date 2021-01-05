@@ -1,4 +1,7 @@
+import { connect } from 'react-redux';
 import React from 'react';
+import { addToCart } from '../../actions/cartAction';
+import { AppState } from '../../store';
 
 interface IProduct {
     _id: string;
@@ -10,11 +13,37 @@ interface IProduct {
     count?: number;
 }
 
+type ICart = {
+    _id: string;
+    title: string;
+    image: string;
+    description: string;
+    price: number;
+    availableSizes: string[];
+    count?: number;
+};
+
 interface IProps {
     product: IProduct | null;
+    cartItems: ICart[];
+    action: Action;
 }
 
-const ProductDetails: React.FC<IProps> = ({ product }) => {
+interface Action {
+    addToCart: (cartItems: ICart[], product: IProduct) => Promise<void>
+}
+
+class ProductDetails extends React.Component<IProps> {
+    constructor(props: IProps){
+        super(props)
+    }
+    handleAddToCart = (product: IProduct) => {
+        this.props.action.addToCart(this.props.cartItems, product);
+
+    }
+    render(): JSX.Element{
+    const {product} = this.props;
+
     return (
         <div>
             {product ? (
@@ -35,6 +64,7 @@ const ProductDetails: React.FC<IProps> = ({ product }) => {
                             <div>Price: {product.price}€</div>
 
                             <button
+                                onClick={() => this.handleAddToCart(product)}
                                 type="button"
                                 className="bg-blue-400 hover:bg-blue-800 text-white p-2 border rounded"
                             >
@@ -47,7 +77,24 @@ const ProductDetails: React.FC<IProps> = ({ product }) => {
                 ''
             )}
         </div>
-    );
+
+    )
+}
 };
 
-export default ProductDetails;
+interface StateProps {
+    cartItems: ICart[];
+}
+
+const mapStateToProps = (state: AppState): StateProps => ({
+    cartItems: state.cartProducts.cartItems
+
+});
+
+const mapDispatchToProps = (dispatch: any): {action: Action} => ({
+    action: {
+        addToCart: (cartItems: ICart[], product: IProduct) => dispatch(addToCart(cartItems, product)),
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);

@@ -30,23 +30,23 @@ export const filterProducts = (size: string, products: IProduct[]) => async (
 export const sortProducts = (sort: string, products: IProduct[]) => async (
     dispatch: Dispatch<AppActions>,
 ): Promise<void> => {
-    const arrangeProducts = (condition: string, array: IProduct[]) => {
-        if (condition === 'Lowest') {
-            return [...array].slice().sort((a, b) => (a.price > b.price ? 1 : -1));
-        }
-        if (condition === 'Highest') {
-            return [...array].slice().sort((a, b) => (a.price < b.price ? 1 : -1));
-        }
-        if (condition === 'Newest') {
-            return [...array].slice().sort((a, b) => (a._id > b._id ? 1 : -1));
-        }
-        return products;
-    };
+    let sortedProduscts = products;
+    if (sort === 'Lowest') {
+        sortedProduscts = [...products].slice().sort((a, b) => (a.price > b.price ? 1 : -1));
+    }
+    if (sort === 'Highest') {
+        sortedProduscts = [...products].slice().sort((a, b) => (a.price < b.price ? 1 : -1));
+    }
+    if (sort === 'Newest') {
+        sortedProduscts = [...products].slice().sort((a, b) => (a._id > b._id ? 1 : -1));
+    }
+;
+
     dispatch({
         type: SORT_PRODUCTS_PRICE,
         payload: {
             sort,
-            items: arrangeProducts(sort, products),
+            items: sortedProduscts,
         },
     });
 };

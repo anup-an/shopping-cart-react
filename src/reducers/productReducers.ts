@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
     FETCH_PRODUCTS,
     FILTER_PRODUCTS_SIZE,
@@ -6,13 +7,13 @@ import {
     SORT_PRODUCTS_PRICE,
 } from '../ActionTypes';
 
-export interface ActionStates {
+export type ActionStates = {
     items: IProduct[];
     sort: string;
     sortedItems: IProduct[];
     filteredItems: IProduct[];
     size: string;
-}
+};
 const productsDefaultState: ActionStates = {
     items: [],
     sort: '',
@@ -22,6 +23,7 @@ const productsDefaultState: ActionStates = {
 };
 
 const productsReducer = (state = productsDefaultState, action: ProductsActionTypes): ActionStates => {
+    console.log(action.type);
     switch (action.type) {
         case FETCH_PRODUCTS:
             return { ...state, items: action.payload.items, filteredItems: action.payload.items };
