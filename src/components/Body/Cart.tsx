@@ -54,7 +54,7 @@ class Cart extends React.Component<IProps, IState> {
         return (
             <div className="flex flex-col">
                 <div className="flex flex-row justify-center h-16 items-center border-b-2 mx-4">
-                    <div>You have {cartItems.length} items in the cart </div>
+                <div className="text-sm">{cartItems.length} items in cart</div>
                 </div>
                 <ul className="mx-5 flex flex-col space-y-4 text-sm mt-4">
                     {cartItems.map((item) => (
@@ -67,15 +67,15 @@ class Cart extends React.Component<IProps, IState> {
                                         src={`${item.image}`}
                                         alt={`${item.title}`}
                                     />
-                                    <div>{item.title}</div>
-                                    <div>
+                                    <div className="hidden lg:block">{item.title}</div>
+                                    <div className="hidden lg:block">
                                         {item.count} x ${item.price}
                                     </div>
                                 </div>
                                 <button onClick={() => this.handleRemoveFromCart(item)} type="button">
                                     
                                     <svg
-                                        className="w-6 h-6 text-red-400"
+                                        className="w-4 h-4 sm:w-6 sm:h-6 text-red-400"
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="none"
                                         stroke="currentColor"
@@ -94,7 +94,7 @@ class Cart extends React.Component<IProps, IState> {
                     ))}
                 </ul>
                 {cartItems.length > 0 ? (
-                    <div className="flex flex-row justify-between items-center mx-5 mt-10">
+                    <div className="flex flex-col md:flex-row justify-between items-center mx-5 mt-10 text-sm">
                         <div>
                             Total: $
                             {cartItems
@@ -103,7 +103,7 @@ class Cart extends React.Component<IProps, IState> {
                         </div>
                         <button
                             onClick={this.openModal}
-                            className="bg-blue-400 hover:bg-blue-800 border rounded text-white p-2"
+                            className="bg-blue-400 hover:bg-blue-800 border rounded text-white p-2 focus:outline-none"
                             type="button"
                         >
                             Checkout

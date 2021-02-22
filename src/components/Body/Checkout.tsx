@@ -172,7 +172,7 @@ class Checkout extends React.Component<IProps,IState> {
                                 type="submit"
                                 className="p-2 bg-blue-400 hover:bg-blue-800 text-white border rounded"
                             >
-                                Order
+                                Submit
                             </button>
                         </div>
                     </form>

@@ -38,13 +38,13 @@ class Filter extends React.Component<IProps, IProduct> {
     render(): JSX.Element {
         const { sort, size, items, actions, filteredItems } = this.props;
         return (
-            <div className="flex flex-row justify-between items-center">
+            <div className="flex flex-row justify-between items-center text-sm">
                 <div> {filteredItems.length} Products</div>
                 <div>
-                    Sort By Price{' '}
+                    Price{' '}
                     <select
                         value={sort}
-                        className="border rounded p-1 border-gray-300"
+                        className="border rounded p-1 border-gray-300 text-sm"
                         onChange={(e) => this.handlesort(e.target.value, size)}
                     >
                         <option key="Newest" value="Newest">
@@ -60,7 +60,7 @@ class Filter extends React.Component<IProps, IProduct> {
                     </select>
                 </div>
                 <div>
-                    Filter By Size{' '}
+                    Size{' '}
                     <select
                         value={size}
                         className="border rounded p-1 border-gray-300"

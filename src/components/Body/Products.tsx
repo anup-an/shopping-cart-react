@@ -64,7 +64,7 @@ class Products extends React.Component<IProps, IState> {
         return (
             <div className="mt-2 mx-2">
                 <Slide direction="up">
-                    <ul className="grid grid-cols-4 gap-10 w-full p-2 text-sm">
+                    <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 w-full p-2 text-sm">
                         {filteredItems?.map((product) => (
                             <li key={product._id} className="border shadow p-2">
                                 <div>
