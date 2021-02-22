@@ -1,11 +1,9 @@
 /* eslint-disable react/no-unused-state */
 import React from 'react';
-// eslint-disable-next-line import/no-extraneous-dependencies
 import { Fade } from 'react-awesome-reveal';
 
 interface IProps {
     cartItems: ICart[];
-    createOrder: (order: IOrder) => void;
 }
 
 interface IOrder {
@@ -26,7 +24,7 @@ interface IState {
     country: string;
 }
 interface ICart {
-    id: string;
+    _id: string;
     title: string;
     image: string;
     description: string;
@@ -35,8 +33,8 @@ interface ICart {
     count?: number;
 }
 
-class Checkout extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+class Checkout extends React.Component<IProps,IState> {
+    constructor(props:IProps) {
         super(props);
         this.state = {
             name: '',
@@ -51,7 +49,6 @@ class Checkout extends React.Component<IProps, IState> {
     generateOrder = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
         const { name, email, address, postalcode, city, country } = this.state;
-        const { createOrder } = this.props;
         const order = {
             name,
             email,
@@ -61,7 +58,6 @@ class Checkout extends React.Component<IProps, IState> {
             country,
             cartItems: this.props,
         };
-        createOrder(order);
     };
 
     handleInput = (event: React.ChangeEvent<HTMLInputElement>): void => {

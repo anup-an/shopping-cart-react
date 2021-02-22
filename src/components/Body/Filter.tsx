@@ -15,8 +15,8 @@ interface IProps {
 }
 
 interface Actions {
-    filterProducts: (size: string, products: IProduct[]) => Promise<void>;
-    sortProducts: (sort: string, products: IProduct[]) => Promise<void>;
+    filterProducts: (size: string, sort: string, products: IProduct[]) => Promise<void>;
+    sortProducts: (sort: string, size:string, products: IProduct[]) => Promise<void>;
 }
 
 class Filter extends React.Component<IProps, IProduct> {
@@ -24,14 +24,14 @@ class Filter extends React.Component<IProps, IProduct> {
         super(props);
     }
 
-    handlesort = (sort: string): void => {
+    handlesort = (sort: string, size: string): void => {
 
-        this.props.actions.sortProducts(sort, this.props.filteredItems);
+        this.props.actions.sortProducts(sort, size, this.props.items);
     }
 
-    handleFilter = (size:string): void => {
-        console.log(this.props.sortedItems)
-        this.props.actions.filterProducts(size, this.props.items);
+    handleFilter = (size:string, sort: string): void => {
+        console.log(sort);
+        this.props.actions.filterProducts(size, sort, this.props.items);
     }
 
 
@@ -45,7 +45,7 @@ class Filter extends React.Component<IProps, IProduct> {
                     <select
                         value={sort}
                         className="border rounded p-1 border-gray-300"
-                        onChange={(e) => this.handlesort(e.target.value)}
+                        onChange={(e) => this.handlesort(e.target.value, size)}
                     >
                         <option key="Newest" value="Newest">
                             {' '}
@@ -64,7 +64,7 @@ class Filter extends React.Component<IProps, IProduct> {
                     <select
                         value={size}
                         className="border rounded p-1 border-gray-300"
-                        onChange={(e) => this.handleFilter(e.target.value)}
+                        onChange={(e) => this.handleFilter(e.target.value, sort)}
                     >
                         <option value="ALL">ALL</option>
                         <option value="S">S</option>
@@ -97,8 +97,8 @@ const mapStateToProps = (state: AppState): StateProps => ({
 
 const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
     actions: {
-        filterProducts: (size: string, products: IProduct[]) => dispatch(filterProducts(size, products)),
-        sortProducts: (sort: string, products: IProduct[]) => dispatch(sortProducts(sort, products)),
+        filterProducts: (size: string, sort: string, products: IProduct[]) => dispatch(filterProducts(size, sort, products)),
+        sortProducts: (sort: string, size:string, products: IProduct[]) => dispatch(sortProducts(sort, size, products)),
     },
 });
 

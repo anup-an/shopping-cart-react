@@ -12,41 +12,54 @@ export const fetchProducts = () => async (dispatch: Dispatch<AppActions>): Promi
     });
 };
 
-export const filterProducts = (size: string, products: IProduct[]) => async (
+export const filterFunction = (size: string, products: IProduct[]|undefined) => {
+    if (products){
+
+        if (size === 'ALL'){
+           return products;
+        }
+        console.log(size);
+        return [...products].filter((product) => product.availableSizes.find((e) => e === size));
+    }
+}
+
+export const sortFunction = (sort: string, products: IProduct[]|undefined) => {
+    if (products && sort === 'Lowest') {
+        return [...products].slice().sort((a, b) => (a.price > b.price ? 1 : -1));
+    }
+    if (products && sort === 'Highest') {
+        return [...products].slice().sort((a, b) => (a.price < b.price ? 1 : -1));
+    }
+    if (products && sort === 'Newest') {
+        return [...products].slice().sort((a, b) => (a._id > b._id ? 1 : -1));
+    }
+}
+
+export const filterProducts = (size: string, sort: string, products: IProduct[]|undefined) => async (
     dispatch: Dispatch<AppActions>,
 ): Promise<void> => {
+    const filteredProducts = filterFunction(size,sortFunction(sort, products));
+    filteredProducts ?
+
     dispatch({
         type: FILTER_PRODUCTS_SIZE,
         payload: {
             size,
-            items:
-                size === 'ALL'
-                    ? products
-                    : products.filter((product) => product.availableSizes.find((e) => e === size)),
+            items: filteredProducts,
         },
-    });
+    }): '';
 };
 
-export const sortProducts = (sort: string, products: IProduct[]) => async (
+export const sortProducts = (sort: string, size: string, products: IProduct[]|undefined) => async (
     dispatch: Dispatch<AppActions>,
 ): Promise<void> => {
-    let sortedProduscts = products;
-    if (sort === 'Lowest') {
-        sortedProduscts = [...products].slice().sort((a, b) => (a.price > b.price ? 1 : -1));
-    }
-    if (sort === 'Highest') {
-        sortedProduscts = [...products].slice().sort((a, b) => (a.price < b.price ? 1 : -1));
-    }
-    if (sort === 'Newest') {
-        sortedProduscts = [...products].slice().sort((a, b) => (a._id > b._id ? 1 : -1));
-    }
-;
-
+    const sortedProducts = sortFunction(sort, filterFunction(size, products)); 
+    sortedProducts ?
     dispatch({
         type: SORT_PRODUCTS_PRICE,
         payload: {
             sort,
-            items: sortedProduscts,
+            items: sortedProducts,
         },
-    });
+    }): '';
 };

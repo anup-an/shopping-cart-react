@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { removeFromCart } from '../../actions/cartAction';
 import { AppState } from '../../store';
+import Checkout from './Checkout'
 
 Modal.setAppElement('#root');
 
@@ -138,8 +139,7 @@ class Cart extends React.Component<IProps, IState> {
                                 </button>
                             </div>
                         </div>
-                        {/*                         <Checkout />
-                         */}{' '}
+                        <Checkout cartItems={cartItems} />
                     </Modal>
                 </div>
             </div>

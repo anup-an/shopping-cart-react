@@ -16,8 +16,8 @@ export type ActionStates = {
 };
 const productsDefaultState: ActionStates = {
     items: [],
-    sort: '',
-    size: '',
+    sort: 'Newest',
+    size: 'ALL',
     sortedItems: [],
     filteredItems: [],
 };
