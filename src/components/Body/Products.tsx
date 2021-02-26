@@ -63,12 +63,12 @@ class Products extends React.Component<IProps, IState> {
         const { isOpen, modalProduct } = this.state;
         return (
             <div className="mt-2 mx-2">
-                <Slide direction="up">
+                <Slide direction="up" triggerOnce>
                     <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 w-full p-2 text-sm">
                         {filteredItems?.map((product) => (
                             <li key={product._id} className="border shadow p-2">
                                 <div>
-                                    <button type="button" onClick={() => this.openModal(product)}>
+                                    <button type="button" className="focus:outline-none" onClick={() => this.openModal(product)}>
                                         <img src={`${product.image}`} loading="eager" alt={`${product.title}`} />
                                     </button>
 

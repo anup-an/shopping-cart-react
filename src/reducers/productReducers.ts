@@ -5,6 +5,7 @@ import {
     IProduct,
     ProductsActionTypes,
     SORT_PRODUCTS_PRICE,
+    SEARCH_PRODUCTS,
 } from '../ActionTypes';
 
 export type ActionStates = {
@@ -40,6 +41,11 @@ const productsReducer = (state = productsDefaultState, action: ProductsActionTyp
                 size: action.payload.size,
                 filteredItems: action.payload.items,
             };
+        case SEARCH_PRODUCTS:
+            return {
+                ...state,
+                filteredItems: action.payload.items,
+            }
         default:
             return state;
     }

@@ -14,7 +14,7 @@ const Body = (): JSX.Element => {
                     <Products />
                 </div>
             </div>
-            <div className="w-1/4">
+            <div className="w-1/4 fixed right-0 h-3/4 overflow-auto">
                 <Cart />
             </div>
         </div>

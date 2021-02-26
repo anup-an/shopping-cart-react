@@ -9,10 +9,10 @@ const App = (): JSX.Element => {
     return (
         <Provider store={store}>
             <div className="flex flex-col">
-                <div>
+                <div className="fixed w-full z-10">
                     <Header />
                 </div>
-                <div>
+                <div className="mt-16">
                     <Body />
                 </div>
             </div>

@@ -7,13 +7,13 @@ export const addToCart = (items: ICart[], product: IProduct) => async (
 ): Promise<void> => {
     const cartItems = items.slice();
     if (cartItems.length === 0) {
-        cartItems.push({ ...product, count: 1 });
+        cartItems.unshift({ ...product, count: 1 });
     } else if (cartItems.length !== 0) {
         const cart = cartItems.find((item) => item._id === product._id);
         if (cart && cart.count) {
             cartItems[cartItems.indexOf(cart)].count = cart.count + 1;
         } else if (!cart) {
-            cartItems.push({ ...product, count: 1 });
+            cartItems.unshift({ ...product, count: 1 });
         }
     }
     dispatch({
@@ -28,7 +28,6 @@ export const addToCart = (items: ICart[], product: IProduct) => async (
 export const removeFromCart = (items: ICart[], item: ICart) => async (
     dispatch: Dispatch<AppActions>,
 ): Promise<void> => {
-
     const cartItems = [...items].slice().filter((element) => element._id !== item._id);
 
     dispatch({

@@ -1,5 +1,5 @@
 module.exports = {
-/*     parserOptions: {
+    /*     parserOptions: {
         tsconfigRootDir: __dirname,
         project: 'tsconfig.json',
         ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features

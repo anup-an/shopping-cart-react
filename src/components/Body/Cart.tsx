@@ -52,7 +52,7 @@ class Cart extends React.Component<IProps, IState> {
         const { cartItems } = this.props;
         const { isOpen } = this.state;
         return (
-            <div className="flex flex-col">
+            <div className="flex flex-col overflow-y-auto">
                 <div className="flex flex-row justify-center h-16 items-center border-b-2 mx-4">
                 <div className="text-sm">{cartItems.length} items in cart</div>
                 </div>

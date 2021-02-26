@@ -3,6 +3,7 @@ export const FILTER_PRODUCTS_SIZE = 'FILTER_PRODUCTS_SIZE';
 export const SORT_PRODUCTS_PRICE = 'SORT_PRODUCTS_PRICE';
 export const ADD_PRODUCTS_CART = 'ADD_PRODUCTS_CART';
 export const REMOVE_PRODUCTS_CART = 'REMOVE_PRODUCTS_CART';
+export const SEARCH_PRODUCTS = 'SEARCH_PRODUCTS';
 
 export type ICart = {
     _id: string;
@@ -60,8 +61,15 @@ export type SortProductsAction = {
     };
 };
 
+export type SearchProductsAction = {
+    type: typeof SEARCH_PRODUCTS;
+    payload: {
+        items: IProduct[];
+    }
+}
+
 export type CartActionTypes = AddToCartAction | RemoveFromCartAction;
 
-export type ProductsActionTypes = FetchProductsAction | FilterProductsAction | SortProductsAction;
+export type ProductsActionTypes = FetchProductsAction | FilterProductsAction | SortProductsAction | SearchProductsAction;
 
 export type AppActions = ProductsActionTypes | CartActionTypes;
