@@ -1,8 +1,10 @@
+/* eslint-disable import/no-cycle */
+/* eslint-disable import/prefer-default-export */
 import express from 'express';
-import { Request, Response } from 'express';
 import mongoose from 'mongoose';
-import { uuid } from 'uuidv4';
+import passport from 'passport';
 import routes from './routes';
+import strategy from './middlewares/passport';
 
 const app = express();
 app.use(express.urlencoded({ extended: false }));
@@ -14,19 +16,9 @@ mongoose.connect('mongodb://localhost/shopping-cart-db', {
     useUnifiedTopology: true,
 });
 
-export const Product = mongoose.model(
-    'products',
-    new mongoose.Schema({
-        _id: { type: String, default: uuid },
-        title: String,
-        description: String,
-        image: String,
-        price: Number,
-        availableSizes: [String],
-    }),
-);
-
-app.get('/', (req: Request, res: Response) => res.send('This is the server homepage'));
+app.use(passport.initialize());
+passport.use(strategy);
+app.get('/', (req, res) => res.send('This is the server homepage'));
 app.use(routes());
 
 const port = process.env.PORT || 5000;

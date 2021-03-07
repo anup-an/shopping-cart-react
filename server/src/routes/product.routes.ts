@@ -1,4 +1,6 @@
+/* eslint-disable import/no-cycle */
 import { Router } from 'express';
+import passport from 'passport';
 import {
     createProducts,
     deleteProducts,
@@ -9,7 +11,7 @@ import {
 
 const router = Router();
 
-router.get('/', getProducts);
+router.get('/', passport.authenticate('jwt', { session: false }), getProducts);
 router.post('/', createProducts);
 router.delete('/:id', deleteProducts);
 router.get('/:id', getProductById);

@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable no-unused-expressions */
 import { Request, Response } from 'express';
-import { Product } from '..';
+import { Product } from '../models/product';
 
 interface IProduct {
     id: string;
