@@ -2,6 +2,7 @@
 /* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
+import bcrypt from 'bcrypt';
 
 import User from '../models/user';
 
@@ -9,7 +10,6 @@ interface IUser {
     _id: string;
     email: string;
     password: string;
-    comparePassword: (password: string) => boolean;
 }
 
 function generateToken(user: IUser) {
@@ -34,7 +34,7 @@ export const loginUser = async (req: Request, res: Response) => {
     const ret = await User.findOne({ email })
         .then(async (user: IUser) => {
             if (user) {
-                const isMatch = user.comparePassword(password);
+                const isMatch = await bcrypt.compare(password, user.password);
                 if (isMatch) {
                     return res.status(200).json(generateToken(user));
                 }

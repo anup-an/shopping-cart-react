@@ -12,9 +12,11 @@ import {
 const router = Router();
 
 router.get('/', getProducts);
-router.post('/', passport.authenticate('jwt', { session: false }), createProducts);
-router.delete('/:id', passport.authenticate('jwt, {session: false}'), deleteProducts);
 router.get('/:id', getProductById);
 router.get('/search/:keywords', searchProducts);
+
+router.use(passport.authenticate('jwt'));
+router.post('/', createProducts);
+router.delete('/:id', deleteProducts);
 
 export default router;

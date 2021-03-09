@@ -10,7 +10,7 @@ const opts: StrategyOptions = {
 const strategy = new Strategy(opts, async (payload, done) => {
     console.log(payload);
     try {
-        const user = await User.findOne({ email: payload.email });
+        const user = await User.findOne({ email: payload.email, password: payload.password });
         console.log(user);
 
         if (user) {

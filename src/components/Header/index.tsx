@@ -1,6 +1,8 @@
 import React from 'react';
+import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { searchProducts } from '../../actions/productAction';
+import Login from './login';
 
 type Actions = {
     searchProducts: (keywords: string) => Promise<void>;
@@ -12,13 +14,21 @@ type IProps = {
 
 type IState = {
     keywords: string;
+    isOpen: boolean;
 }
 
 
 class Header extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props)
-        this.state = {keywords : ''};
+        this.state = {keywords : '', isOpen: false};
+    }
+    openModal = () => {
+        this.setState((state) => ({...state, isOpen: true}));
+    }
+
+    closeModal = () => {
+        this.setState((state) => ({...state, isOpen: false}));
     }
 
     handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -50,9 +60,19 @@ class Header extends React.Component<IProps, IState> {
                     </label>
                 </div>
                 <div className="flex flex-row justify-between gap-x-10">
-                    <button className="focus:outline-none">Login</button>
+                    <button className="focus:outline-none" onClick={this.openModal}>Login</button>
                     <button className="focus:outline-none">Register</button>
                 </div>
+            <div>
+
+            <Modal isOpen={this.state.isOpen} onRequestClose={this.closeModal}>
+                <button onClick={this.closeModal}>
+
+                <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+                <Login />
+            </Modal>
+            </div>
             </div>
         );
     }
