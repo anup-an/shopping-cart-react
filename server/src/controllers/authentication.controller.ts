@@ -9,6 +9,7 @@ interface IUser {
     _id: string;
     email: string;
     password: string;
+    comparePassword: (password: string) => boolean;
 }
 
 function generateToken(user: IUser) {
@@ -29,12 +30,21 @@ export const signupUser = async (req: Request, res: Response) => {
 
 export const loginUser = async (req: Request, res: Response) => {
     const { email, password } = req.body;
-    const ret = await User.findOne({ email, password })
+
+    const ret = await User.findOne({ email })
         .then(async (user: IUser) => {
             if (user) {
-                return res.status(200).json(generateToken(user));
+                const isMatch = user.comparePassword(password);
+                if (isMatch) {
+                    return res.status(200).json(generateToken(user));
+                }
+
+                return res.status(401).json({
+                    status: 'error',
+                    data: 'Incorrect password!',
+                });
             }
-            return res.status(401).json({ status: 'error', data: 'Email or password is incorrect' });
+            return res.status(401).json({ status: 'error', data: 'User not found. Please enter correct email.' });
         })
         .catch((err: Error) => res.status(500).json({ status: 'error', data: err.message }));
     return ret;

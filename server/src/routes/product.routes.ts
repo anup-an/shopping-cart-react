@@ -11,9 +11,9 @@ import {
 
 const router = Router();
 
-router.get('/', passport.authenticate('jwt', { session: false }), getProducts);
-router.post('/', createProducts);
-router.delete('/:id', deleteProducts);
+router.get('/', getProducts);
+router.post('/', passport.authenticate('jwt', { session: false }), createProducts);
+router.delete('/:id', passport.authenticate('jwt, {session: false}'), deleteProducts);
 router.get('/:id', getProductById);
 router.get('/search/:keywords', searchProducts);
 
