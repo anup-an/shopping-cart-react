@@ -10,7 +10,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-mongoose.connect('mongodb://localhost/shopping-cart-db', {
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/shopping-cart-db', {
     useNewUrlParser: true,
     useCreateIndex: true,
     useUnifiedTopology: true,

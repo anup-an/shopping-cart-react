@@ -17,7 +17,7 @@ const App = (): JSX.Element => {
                 <div className="fixed w-full z-10">
                     <Header />
                 </div>
-                <div className="mt-16">
+                <div className="mt-20">
                     <Routers />
                 </div>
             </div>
