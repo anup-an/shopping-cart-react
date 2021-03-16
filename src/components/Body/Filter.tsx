@@ -16,7 +16,7 @@ interface IProps {
 
 interface Actions {
     filterProducts: (size: string, sort: string, products: IProduct[]) => Promise<void>;
-    sortProducts: (sort: string, size:string, products: IProduct[]) => Promise<void>;
+    sortProducts: (sort: string, size: string, products: IProduct[]) => Promise<void>;
 }
 
 class Filter extends React.Component<IProps, IProduct> {
@@ -25,15 +25,13 @@ class Filter extends React.Component<IProps, IProduct> {
     }
 
     handlesort = (sort: string, size: string): void => {
-
         this.props.actions.sortProducts(sort, size, this.props.items);
-    }
+    };
 
-    handleFilter = (size:string, sort: string): void => {
+    handleFilter = (size: string, sort: string): void => {
         console.log(sort);
         this.props.actions.filterProducts(size, sort, this.props.items);
-    }
-
+    };
 
     render(): JSX.Element {
         const { sort, size, items, actions, filteredItems } = this.props;
@@ -97,8 +95,10 @@ const mapStateToProps = (state: AppState): StateProps => ({
 
 const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
     actions: {
-        filterProducts: (size: string, sort: string, products: IProduct[]) => dispatch(filterProducts(size, sort, products)),
-        sortProducts: (sort: string, size:string, products: IProduct[]) => dispatch(sortProducts(sort, size, products)),
+        filterProducts: (size: string, sort: string, products: IProduct[]) =>
+            dispatch(filterProducts(size, sort, products)),
+        sortProducts: (sort: string, size: string, products: IProduct[]) =>
+            dispatch(sortProducts(sort, size, products)),
     },
 });
 

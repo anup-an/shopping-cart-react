@@ -45,7 +45,7 @@ const productsReducer = (state = productsDefaultState, action: ProductsActionTyp
             return {
                 ...state,
                 filteredItems: action.payload.items,
-            }
+            };
         default:
             return state;
     }

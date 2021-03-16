@@ -65,11 +65,15 @@ export type SearchProductsAction = {
     type: typeof SEARCH_PRODUCTS;
     payload: {
         items: IProduct[];
-    }
-}
+    };
+};
 
 export type CartActionTypes = AddToCartAction | RemoveFromCartAction;
 
-export type ProductsActionTypes = FetchProductsAction | FilterProductsAction | SortProductsAction | SearchProductsAction;
+export type ProductsActionTypes =
+    | FetchProductsAction
+    | FilterProductsAction
+    | SortProductsAction
+    | SearchProductsAction;
 
 export type AppActions = ProductsActionTypes | CartActionTypes;

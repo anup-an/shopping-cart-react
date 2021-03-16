@@ -12,15 +12,14 @@ const App = (): JSX.Element => {
     return (
         <Provider store={store}>
             <BrowserRouter>
-
-            <div className="flex flex-col">
-                <div className="fixed w-full z-10">
-                    <Header />
+                <div className="flex flex-col">
+                    <div className="fixed w-full z-10">
+                        <Header />
+                    </div>
+                    <div className="mt-20">
+                        <Routers />
+                    </div>
                 </div>
-                <div className="mt-20">
-                    <Routers />
-                </div>
-            </div>
             </BrowserRouter>
         </Provider>
     );

@@ -8,7 +8,7 @@ interface IState {
 
 interface IProps {}
 
-class Login extends React.Component<IProps, IState> {
+class Register extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = { email: '', password: '' };
@@ -19,7 +19,7 @@ class Login extends React.Component<IProps, IState> {
     handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
         const { email, password } = this.state;
-        await axios.post('/api/login', { email, password }).then((response) => {
+        await axios.post('/api/register', { email, password }).then((response) => {
             console.log(response.data);
         });
     };
@@ -29,22 +29,78 @@ class Login extends React.Component<IProps, IState> {
                 <div className="bg-white border rounded-lg shadow-xl w-2/3 flex flex-row bg-blue-800">
                     <div className="h-96 w-1/2 text-white p-4 flex items-center justify-center flex-col">
                         <div className="text-2xl">Welcome to the E-Shop!</div>
-                        <div>Please log into your account to continue.</div>
+                        <div>Please fill up your details to register.</div>
                     </div>
-                    <div className="w-1/2 h-96 bg-white flex flex-col items-center justify-center space-y-12">
+                    <div className="w-1/2 h-96 bg-white flex flex-col items-center justify-center space-y-8">
                         <div className="flex flex-row items-center space-x-2">
-                            <div>If you are a new user, signup here</div>
+                            <div>Already registered, login to your account</div>
                             <button
                                 className="bg-blue-400 hover:bg-blue-800 p-1 text-white border rounded shadow text-sm focus:outline-none"
                                 type="button"
                             >
-                                Sign Up
+                                Login
                             </button>
                         </div>
-                        <div className="text-2xl text-blue-800 text-left">Login</div>
+                        <div className="text-2xl text-blue-800 text-left">Signup</div>
 
-                        <form onSubmit={this.handleLogin} className="flex flex-col space-y-4 w-2/3">
-                            <div>
+                        <form onSubmit={this.handleLogin} className="flex flex-col space-y-8 w-2/3">
+                            <div className="flex flex-col space-y-2">
+                                <label
+                                    className="flex flex-row w-full border-b items-end justify-between"
+                                    htmlFor="firstname"
+                                >
+                                    <input
+                                        className="focus:outline-none text-sm"
+                                        id="firstname"
+                                        name="firstname"
+                                        placeholder="First Name"
+                                        required
+                                        onChange={this.handleInput}
+                                    />
+                                    <svg
+                                        className="h-5 w-5 text-blue-400"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zm-4 7a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                        />
+                                    </svg>{' '}
+                                </label>
+
+                                <label
+                                    className="flex flex-row w-full border-b items-end justify-between"
+                                    htmlFor="lastname"
+                                >
+                                    <input
+                                        className="focus:outline-none text-sm"
+                                        id="firstname"
+                                        name="lastname"
+                                        placeholder="Last Name"
+                                        required
+                                        onChange={this.handleInput}
+                                    />
+                                    <svg
+                                        className="h-5 w-5 text-blue-400"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zm-4 7a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                        />
+                                    </svg>{' '}
+                                </label>
+
                                 <label
                                     className="flex flex-row w-full border-b items-end justify-between"
                                     htmlFor="email"
@@ -53,7 +109,7 @@ class Login extends React.Component<IProps, IState> {
                                         className="focus:outline-none text-sm"
                                         id="email"
                                         name="email"
-                                        placeholder="Type your e-mail"
+                                        placeholder="E-mail"
                                         required
                                         onChange={this.handleInput}
                                     />
@@ -72,8 +128,6 @@ class Login extends React.Component<IProps, IState> {
                                         />
                                     </svg>
                                 </label>
-                            </div>
-                            <div>
                                 <label
                                     htmlFor="password"
                                     className="flex flex-row w-full border-b items-end justify-between"
@@ -82,7 +136,7 @@ class Login extends React.Component<IProps, IState> {
                                         className="w-full focus:outline-none text-sm"
                                         id="password"
                                         name="password"
-                                        placeholder="Type your password"
+                                        placeholder="Password"
                                         required
                                         onChange={this.handleInput}
                                     />
@@ -102,23 +156,11 @@ class Login extends React.Component<IProps, IState> {
                                     </svg>
                                 </label>
                             </div>
-
-                            <button
-                                type="button"
-                                className="text-sm text-right text-blue-400 focus:outline-none hover:text-blue-800"
-                            >
-                                Forgot password ?
-                            </button>
                             <button
                                 className="w-full p-2 hover:bg-blue-800 bg-blue-400 border rounded text-white"
                                 type="submit"
                             >
-                                <div>Login</div>
-
-                                {/*                     <div className="animate-ping ease-in-out uration-100 bg-blue-800 w-full h-full">
-                        </div>
-
- */}
+                                <div>Signup</div>
                             </button>
                         </form>
                     </div>
@@ -128,4 +170,4 @@ class Login extends React.Component<IProps, IState> {
     }
 }
 
-export default Login;
+export default Register;

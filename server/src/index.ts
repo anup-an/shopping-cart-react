@@ -21,6 +21,10 @@ passport.use(strategy);
 app.get('/', (req, res) => res.send('This is the server homepage'));
 app.use(routes());
 
+/* if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('/build'));
+} */
+
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Listening to http://localhost:${port}`);

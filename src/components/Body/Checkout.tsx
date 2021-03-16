@@ -33,8 +33,8 @@ interface ICart {
     count?: number;
 }
 
-class Checkout extends React.Component<IProps,IState> {
-    constructor(props:IProps) {
+class Checkout extends React.Component<IProps, IState> {
+    constructor(props: IProps) {
         super(props);
         this.state = {
             name: '',
@@ -69,7 +69,7 @@ class Checkout extends React.Component<IProps,IState> {
 
     render(): JSX.Element {
         return (
-            <div className="mx-5 p-2">
+            <div className="mx-5 p-2 z-20">
                 <Fade>
                     <div className="text-2xl font-medium text-center text-blue-500">Checkout Form</div>
                     <div className="text-center text-sm mb-4">

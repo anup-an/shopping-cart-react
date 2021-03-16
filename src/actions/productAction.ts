@@ -1,7 +1,14 @@
 /* eslint-disable no-underscore-dangle */
 import axios from 'axios';
 import { Dispatch } from 'redux';
-import { FETCH_PRODUCTS, AppActions, FILTER_PRODUCTS_SIZE, SEARCH_PRODUCTS, IProduct, SORT_PRODUCTS_PRICE } from '../ActionTypes';
+import {
+    FETCH_PRODUCTS,
+    AppActions,
+    FILTER_PRODUCTS_SIZE,
+    SEARCH_PRODUCTS,
+    IProduct,
+    SORT_PRODUCTS_PRICE,
+} from '../ActionTypes';
 
 export const fetchProducts = () => async (dispatch: Dispatch<AppActions>): Promise<void> => {
     await axios.get('/api/products').then((response) => {
@@ -64,7 +71,6 @@ export const sortProducts = (sort: string, size: string, products: IProduct[] | 
         : '';
 };
 
-
 export const searchProducts = (keywords: string) => async (dispatch: Dispatch<AppActions>): Promise<void> => {
     axios.get(`/api/products/search/:${keywords}`).then((response) => {
         console.log(response.data);
@@ -72,8 +78,7 @@ export const searchProducts = (keywords: string) => async (dispatch: Dispatch<Ap
             type: SEARCH_PRODUCTS,
             payload: {
                 items: response.data.data,
-            }
-        })
-    } 
-    )
-}
+            },
+        });
+    });
+};
