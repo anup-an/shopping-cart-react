@@ -19,7 +19,7 @@ class Register extends React.Component<IProps, IState> {
     handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
         const { email, password } = this.state;
-        await axios.post('/api/register', { email, password }).then((response) => {
+        await axios.post('/api/signup', { email, password }).then((response) => {
             console.log(response.data);
         });
     };
@@ -157,7 +157,7 @@ class Register extends React.Component<IProps, IState> {
                                 </label>
                             </div>
                             <button
-                                className="w-full p-2 hover:bg-blue-800 bg-blue-400 border rounded text-white"
+                                className="w-full p-2 hover:bg-blue-800 bg-blue-400 border rounded text-white focus:outline-none"
                                 type="submit"
                             >
                                 <div>Signup</div>
