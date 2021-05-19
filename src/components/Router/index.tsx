@@ -10,6 +10,9 @@ const Routers = () => {
             <Route exact path="/">
                 <Body />
             </Route>
+            <Route path="/user">
+                <Body />
+            </Route>
             <Route path="/login">
                 <Login />
             </Route>

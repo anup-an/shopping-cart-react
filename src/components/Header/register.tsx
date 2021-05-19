@@ -1,5 +1,7 @@
 import axios from 'axios';
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 
 interface IState {
     email: string;
@@ -29,17 +31,16 @@ class Register extends React.Component<IProps, IState> {
                 <div className="bg-white border rounded-lg shadow-xl w-2/3 flex flex-row bg-blue-800">
                     <div className="h-96 w-1/2 text-white p-4 flex items-center justify-center flex-col">
                         <div className="text-2xl">Welcome to the E-Shop!</div>
-                        <div>Please fill up your details to register.</div>
+                        <div>Please fill up your details to create a new account.</div>
                     </div>
                     <div className="w-1/2 h-96 bg-white flex flex-col items-center justify-center space-y-8">
                         <div className="flex flex-row items-center space-x-2">
                             <div>Already registered, login to your account</div>
-                            <button
+                            <Link to="/login"
                                 className="bg-blue-400 hover:bg-blue-800 p-1 text-white border rounded shadow text-sm focus:outline-none"
-                                type="button"
                             >
                                 Login
-                            </button>
+                            </Link>
                         </div>
                         <div className="text-2xl text-blue-800 text-left">Signup</div>
 
