@@ -10,13 +10,19 @@ interface IUser {
     _id: string;
     email: string;
     password: string;
+    refreshToken: string;
 }
 
-function generateToken(user: IUser) {
-    return jwt.sign({ email: user.email }, 'Some_default_random_secret_token_here', {
-        expiresIn: 86400 * 7,
-    });
-}
+const generateToken = (user: IUser) => {
+    return {
+        accessToken: jwt.sign({ email: user.email }, 'Some_default_random_secret_token_here', {
+            expiresIn: 120,
+        }),
+        refreshToken: jwt.sign({ email: user.email }, 'Some_default_random_secret_token_here', {
+            expiresIn: 86400,
+        }),
+    };
+};
 
 export const signupUser = async (req: Request, res: Response) => {
     const { email, password } = req.body;
@@ -36,7 +42,12 @@ export const loginUser = async (req: Request, res: Response) => {
             if (user) {
                 const isMatch = await bcrypt.compare(password, user.password);
                 if (isMatch) {
-                    return res.status(200).json(generateToken(user));
+                    const token = generateToken(user);
+                    User.updateOne({ email: user.email }, { $set: { refreshToken: token.refreshToken } });
+                    return res
+                        .cookie('accessToken', token.accessToken, { secure: true, httpOnly: true })
+                        .status(200)
+                        .json({ status: 'success', data: user });
                 }
 
                 return res.status(401).json({
