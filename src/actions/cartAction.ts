@@ -5,7 +5,7 @@ import { ADD_PRODUCTS_CART, AppActions, ICart, IProduct, REMOVE_PRODUCTS_CART } 
 export const addToCart = (items: ICart[], product: IProduct) => async (
     dispatch: Dispatch<AppActions>,
 ): Promise<void> => {
-    const cartItems = items.slice();
+    const cartItems = [...items];
     if (cartItems.length === 0) {
         cartItems.unshift({ ...product, count: 1 });
     } else if (cartItems.length !== 0) {
@@ -28,7 +28,7 @@ export const addToCart = (items: ICart[], product: IProduct) => async (
 export const removeFromCart = (items: ICart[], item: ICart) => async (
     dispatch: Dispatch<AppActions>,
 ): Promise<void> => {
-    const cartItems = [...items].slice().filter((element) => element._id !== item._id);
+    const cartItems = [...items].filter((element) => element._id !== item._id);
 
     dispatch({
         type: REMOVE_PRODUCTS_CART,

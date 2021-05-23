@@ -101,17 +101,6 @@ class Header extends React.Component<IProps, IState> {
                         </svg>
                     </Link>
                 </div>
-
-                {/* <Modal 
-            overlayClassName="fixed inset-0 flex z-10 bg-blue-800 bg-opacity-75 items-center justify-center"
-            className="relative bg-white w-1/2 h-1/2 border rounded-lg focus:outline-none p-2"
-            isOpen={this.state.isOpen} onRequestClose={this.closeModal}>
-                <button onClick={this.closeModal}>
-
-                <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-                </button>
-                <Login />
-            </Modal> */}
             </div>
         );
     }

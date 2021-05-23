@@ -1,40 +1,45 @@
 import axios from 'axios';
 import React from 'react';
+import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
-
+import { logInUser } from '../../actions/userAction';
+import { IUser, IProduct } from '../../ActionTypes';
+import { AppState } from '../../store';
 
 interface IState {
     email: string;
     password: string;
-    token: string;
-    isLoggedIn: boolean;
 }
 
-interface IProps {}
+interface IProps {
+    actions: Actions;
+    user: IUser | null;
+}
+
+interface Actions {
+    logInUser: (email: string, password: string) => Promise<void>;
+}
 
 class Login extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
-        this.state = { email: '', password: '', token: '', isLoggedIn: false };
+        this.state = { email: '', password: '' };
     }
     handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState((state) => ({ ...state, [event.target.name]: event.target.value }));
     };
     handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
-        const { email, password } = this.state;
-
-        await axios.post('/api/login', { email, password }).then((response) => {
-            console.log(response.data);
-            this.setState({...this.state, isLoggedIn: response.data.status === 'success' ? true : false});
-        });
-        console.log(this.state.isLoggedIn);
+        this.props.actions.logInUser(this.state.email, this.state.password);
     };
-    render() {
+    render(): JSX.Element {
+        const { email, password } = this.state;
+        const { user } = this.props;
+
         return (
             <div>
-                {!this.state.isLoggedIn ?
+                {!user ?
                     <div className="flex flex-row flex items-center justify-center h-full mt-28">
                         <div className="bg-white border rounded-lg shadow-xl w-2/3 flex flex-row bg-blue-800">
                             <div className="h-96 w-1/2 text-white p-4 flex items-center justify-center flex-col">
@@ -141,4 +146,19 @@ class Login extends React.Component<IProps, IState> {
     }
 }
 
-export default Login;
+interface StateProps {
+    user: IUser | null;
+}
+
+const mapStateToProps = (state: AppState): StateProps => ({
+    user: state.user.user,
+});
+
+const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
+    actions: {
+        logInUser: (email: string, password: string) => dispatch(logInUser(email,password))
+    },
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -4,6 +4,12 @@ export const SORT_PRODUCTS_PRICE = 'SORT_PRODUCTS_PRICE';
 export const ADD_PRODUCTS_CART = 'ADD_PRODUCTS_CART';
 export const REMOVE_PRODUCTS_CART = 'REMOVE_PRODUCTS_CART';
 export const SEARCH_PRODUCTS = 'SEARCH_PRODUCTS';
+export const EDIT_PROFILE_USER = 'EDIT_PROFILE_USER';
+export const ADD_TO_CART_USER = 'ADD_TO_CART_USER';
+export const REMOVE_FROM_CART_USER = 'REMOVE_FROM_CART_USER';
+export const ADD_TO_WISHLIST_USER = 'ADD_TO_WISHLIST_USER';
+export const LOG_IN_USER = 'LOG_IN_USER';
+
 
 export type ICart = {
     _id: string;
@@ -23,6 +29,20 @@ export type IProduct = {
     price: number;
     availableSizes: string[];
 };
+
+export type IUser = {
+    _id: string;
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
+    city: string;
+    country: string;
+    refreshToken: string;
+    wishList: IProduct[];
+    cart: ICart[];
+}
 
 export type AddToCartAction = {
     type: typeof ADD_PRODUCTS_CART;
@@ -68,6 +88,41 @@ export type SearchProductsAction = {
     };
 };
 
+export type EditProfileUserAction = {
+    type: typeof EDIT_PROFILE_USER;
+    payload: {
+        user: IUser;
+    }
+}
+
+export type AddToCartUserAction = {
+    type: typeof ADD_TO_CART_USER;
+    payload: {
+        user: IUser;
+    }
+}
+
+export type RemoveFromCartUserAction = {
+    type: typeof REMOVE_FROM_CART_USER;
+    payload: {
+        user: IUser;
+    }
+}
+
+export type AddToWishlistUserAction = {
+    type: typeof ADD_TO_WISHLIST_USER;
+    payload: {
+        user: IUser;
+    }
+}
+
+export type LogInUserAction = {
+    type: typeof LOG_IN_USER;
+    payload: {
+        user: IUser;
+    }
+}
+
 export type CartActionTypes = AddToCartAction | RemoveFromCartAction;
 
 export type ProductsActionTypes =
@@ -76,4 +131,6 @@ export type ProductsActionTypes =
     | SortProductsAction
     | SearchProductsAction;
 
-export type AppActions = ProductsActionTypes | CartActionTypes;
+export type UserActionTypes = EditProfileUserAction | AddToCartUserAction | AddToWishlistUserAction | RemoveFromCartUserAction | LogInUserAction;
+
+export type AppActions = ProductsActionTypes | CartActionTypes | UserActionTypes;

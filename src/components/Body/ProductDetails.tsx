@@ -2,6 +2,8 @@ import { connect } from 'react-redux';
 import React from 'react';
 import { addToCart } from '../../actions/cartAction';
 import { AppState } from '../../store';
+import { IUser } from '../../ActionTypes';
+import { addToUserCart } from '../../actions/userAction';
 
 interface IProduct {
     _id: string;
@@ -27,10 +29,12 @@ interface IProps {
     product: IProduct | null;
     cartItems: ICart[];
     action: Action;
+    user: IUser | null;
 }
 
 interface Action {
-    addToCart: (cartItems: ICart[], product: IProduct) => Promise<void>
+    addToCart: (cartItems: ICart[], product: IProduct) => Promise<void>;
+    addToUserCart: (user: IUser, product: IProduct) => Promise<void>;
 }
 
 class ProductDetails extends React.Component<IProps> {
@@ -42,10 +46,11 @@ class ProductDetails extends React.Component<IProps> {
 
     }
     render(): JSX.Element{
-    const {product} = this.props;
+    const {product, user} = this.props;
 
     return (
         <div>
+            {console.log(user)}
             {product ? (
                 <div className="flex flex-row space-x-10 items-center">
                     <img className="w-1/3 h-auto" src={`${product?.image}`} loading="eager" alt={`${product?.title}`} />
@@ -84,16 +89,18 @@ class ProductDetails extends React.Component<IProps> {
 
 interface StateProps {
     cartItems: ICart[];
+    user: IUser | null;
 }
 
 const mapStateToProps = (state: AppState): StateProps => ({
-    cartItems: state.cartProducts.cartItems
-
+    cartItems: state.cartProducts.cartItems,
+    user: state.user.user,
 });
 
 const mapDispatchToProps = (dispatch: any): {action: Action} => ({
     action: {
         addToCart: (cartItems: ICart[], product: IProduct) => dispatch(addToCart(cartItems, product)),
+        addToUserCart: (user: IUser, product: IProduct) => dispatch(addToUserCart(user,product))
     }
 })
 

@@ -5,13 +5,18 @@ export interface IUser {
     _id: string;
     email: string;
     password: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
+    city: string;
+    country: string;
     refreshToken: string;
     wishList: IProduct[];
     cart: ICart[];
 }
 
 interface IProduct {
-    id: string;
+    _id: string;
     title: string;
     image: string;
     description: string;
@@ -20,7 +25,7 @@ interface IProduct {
 }
 
 interface ICart {
-    id: string;
+    _id: string;
     title: string;
     image: string;
     description: string;
