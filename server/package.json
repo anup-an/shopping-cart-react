@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "watch": "nodemon"
+        "watch": "nodemon",
+        "start": "ts-node -r dotenv/config src/index.ts"
     },
     "keywords": [],
     "author": "",

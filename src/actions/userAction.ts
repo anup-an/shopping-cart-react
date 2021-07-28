@@ -2,6 +2,16 @@ import { Dispatch } from 'redux';
 import axios from 'axios';
 import { EDIT_PROFILE_USER, LOG_IN_USER, ADD_TO_CART_USER, ADD_TO_WISHLIST_USER, IUser, IProduct, AppActions, REMOVE_FROM_CART_USER } from '../ActionTypes';
 
+export type ICart = {
+    _id: string;
+    title: string;
+    image: string;
+    description: string;
+    price: number;
+    availableSizes: string[];
+    count?: number;
+};
+
 export const logInUser = (email: string, password: string) => async (
     dispatch: Dispatch<AppActions>): Promise<void> => {
     
@@ -39,10 +49,10 @@ export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (
         })
     }
 
-export const removeFromUserCart = (loggedUser: IUser, product: IProduct) => async (
+export const removeFromUserCart = (loggedUser: IUser, cart: ICart) => async (
     dispatch: Dispatch<AppActions>) => {
-    const cartItems = [...loggedUser.cart].filter((element) => element._id !== product._id);
-    loggedUser.cart = [...cartItems];
+    const cartItems = loggedUser ? [...loggedUser.cart].filter((element) => element._id !== cart._id): [];
+    loggedUser ? loggedUser.cart = [...cartItems]: '';
     dispatch({
         type: REMOVE_FROM_CART_USER,
         payload: {

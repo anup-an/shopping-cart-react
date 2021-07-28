@@ -1,10 +1,22 @@
 import { EDIT_PROFILE_USER, ADD_TO_CART_USER, REMOVE_FROM_CART_USER, ADD_TO_WISHLIST_USER, IUser, UserActionTypes, LOG_IN_USER } from '../ActionTypes';
 type IUserActionStates = {
-    user: IUser | null;
+    user: IUser;
 };
 
 const userDefaultState: IUserActionStates = {   
-    user: null
+    user : {
+    "_id": '',
+    "email": '',
+    "password": '',
+    "firstName": '',
+    "lastName": '',
+    "phone": '',
+    "city": '',
+    "country": '',
+    "refreshToken": '',
+    "wishList": [],
+    "cart": [],
+}
 }
 
 const userReducer = (state = userDefaultState, action: UserActionTypes): IUserActionStates => {
