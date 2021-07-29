@@ -14,7 +14,7 @@ interface IState {
 
 interface IProps {
     actions: Actions;
-    user: IUser | null;
+    user: IUser;
 }
 
 interface Actions {

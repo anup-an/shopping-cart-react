@@ -1,6 +1,12 @@
 import axios from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router';
+import { logInUser } from '../../actions/userAction';
+import { IUser, IProduct } from '../../ActionTypes';
+import { AppState } from '../../store';
+
+
 
 
 interface IState {
@@ -8,7 +14,15 @@ interface IState {
     password: string;
 }
 
-interface IProps {}
+interface IProps {
+    actions: Actions;
+    user: IUser;
+}
+
+interface Actions {
+    logInUser: (email: string, password: string) => Promise<void>;
+}
+
 
 class Register extends React.Component<IProps, IState> {
     constructor(props: IProps) {
@@ -18,17 +32,19 @@ class Register extends React.Component<IProps, IState> {
     handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState((state) => ({ ...state, [event.target.name]: event.target.value }));
     };
-    handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
-        const { email, password } = this.state;
         await axios.post('https://shopping-cart-app-react.herokuapp.com/api/signup', { email, password }).then((response) => {
-            console.log(response.data);
+            response.data.status == "success" ? this.props.actions.logInUser(this.state.email, this.state.password) : '';
         });
     };
     render() {
+        const { email, password } = this.state;
+        const { user } = this.props;
+
         return (
             <div className="flex flex-row flex items-center justify-center h-full mt-28">
-                <div className="bg-white border rounded-lg shadow-xl w-2/3 flex flex-row bg-blue-800">
+                {user?._id == "" ? <div className="bg-white border rounded-lg shadow-xl w-2/3 flex flex-row bg-blue-800">
                     <div className="h-96 w-1/2 text-white p-4 flex items-center justify-center flex-col">
                         <div className="text-2xl">Welcome to the E-Shop!</div>
                         <div>Please fill up your details to create a new account.</div>
@@ -44,7 +60,7 @@ class Register extends React.Component<IProps, IState> {
                         </div>
                         <div className="text-2xl text-blue-800 text-left">Signup</div>
 
-                        <form onSubmit={this.handleLogin} className="flex flex-col space-y-8 w-2/3">
+                        <form onSubmit={this.handleRegister} className="flex flex-col space-y-8 w-2/3">
                             <div className="flex flex-col space-y-2">
                                 <label
                                     className="flex flex-row w-full border-b items-end justify-between"
@@ -165,10 +181,26 @@ class Register extends React.Component<IProps, IState> {
                             </button>
                         </form>
                     </div>
-                </div>
+                </div> : <div>
+                    <Redirect to="/user" />
+                </div>}
             </div>
         );
     }
 }
+interface StateProps {
+    user: IUser;
+}
 
-export default Register;
+const mapStateToProps = (state: AppState): StateProps => ({
+    user: state.user.user,
+});
+
+const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
+    actions: {
+        logInUser: (email: string, password: string) => dispatch(logInUser(email,password))
+    },
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
