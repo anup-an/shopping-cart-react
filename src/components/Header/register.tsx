@@ -21,7 +21,7 @@ class Register extends React.Component<IProps, IState> {
     handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
         const { email, password } = this.state;
-        await axios.post('/api/signup', { email, password }).then((response) => {
+        await axios.post('https://shopping-cart-app-react.herokuapp.com/api/signup', { email, password }).then((response) => {
             console.log(response.data);
         });
     };

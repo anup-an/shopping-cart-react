@@ -13,20 +13,20 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/shopping-cart-db', {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-});
+mongoose.connect(
+    'mongodb+srv://anup-an:IvNT46LZr37Vz0IN@cluster0.f4upd.mongodb.net/shopping-cart-db?retryWrites=true&w=majority',
+    {
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useUnifiedTopology: true,
+    },
+);
 
 app.use(passport.initialize());
 passport.use(strategy);
 app.get('/', (req, res) => res.send('This is the server homepage'));
 app.use(routes());
 
-/* if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('/build'));
-} */
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
     console.log(`Listening to http://localhost:${port}`);

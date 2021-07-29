@@ -15,7 +15,7 @@ export type ICart = {
 export const logInUser = (email: string, password: string) => async (
     dispatch: Dispatch<AppActions>): Promise<void> => {
     
-    const loggedUser: IUser = await (await axios.post('/api/login', { email, password })).data.data;
+    const loggedUser: IUser = await (await axios.post('https://shopping-cart-app-react.herokuapp.com/api/login', { email, password })).data.data;
     console.log(loggedUser);
     dispatch({
         type: LOG_IN_USER,
