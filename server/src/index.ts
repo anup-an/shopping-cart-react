@@ -3,6 +3,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import passport from 'passport';
+import cors from 'cors';
 import routes from './routes';
 import strategy from './middlewares/passport';
 
@@ -10,6 +11,7 @@ import strategy from './middlewares/passport';
 require('dotenv').config();
 
 const app = express();
+app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
