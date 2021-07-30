@@ -2,6 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
+import { connect } from 'react-redux';
 import { logInUser } from '../../actions/userAction';
 import { IUser, IProduct } from '../../ActionTypes';
 import { AppState } from '../../store';
@@ -34,6 +35,7 @@ class Register extends React.Component<IProps, IState> {
     };
     handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
+        const { email, password } = this.state;
         await axios.post('https://shopping-cart-app-react.herokuapp.com/api/signup', { email, password }).then((response) => {
             response.data.status == "success" ? this.props.actions.logInUser(this.state.email, this.state.password) : '';
         });
