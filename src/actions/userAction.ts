@@ -26,6 +26,32 @@ export const logInUser = (email: string, password: string) => async (
     
 }
 
+export const logOutUser = () => async(dispatch: Dispatch<AppActions>): Promise<void>) => {
+    const status: string = await axios.post('https://shopping-cart-app-react.herokuapp.com/api/logout').data.status;
+    if (status == "error") {
+        const loggedUser: IUser = {
+            "_id": '',
+            "email": '',
+            "password": '',
+            "firstName": '',
+            "lastName": '',
+            "phone": '',
+            "city": '',
+            "country": '',
+            "refreshToken": '',
+            "wishList": [],
+            "cart": [],
+        }
+        dispatch({
+            type: LOG_IN_USER,
+            payload: {
+                user: loggedUser
+            }
+        })
+    }
+    
+}
+
 export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (
     dispatch: Dispatch<AppActions>): Promise<void> => {
     const cartItems = [...loggedUser.cart];

@@ -8,10 +8,11 @@ import Login from './login';
 import Body from '../Body';
 import { IUser, IProduct } from '../../ActionTypes';
 import { AppState } from '../../store';
-
+import { logOutUser } from '../../actions/userAction';
 
 type Actions = {
     searchProducts: (keywords: string) => Promise<void>;
+    logOutUser: () => Promise<void>;
 };
 
 type IProps = {
@@ -45,6 +46,10 @@ class Header extends React.Component<IProps, IState> {
         event.preventDefault();
         this.props.actions.searchProducts(this.state.keywords);
     };
+    handleLogOut = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        this.props.actions.logOutUser();
+    }
     render() {
         const { keywords } = this.state;
         const { user } = this.props;
@@ -90,7 +95,8 @@ class Header extends React.Component<IProps, IState> {
                     {user._id == "" ?
                         <Link to="/register" className="border border-blue-800 focus:border-white p-2">
                             Register
-                        </Link> : <div className="border border-blue-800 focus:border-white p-2">Logout</div>}
+                        </Link> : <button onClick={this.handleLogOut} type="button"
+                            className="border border-blue-800 focus:border-white p-2">Logout</button>}
                     <Link to="/cart" className="border border-blue-800 focus:border-white p-2">
                         <svg
                             className="focus:outline-none h-6 w-6 text-white"
@@ -125,6 +131,7 @@ const mapStateToProps = (state: AppState): StateProps => ({
 const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
     actions: {
         searchProducts: (keywords: string) => dispatch(searchProducts(keywords)),
+        logOutUser: () => dispatch(logOutUser()),
     },
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
