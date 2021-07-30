@@ -6,6 +6,9 @@ import { connect } from 'react-redux';
 import { searchProducts } from '../../actions/productAction';
 import Login from './login';
 import Body from '../Body';
+import { IUser, IProduct } from '../../ActionTypes';
+import { AppState } from '../../store';
+
 
 type Actions = {
     searchProducts: (keywords: string) => Promise<void>;
@@ -13,6 +16,7 @@ type Actions = {
 
 type IProps = {
     actions: Actions;
+    user: IUser;
 };
 
 type IState = {
@@ -43,6 +47,7 @@ class Header extends React.Component<IProps, IState> {
     };
     render() {
         const { keywords } = this.state;
+        const { user } = this.props;
         return (
             <div className="flex flex-row bg-blue-800 text-white text-xl justify-between p-4 items-center">
                 <Link to="/" className="border border-blue-800 focus:border-white p-2">
@@ -78,12 +83,14 @@ class Header extends React.Component<IProps, IState> {
                     </label>
                 </form>
                 <div className="flex flex-row justify-between items-center gap-x-10">
-                    <Link to="/login" className="border border-blue-800 focus:border-white p-2">
-                        Login
-                    </Link>
-                    <Link to="/register" className="border border-blue-800 focus:border-white p-2">
-                        Register
-                    </Link>
+                    {user._id != "" ?
+                        <Link to="/login" className="border border-blue-800 focus:border-white p-2">
+                            Login
+                        </Link> : `Welcome ${user.firstName}`}
+                    {user._id != "" ?
+                        <Link to="/login" className="border border-blue-800 focus:border-white p-2">
+                            Register
+                        </Link> : ''}
                     <Link to="/cart" className="border border-blue-800 focus:border-white p-2">
                         <svg
                             className="focus:outline-none h-6 w-6 text-white"
@@ -106,9 +113,18 @@ class Header extends React.Component<IProps, IState> {
     }
 }
 
+interface StateProps {
+    user: IUser;
+}
+
+const mapStateToProps = (state: AppState): StateProps => ({
+    user: state.user.user,
+});
+
+
 const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
     actions: {
         searchProducts: (keywords: string) => dispatch(searchProducts(keywords)),
     },
 });
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
