@@ -13,6 +13,8 @@ import { AppState } from '../../store';
 interface IState {
     email: string;
     password: string;
+    firstName: string;
+    lastName: string;
 }
 
 interface IProps {
@@ -28,20 +30,20 @@ interface Actions {
 class Register extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
-        this.state = { email: '', password: '' };
+        this.state = { email: '', password: '', firstName: '', lastName: ''};
     }
     handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState((state) => ({ ...state, [event.target.name]: event.target.value }));
     };
     handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
-        const { email, password } = this.state;
-        await axios.post('https://shopping-cart-app-react.herokuapp.com/api/signup', { email, password }).then((response) => {
+        const { email, password, firstName, lastName } = this.state;
+        await axios.post('https://shopping-cart-app-react.herokuapp.com/api/signup', { email, password, firstName, lastName }).then((response) => {
             response.data.status == "success" ? this.props.actions.logInUser(this.state.email, this.state.password) : '';
         });
     };
     render() {
-        const { email, password } = this.state;
+        const { email, password, firstName, lastName } = this.state;
         const { user } = this.props;
 
         return (
