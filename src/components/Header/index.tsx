@@ -83,11 +83,11 @@ class Header extends React.Component<IProps, IState> {
                     </label>
                 </form>
                 <div className="flex flex-row justify-between items-center gap-x-10">
-                    {user._id != "" ?
+                    {user._id == "" ?
                         <Link to="/login" className="border border-blue-800 focus:border-white p-2">
                             Login
                         </Link> : `Welcome ${user.firstName}`}
-                    {user._id != "" ?
+                    {user._id == "" ?
                         <Link to="/login" className="border border-blue-800 focus:border-white p-2">
                             Register
                         </Link> : ''}
