@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable consistent-return */
 import jwt from 'jsonwebtoken';
@@ -25,12 +26,12 @@ const generateToken = (user: IUser) => {
 };
 
 export const signupUser = async (req: Request, res: Response) => {
-    const { email, password } = req.body;
+    const { email, password, firstName, lastName } = req.body;
     const foundUser = await User.findOne({ email });
     if (foundUser) {
         return res.status(500).json({ status: 'error', data: 'Email already in use' });
     }
-    await new User({ email, password }).save();
+    await new User({ email, password, firstName, lastName }).save();
     res.status(200).json({ status: 'success', data: 'Signup successful!' });
 };
 
@@ -62,6 +63,22 @@ export const loginUser = async (req: Request, res: Response) => {
 };
 
 export const logoutUser = async (req: Request, res: Response) => {
-    req.logout();
-    return res.status(200).json({ status: 'error', data: 'Successfully logged out!' });
+    res.clearCookie('accessToken');
+    res.send('You are in logout route');
+    return res.status(200).json({ status: 'success', data: 'Successfully logged out!' });
+};
+
+export const reIssueTokens = async (req: Request, res: Response) => {
+    console.log(req.user);
+    console.log(res);
+    /* const { user } = req;
+    console.log(user);
+    const refToken: string = await User.findOne(user).refreshToken;
+    try {
+        jwt.verify(refToken, 'Some_default_random_secret_token_here');
+        const newToken: string = jwt.sign(req.user, 'Some_default_random_secret_token_here', { expiresIn: 120 });
+        res.cookie('accessToken', newToken, { secure: true, httpOnly: true }).send();
+    } catch (error) {
+        return res.status(401).send();
+    } */
 };

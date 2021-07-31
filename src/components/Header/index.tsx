@@ -46,9 +46,10 @@ class Header extends React.Component<IProps, IState> {
         event.preventDefault();
         this.props.actions.searchProducts(this.state.keywords);
     };
-    handleLogOut = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
+    handleLogOut = () => {
+        const { user } = this.props;
         this.props.actions.logOutUser();
+        console.log(user)
     }
     render() {
         const { keywords } = this.state;

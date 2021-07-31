@@ -26,9 +26,10 @@ export const logInUser = (email: string, password: string) => async (
     
 }
 
-export const logOutUser = () => async(dispatch: Dispatch<AppActions>): Promise<void>) => {
-    const status: string = await axios.post('https://shopping-cart-app-react.herokuapp.com/api/logout').data.status;
-    if (status == "error") {
+export const logOutUser = () => async(dispatch: Dispatch<AppActions>): Promise<void> => {
+    const status: string = await (await axios.post('https://shopping-cart-app-react.herokuapp.com/api/logout')).data.status;
+    console.log(status);
+    if (status == "success") {
         const loggedUser: IUser = {
             "_id": '',
             "email": '',
