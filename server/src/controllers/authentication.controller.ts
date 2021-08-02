@@ -75,11 +75,12 @@ export const reIssueTokens = async (req: Request, res: Response) => {
     const { user } = req;
     console.log(user);
     const refToken: string = await User.findOne(user).refreshToken;
-    try {
+    res.send(`Reissue token ${refToken}`);
+    /* try {
         jwt.verify(refToken, 'Some_default_random_secret_token_here');
         const newToken: string = jwt.sign(req.user, 'Some_default_random_secret_token_here', { expiresIn: 120 });
         res.cookie('accessToken', newToken, { secure: true, httpOnly: true }).send();
     } catch (error) {
         return res.status(401).send();
-    }
+    } */
 };
