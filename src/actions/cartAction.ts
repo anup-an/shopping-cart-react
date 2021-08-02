@@ -19,7 +19,7 @@ export const addToCart = (items: ICart[], product: IProduct) => async (
     dispatch({
         type: ADD_PRODUCTS_CART,
         payload: {
-            items: cartItems,
+            items: [...cartItems],
         },
     });
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
@@ -33,7 +33,7 @@ export const removeFromCart = (items: ICart[], item: ICart) => async (
     dispatch({
         type: REMOVE_PRODUCTS_CART,
         payload: {
-            items: cartItems,
+            items: [...cartItems],
         },
     });
     localStorage.setItem('cartItems', JSON.stringify(cartItems));

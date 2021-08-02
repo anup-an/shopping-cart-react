@@ -1,15 +1,12 @@
 import React from 'react';
 import { Slide } from 'react-awesome-reveal';
-import Modal from 'react-modal';
 import { connect } from 'react-redux';
 import { removeFromCart } from '../../actions/cartAction';
 import { removeFromUserCart } from '../../actions/userAction';
 import { AppState } from '../../store';
-import Checkout from './Checkout'
 import ViewCart from './ViewCart';
+import CartSum from './CartSum';
 import { IProduct, IUser } from '../../ActionTypes';
-
-Modal.setAppElement('#root');
 
 type ICart = {
     _id: string;
@@ -58,8 +55,16 @@ class Cart extends React.Component<IProps, IState> {
         const { isOpen } = this.state;
         return (
             <div>
-                {user ? <ViewCart handleRemoveFromCart={this.handleRemoveFromCart} cartItems={user.cart} /> :
-                    <ViewCart handleRemoveFromCart={this.handleRemoveFromCart} cartItems={cartItems} />}
+                {user._id != '' ?
+                    <div>
+                        <ViewCart handleRemoveFromCart={this.handleRemoveFromCart} cartItems={user.cart} />
+                        <CartSum cartItems={user.cart} />
+                    </div> :
+                    <div>
+                        <ViewCart handleRemoveFromCart={this.handleRemoveFromCart} cartItems={cartItems} />
+                        <CartSum cartItems={cartItems} />
+                    </div>
+                }
             </div>
             
         );

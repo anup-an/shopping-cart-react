@@ -17,10 +17,8 @@ const verifyUser = (req: Request, res: Response, next: NextFunction) => {
     }
     try {
         payload = jwt.verify(accessToken, 'Some_default_random_secret_token_here');
-        console.log(payload);
         const user = User.findOne({ payload });
         req.user = user;
-        console.log(req);
         next();
     } catch (error) {
         return res.status(401).send();

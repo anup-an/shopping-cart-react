@@ -62,6 +62,7 @@ export type FetchProductsAction = {
     type: typeof FETCH_PRODUCTS;
     payload: {
         items: IProduct[];
+        isLoading: boolean;
     };
 };
 

@@ -13,9 +13,9 @@ const cartDefaultState: ICartActionStates = {
 const cartReducer = (state = cartDefaultState, action: CartActionTypes): ICartActionStates => {
     switch (action.type) {
         case ADD_PRODUCTS_CART:
-            return { ...state, cartItems: action.payload.items };
+            return { ...state, cartItems: [ ...action.payload.items ] };
         case REMOVE_PRODUCTS_CART:
-            return { ...state, cartItems: action.payload.items };
+            return { ...state, cartItems: [ ...action.payload.items ] };
         default:
             return { ...state };
     }

@@ -99,6 +99,7 @@ class Login extends React.Component<IProps, IState> {
                                                 placeholder="Type your password"
                                                 required
                                                 onChange={this.handleInput}
+                                                type="password"
                                             />
                                             <svg
                                                 className="h-6 w-6 text-blue-400"

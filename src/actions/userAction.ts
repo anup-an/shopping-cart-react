@@ -1,6 +1,7 @@
 import { Dispatch } from 'redux';
 import axios from 'axios';
 import { EDIT_PROFILE_USER, LOG_IN_USER, ADD_TO_CART_USER, ADD_TO_WISHLIST_USER, IUser, IProduct, AppActions, REMOVE_FROM_CART_USER } from '../ActionTypes';
+axios.defaults.withCredentials = true;
 
 export type ICart = {
     _id: string;
@@ -15,8 +16,8 @@ export type ICart = {
 export const logInUser = (email: string, password: string) => async (
     dispatch: Dispatch<AppActions>): Promise<void> => {
     
-    const loggedUser: IUser = await (await axios.post('https://shopping-cart-app-react.herokuapp.com/api/login', { email, password })).data.data;
-    console.log(loggedUser);
+    const loggedUser: IUser = await (await axios.post(
+        'https://shopping-cart-app-react.herokuapp.com/api/login', { email, password }, { withCredentials: true })).data.data;
     dispatch({
         type: LOG_IN_USER,
         payload: {
@@ -28,7 +29,6 @@ export const logInUser = (email: string, password: string) => async (
 
 export const logOutUser = () => async(dispatch: Dispatch<AppActions>): Promise<void> => {
     const status: string = await (await axios.post('https://shopping-cart-app-react.herokuapp.com/api/logout')).data.status;
-    console.log(status);
     if (status == "success") {
         const loggedUser: IUser = {
             "_id": '',
@@ -66,8 +66,7 @@ export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (
             cartItems.unshift({ ...product, count: 1 });
         }
     }
-    loggedUser.cart = [...cartItems];
-    console.log(loggedUser);
+    loggedUser = {...loggedUser, cart: [...cartItems]};
         dispatch({
             type: ADD_TO_CART_USER,
             payload: {
@@ -79,7 +78,7 @@ export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (
 export const removeFromUserCart = (loggedUser: IUser, cart: ICart) => async (
     dispatch: Dispatch<AppActions>) => {
     const cartItems = loggedUser ? [...loggedUser.cart].filter((element) => element._id !== cart._id): [];
-    loggedUser ? loggedUser.cart = [...cartItems]: '';
+    loggedUser = {...loggedUser, cart: [...cartItems]};
     dispatch({
         type: REMOVE_FROM_CART_USER,
         payload: {

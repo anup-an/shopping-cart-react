@@ -14,6 +14,7 @@ export type ActionStates = {
     sortedItems: IProduct[];
     filteredItems: IProduct[];
     size: string;
+    isLoading: boolean;
 };
 const productsDefaultState: ActionStates = {
     items: [],
@@ -21,13 +22,16 @@ const productsDefaultState: ActionStates = {
     size: 'ALL',
     sortedItems: [],
     filteredItems: [],
+    isLoading: true,
 };
 
 const productsReducer = (state = productsDefaultState, action: ProductsActionTypes): ActionStates => {
-    console.log(action.type);
     switch (action.type) {
         case FETCH_PRODUCTS:
-            return { ...state, items: action.payload.items, filteredItems: action.payload.items };
+            return {
+                ...state, items: action.payload.items, filteredItems: action.payload.items,
+                isLoading: action.payload.isLoading,
+            };
         case SORT_PRODUCTS_PRICE:
             return {
                 ...state,

@@ -46,7 +46,11 @@ export const loginUser = async (req: Request, res: Response) => {
                     const token = generateToken(user);
                     User.updateOne({ email: user.email }, { $set: { refreshToken: token.refreshToken } });
                     return res
-                        .cookie('accessToken', token.accessToken, { secure: true, httpOnly: true })
+                        .cookie('accessToken', token.accessToken, {
+                            secure: true,
+                            httpOnly: true,
+                            sameSite: 'none',
+                        })
                         .status(200)
                         .json({ status: 'success', data: user });
                 }
@@ -64,14 +68,11 @@ export const loginUser = async (req: Request, res: Response) => {
 
 export const logoutUser = async (req: Request, res: Response) => {
     res.clearCookie('accessToken');
-    res.send('You are in logout route');
     return res.status(200).json({ status: 'success', data: 'Successfully logged out!' });
 };
 
 export const reIssueTokens = async (req: Request, res: Response) => {
-    console.log(req.user);
-    console.log(res);
-    /* const { user } = req;
+    const { user } = req;
     console.log(user);
     const refToken: string = await User.findOne(user).refreshToken;
     try {
@@ -80,5 +81,5 @@ export const reIssueTokens = async (req: Request, res: Response) => {
         res.cookie('accessToken', newToken, { secure: true, httpOnly: true }).send();
     } catch (error) {
         return res.status(401).send();
-    } */
+    }
 };

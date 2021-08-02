@@ -25,11 +25,10 @@ type IProps = {
     cartItems: ICart[];
     filteredItems: IProduct[];
     actions: Actions;
-    user: IUser | null;
+    user: IUser;
 };
 
 type Actions = {
-    fetchProducts: () => Promise<void>;
     addToCart: (cartItems: ICart[], product: IProduct) => Promise<void>;
     addToUserCart: (user: IUser, product: IProduct) => Promise<void>;
 };
@@ -43,11 +42,6 @@ class Products extends React.Component<IProps, IState> {
         this.state = { isOpen: false, modalProduct: null };
     }
 
-    componentDidMount() {
-        console.log('List of products');
-        this.props.actions.fetchProducts();
-    }
-
     closeModal = (): void => {
         this.setState({ isOpen: false });
     };
@@ -57,7 +51,7 @@ class Products extends React.Component<IProps, IState> {
     };
 
     handleAddToCart = (product: IProduct) => {
-        this.props.user ? this.props.actions.addToUserCart(this.props.user, product) : this.props.actions.addToCart(this.props.cartItems, product);
+        this.props.user._id != '' ? this.props.actions.addToUserCart(this.props.user, product) : this.props.actions.addToCart(this.props.cartItems, product);
     };
 
     render(): JSX.Element {
@@ -140,20 +134,17 @@ class Products extends React.Component<IProps, IState> {
 }
 
 interface StateProps {
-    filteredItems: IProduct[];
     cartItems: ICart[];
-    user: IUser | null;
+    user: IUser;
 }
 
 const mapStateToProps = (state: AppState): StateProps => ({
-    filteredItems: state.products.filteredItems,
     cartItems: state.cartProducts.cartItems,
     user: state.user.user,
 });
 
 const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
     actions: {
-        fetchProducts: () => dispatch(fetchProducts()),
         addToCart: (cartItems: ICart[], product: IProduct) => dispatch(addToCart(cartItems, product)),
         addToUserCart: (user: IUser, product: IProduct) => dispatch(addToUserCart(user, product))
     },

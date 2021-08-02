@@ -14,7 +14,7 @@ export const fetchProducts = () => async (dispatch: Dispatch<AppActions>): Promi
     await axios.get('https://shopping-cart-app-react.herokuapp.com/api/products').then((response) => {
         dispatch({
             type: FETCH_PRODUCTS,
-            payload: { items: response.data.data },
+            payload: { items: response.data.data, isLoading: false },
         });
     });
 };

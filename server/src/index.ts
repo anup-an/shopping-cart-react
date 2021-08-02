@@ -4,6 +4,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import routes from './routes';
 import strategy from './middlewares/passport';
 
@@ -11,9 +12,18 @@ import strategy from './middlewares/passport';
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+app.use(cookieParser());
+/* app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    next();
+}); */
 
 mongoose.connect(
     'mongodb+srv://anup-an:IvNT46LZr37Vz0IN@cluster0.f4upd.mongodb.net/shopping-cart-db?retryWrites=true&w=majority',
