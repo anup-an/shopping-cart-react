@@ -44,9 +44,9 @@ export const loginUser = async (req: Request, res: Response) => {
                 const isMatch = await bcrypt.compare(password, user.password);
                 if (isMatch) {
                     const token = generateToken(user);
-                    await User.updateOne({ email: user.email }, { $set: { refreshToken: token.refreshToken } }).save();
+                    await User.updateOne({ email: user.email }, { $set: { refreshToken: token.refreshToken } });
                     return res
-                        .cookie('accessToken', token, {
+                        .cookie('token', token, {
                             secure: true,
                             httpOnly: true,
                             sameSite: 'none',
@@ -68,7 +68,7 @@ export const loginUser = async (req: Request, res: Response) => {
 
 export const logoutUser = async (req: Request, res: Response) => {
     const { token } = req.cookies;
-    await User.updateOne({ refreshToken: token.refreshToken }, { $set: { refreshToken: '' } }).save();
+    await User.updateOne({ refreshToken: token.refreshToken }, { $set: { refreshToken: '' } });
     res.clearCookie('accessToken');
     return res.status(200).json({ status: 'success', data: 'Successfully logged out!' });
 };

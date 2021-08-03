@@ -10,13 +10,13 @@ interface JWTData {
 }
 
 const verifyUser = (req: Request, res: Response, next: NextFunction) => {
-    const { accessToken } = req.cookies;
+    const { token } = req.cookies;
     let payload;
-    if (!accessToken) {
+    if (!token) {
         return res.status(403).send();
     }
     try {
-        payload = jwt.verify(accessToken, 'Some_default_random_secret_token_here');
+        payload = jwt.verify(token.accessToken, 'Some_default_random_secret_token_here');
         const user = User.findOne({ payload });
         req.user = user;
         next();

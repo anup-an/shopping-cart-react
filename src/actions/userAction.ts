@@ -87,7 +87,7 @@ export const removeFromUserCart = (loggedUser: IUser, cart: ICart) => async (
 }
 
 export const getUserFromToken = () => async (dispatch: Dispatch<AppActions>) => {
-    const loggedUser: IUser = await (await axios.get('https://shopping-cart-app-react.herokuapp.com/api/token')).data.data;
+    const loggedUser: IUser = await (await axios.get('https://shopping-cart-app-react.herokuapp.com/api/users/token')).data.data;
     dispatch({
         type: GET_USER_FROM_TOKEN,
         payload: {
