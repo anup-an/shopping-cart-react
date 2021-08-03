@@ -9,6 +9,7 @@ export const ADD_TO_CART_USER = 'ADD_TO_CART_USER';
 export const REMOVE_FROM_CART_USER = 'REMOVE_FROM_CART_USER';
 export const ADD_TO_WISHLIST_USER = 'ADD_TO_WISHLIST_USER';
 export const LOG_IN_USER = 'LOG_IN_USER';
+export const GET_USER_FROM_TOKEN = 'GET_USER_FROM_TOKEN';
 
 
 export type ICart = {
@@ -124,6 +125,13 @@ export type LogInUserAction = {
     }
 }
 
+export type getUserFromTokenAction = {
+    type: typeof GET_USER_FROM_TOKEN;
+    payload: {
+        user: IUser;
+    }
+}
+
 export type CartActionTypes = AddToCartAction | RemoveFromCartAction;
 
 export type ProductsActionTypes =
@@ -132,6 +140,6 @@ export type ProductsActionTypes =
     | SortProductsAction
     | SearchProductsAction;
 
-export type UserActionTypes = EditProfileUserAction | AddToCartUserAction | AddToWishlistUserAction | RemoveFromCartUserAction | LogInUserAction;
+export type UserActionTypes = EditProfileUserAction | AddToCartUserAction | AddToWishlistUserAction | RemoveFromCartUserAction | LogInUserAction | getUserFromTokenAction;
 
 export type AppActions = ProductsActionTypes | CartActionTypes | UserActionTypes;

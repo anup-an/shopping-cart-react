@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import axios from 'axios';
-import { EDIT_PROFILE_USER, LOG_IN_USER, ADD_TO_CART_USER, ADD_TO_WISHLIST_USER, IUser, IProduct, AppActions, REMOVE_FROM_CART_USER } from '../ActionTypes';
+import { EDIT_PROFILE_USER, LOG_IN_USER, ADD_TO_CART_USER, ADD_TO_WISHLIST_USER, GET_USER_FROM_TOKEN, IUser, IProduct, AppActions, REMOVE_FROM_CART_USER } from '../ActionTypes';
 axios.defaults.withCredentials = true;
 
 export type ICart = {
@@ -24,7 +24,6 @@ export const logInUser = (email: string, password: string) => async (
             user: loggedUser
         }
     })
-    
 }
 
 export const logOutUser = () => async(dispatch: Dispatch<AppActions>): Promise<void> => {
@@ -81,6 +80,16 @@ export const removeFromUserCart = (loggedUser: IUser, cart: ICart) => async (
     loggedUser = {...loggedUser, cart: [...cartItems]};
     dispatch({
         type: REMOVE_FROM_CART_USER,
+        payload: {
+            user: loggedUser
+        }
+    })
+}
+
+export const getUserFromToken = () => async (dispatch: Dispatch<AppActions>) => {
+    const loggedUser: IUser = await (await axios.get('https://shopping-cart-app-react.herokuapp.com/api/token')).data.data;
+    dispatch({
+        type: GET_USER_FROM_TOKEN,
         payload: {
             user: loggedUser
         }

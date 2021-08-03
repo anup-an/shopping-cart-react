@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import { Request, Response } from 'express';
 import User from '../models/user';
 
@@ -34,7 +35,7 @@ interface ICart {
     quantity: number;
 }
 
-export const editUserData = async (req: Request, res: Response): Promise<void> => {
+export const editUserById = async (req: Request, res: Response): Promise<void> => {
     const user: IUser = req.body;
     User.findByIdAndUpdate(req.params.id, { user }, { upsert: true }, (err, response) => {
         if (err) {
@@ -46,8 +47,35 @@ export const editUserData = async (req: Request, res: Response): Promise<void> =
     });
 };
 
-export const getUserData = async (req: Request, res: Response): Promise<void> => {
+export const getUserById = async (req: Request, res: Response): Promise<void> => {
     User.findById(req.params.id).then((user: IUser) => {
         res.status(200).json({ status: 'success', data: user });
     });
+};
+
+export const getUserByToken = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { token } = req.cookies;
+        const user = await User.findOne({ refreshToken: token.refreshToken });
+        user
+            ? res.status(200).json({ status: 'Logged user found.', data: user })
+            : res.status(401).json({
+                  status: 'Refresh token not found in the database. Token has expired or user has not logged in.',
+                  data: {
+                      _id: '',
+                      email: '',
+                      password: '',
+                      firstName: '',
+                      lastName: '',
+                      phone: '',
+                      city: '',
+                      country: '',
+                      refreshToken: '',
+                      wishList: [],
+                      cart: [],
+                  },
+              });
+    } catch (error) {
+        console.log(error);
+    }
 };
