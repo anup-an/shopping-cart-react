@@ -5,6 +5,6 @@ import { editUserById, getUserById, getUserByToken } from '../controllers/user.c
 const router = Router();
 router.post('/:id', verifyUser, editUserById);
 router.get('/:id', verifyUser, getUserById);
-router.get('/token', getUserByToken);
+router.get('/', getUserByToken);
 
 export default router;
