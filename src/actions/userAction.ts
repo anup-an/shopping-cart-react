@@ -21,7 +21,7 @@ const reIssueAccessToken = async () => {
 const runInLoop = () => {
     setTimeout(() => {
         reIssueAccessToken();
-    }, 100000)
+    }, 5000)
 }
 
 export const logInUser = (email: string, password: string) => async (
