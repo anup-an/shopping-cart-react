@@ -50,6 +50,7 @@ export const loginUser = async (req: Request, res: Response) => {
                             secure: true,
                             httpOnly: true,
                             sameSite: 'none',
+                            maxAge: 180000,
                         })
                         .status(200)
                         .json({ status: 'success', data: user });
