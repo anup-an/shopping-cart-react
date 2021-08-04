@@ -13,6 +13,17 @@ export type ICart = {
     count?: number;
 };
 
+const reIssueAccessToken = async () => {
+    await axios.get('https://shopping-cart-app-react.herokuapp.com/api/reissue-token');
+    runInLoop();
+}
+
+const runInLoop = () => {
+    setTimeout(() => {
+        reIssueAccessToken();
+    }, 100000)
+}
+
 export const logInUser = (email: string, password: string) => async (
     dispatch: Dispatch<AppActions>): Promise<void> => {
     
@@ -24,6 +35,9 @@ export const logInUser = (email: string, password: string) => async (
             user: loggedUser
         }
     })
+    setTimeout(() => {
+        reIssueAccessToken();
+    }, 100000)
 }
 
 export const logOutUser = () => async(dispatch: Dispatch<AppActions>): Promise<void> => {
@@ -75,6 +89,7 @@ export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (
             }
         })
     }
+    
 
 export const removeFromUserCart = (loggedUser: IUser, cart: ICart) => async (
     dispatch: Dispatch<AppActions>) => {

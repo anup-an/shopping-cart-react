@@ -7,6 +7,6 @@ const router = Router();
 router.post('/signup', signupUser);
 router.post('/login', loginUser);
 router.post('/logout', verifyUser, logoutUser);
-router.get('/refresh-token', reIssueTokens);
+router.get('/reissue-token', reIssueTokens);
 
 export default router;

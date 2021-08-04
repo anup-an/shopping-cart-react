@@ -74,15 +74,23 @@ export const logoutUser = async (req: Request, res: Response) => {
 };
 
 export const reIssueTokens = async (req: Request, res: Response) => {
-    const { user } = req;
-    console.log(user);
-    const refToken: string = await User.findOne(user).refreshToken;
-    res.send(`Reissue token ${refToken}`);
-    /* try {
-        jwt.verify(refToken, 'Some_default_random_secret_token_here');
-        const newToken: string = jwt.sign(req.user, 'Some_default_random_secret_token_here', { expiresIn: 120 });
-        res.cookie('accessToken', newToken, { secure: true, httpOnly: true }).send();
+    try {
+        const { token } = req.cookies;
+        const user = await User.findOne({ refreshToken: token.refreshToken });
+        if (user) {
+            jwt.verify(user.refreshToken, 'Some_default_random_secret_token_here');
+            const newToken: string = jwt.sign({ email: user.email }, 'Some_default_random_secret_token_here', {
+                expiresIn: 120,
+            });
+            const tokens = {
+                accessToken: newToken,
+                refreshToken: user.refreshToken,
+            };
+            res.cookie('token', tokens, { secure: true, httpOnly: true, sameSite: 'none' }).send();
+        } else {
+            res.status(403).json({ status: 'error', data: 'Invalid refresh token' });
+        }
     } catch (error) {
         return res.status(401).send();
-    } */
+    }
 };
