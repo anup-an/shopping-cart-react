@@ -65,7 +65,9 @@ export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (
             cartItems.unshift({ ...product, count: 1 });
         }
     }
-    loggedUser = {...loggedUser, cart: [...cartItems]};
+    loggedUser = { ...loggedUser, cart: [...cartItems] };
+    await axios.post(
+        'https://shopping-cart-app-react.herokuapp.com/api/users/add-products', { loggedUser });
         dispatch({
             type: ADD_TO_CART_USER,
             payload: {
@@ -77,7 +79,9 @@ export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (
 export const removeFromUserCart = (loggedUser: IUser, cart: ICart) => async (
     dispatch: Dispatch<AppActions>) => {
     const cartItems = loggedUser ? [...loggedUser.cart].filter((element) => element._id !== cart._id): [];
-    loggedUser = {...loggedUser, cart: [...cartItems]};
+    loggedUser = { ...loggedUser, cart: [...cartItems] };
+    await axios.post(
+        'https://shopping-cart-app-react.herokuapp.com/api/users/add-products', { loggedUser });
     dispatch({
         type: REMOVE_FROM_CART_USER,
         payload: {

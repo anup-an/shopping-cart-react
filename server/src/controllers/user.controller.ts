@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-expressions */
 import { Request, Response } from 'express';
 import User from '../models/user';
@@ -78,4 +79,10 @@ export const getUserByToken = async (req: Request, res: Response): Promise<void>
     } catch (error) {
         console.log(error);
     }
+};
+
+export const addToUserCart = async (req: Request, res: Response): Promise<void> => {
+    const { user } = req.body;
+    await User.updateOne({ _id: user._id }, { $set: { cart: [...user.cart] } });
+    res.status(200).json({ status: 'success', data: 'User cart added to database' });
 };
