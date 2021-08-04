@@ -6,6 +6,6 @@ const router = Router();
 router.post('/:id', verifyUser, editUserById);
 router.get('/:id', verifyUser, getUserById);
 router.get('/', getUserByToken);
-router.post('/add-products', verifyUser, addToUserCart);
+router.post('/:id/update-cart', verifyUser, addToUserCart);
 
 export default router;
