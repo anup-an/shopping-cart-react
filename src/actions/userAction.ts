@@ -37,7 +37,7 @@ export const logInUser = (email: string, password: string) => async (
     })
     setTimeout(() => {
         reIssueAccessToken();
-    }, 100000)
+    }, 5000)
 }
 
 export const logOutUser = () => async(dispatch: Dispatch<AppActions>): Promise<void> => {
