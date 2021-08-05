@@ -39,7 +39,7 @@ export const loginUser = async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     const ret = await User.findOne({ email })
-        .then(async (user: IUser) => {
+        .then(async (user: IUser | null) => {
             if (user) {
                 const isMatch = await bcrypt.compare(password, user.password);
                 if (isMatch) {
@@ -70,7 +70,7 @@ export const loginUser = async (req: Request, res: Response) => {
 export const logoutUser = async (req: Request, res: Response) => {
     const { token } = req.cookies;
     await User.updateOne({ refreshToken: token.refreshToken }, { $set: { refreshToken: '' } });
-    res.clearCookie('accessToken');
+    res.clearCookie('token');
     return res.status(200).json({ status: 'success', data: 'Successfully logged out!' });
 };
 

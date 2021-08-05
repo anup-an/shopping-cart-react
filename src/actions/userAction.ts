@@ -80,8 +80,10 @@ export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (
         }
     }
     loggedUser = { ...loggedUser, cart: [...cartItems] };
+    const id = loggedUser._id;
+    const cart = loggedUser.cart; 
     await axios.post(
-        `https://shopping-cart-app-react.herokuapp.com/api/users/${loggedUser._id}/update-cart`, { loggedUser });
+        `https://shopping-cart-app-react.herokuapp.com/api/users/${loggedUser._id}/update-cart`, { id, cart });
         dispatch({
             type: ADD_TO_CART_USER,
             payload: {
@@ -95,8 +97,11 @@ export const removeFromUserCart = (loggedUser: IUser, cart: ICart) => async (
     dispatch: Dispatch<AppActions>) => {
     const cartItems = loggedUser ? [...loggedUser.cart].filter((element) => element._id !== cart._id): [];
     loggedUser = { ...loggedUser, cart: [...cartItems] };
+    const id = loggedUser._id;
+    const cart = loggedUser.cart; 
+
     await axios.post(
-        'https://shopping-cart-app-react.herokuapp.com/api/users/add-products', { loggedUser });
+        'https://shopping-cart-app-react.herokuapp.com/api/users/add-products', { id, cart });
     dispatch({
         type: REMOVE_FROM_CART_USER,
         payload: {

@@ -3,23 +3,23 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import User from '../models/user';
 
 interface JWTData {
     email: string;
 }
 
 const verifyUser = (req: Request, res: Response, next: NextFunction) => {
-    const { token } = req.cookies;
-    let payload;
-    if (!token) {
-        return res.status(403).send();
-    }
     try {
-        payload = jwt.verify(token.accessToken, 'Some_default_random_secret_token_here');
-        const user = User.findOne({ payload });
-        req.user = user;
-        next();
+        const { token } = req.cookies;
+        if (token) {
+            jwt.verify(token.accessToken, 'Some_default_random_secret_token_here');
+            next();
+        } else {
+            return res.status(403).send('No token');
+        }
+
+        /* const user = User.findOne({ payload });
+        req.user = user; */
     } catch (error) {
         return res.status(401).send();
     }

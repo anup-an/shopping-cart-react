@@ -21,14 +21,14 @@ interface IProduct {
     price: number;
     availableSizes: string[];
 }
-interface ICart {
-    id: string;
+export interface ICart {
+    _id: string;
     title: string;
     image: string;
     description: string;
     price: number;
     availableSizes: string[];
-    quantity: number;
+    count?: number;
 }
 
 const CartSchema = new mongoose.Schema({
@@ -38,7 +38,7 @@ const CartSchema = new mongoose.Schema({
     description: { type: String },
     price: { type: Number },
     availableSizes: { type: [String] },
-    quantity: { type: Number },
+    count: { type: Number },
 });
 
 const ProductSchema = new mongoose.Schema({
@@ -54,9 +54,14 @@ const UserSchema = new mongoose.Schema({
     _id: { type: String, default: uuidv4 },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
+    firstName: { type: String },
+    lastName: { type: String },
+    phone: { type: String },
+    city: { type: String },
+    country: { type: String },
     refreshToken: { type: String },
-    cart: { type: [CartSchema] },
     wishList: { type: [ProductSchema] },
+    cart: { type: [CartSchema] },
 });
 
 UserSchema.pre<IUser>('save', async function (next) {

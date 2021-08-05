@@ -22,11 +22,16 @@ export const getProducts = async (req: Request, res: Response) => {
 };
 
 export const getProductById = async (req: Request, res: Response) => {
-    await Product.findOne({ _id: req.params.id }).exec((err: { message: string }, product: IProduct) => {
-        err
-            ? res.status(500).json({ status: 'error', data: err.message })
-            : res.status(200).json({ status: 'success', data: product });
-    });
+    try {
+        const product = await Product.findOne({ _id: req.params.id });
+        if (product) {
+            res.status(200).json({ status: 'success', data: product });
+        } else {
+            res.status(500).send('Product not found');
+        }
+    } catch (error) {
+        res.send(error);
+    }
 };
 
 export const createProducts = async (req: Request, res: Response) => {
@@ -38,22 +43,24 @@ export const createProducts = async (req: Request, res: Response) => {
 };
 
 export const deleteProducts = async (req: Request, res: Response) => {
-    await Product.findByIdAndRemove(req.params.id).exec((err: { message: string }) => {
-        err
-            ? res.status(500).json({ status: 'error', data: err.message })
-            : res.status(200).json({ status: 'success', data: req.params.id });
-    });
+    try {
+        await Product.findByIdAndRemove(req.params.id);
+        res.send('Product deleted');
+    } catch (error) {
+        res.send(error);
+    }
 };
 
 export const searchProducts = async (req: Request, res: Response) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { keywords } = req.params;
-    console.log(keywords);
-    await Product.find({ title: { $regex: keywords.substring(1), $options: 'i' } }).exec(
-        (err: { message: string }, products: IProduct[]) => {
-            err
-                ? res.status(500).json({ status: 'error', data: err.message })
-                : res.status(200).json({ status: 'success', data: products });
-        },
-    );
+    try {
+        const { keywords } = req.params;
+        const products = await Product.find({ title: { $regex: keywords.substring(1), $options: 'i' } });
+        if (products) {
+            res.status(200).json({ status: 'success', data: products });
+        } else {
+            res.status(500).json({ status: 'error', data: 'products not found' });
+        }
+    } catch (error) {
+        res.send(error);
+    }
 };

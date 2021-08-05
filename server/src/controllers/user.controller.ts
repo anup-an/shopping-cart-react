@@ -49,9 +49,16 @@ export const editUserById = async (req: Request, res: Response): Promise<void> =
 };
 
 export const getUserById = async (req: Request, res: Response): Promise<void> => {
-    User.findById(req.params.id).then((user: IUser) => {
-        res.status(200).json({ status: 'success', data: user });
-    });
+    try {
+        const user = await User.findById(req.params.id);
+        if (user) {
+            res.status(200).json({ status: 'success', data: user });
+        } else {
+            res.send('User not found');
+        }
+    } catch (error) {
+        res.send(error);
+    }
 };
 
 export const getUserByToken = async (req: Request, res: Response): Promise<void> => {
@@ -81,8 +88,16 @@ export const getUserByToken = async (req: Request, res: Response): Promise<void>
     }
 };
 
-export const addToUserCart = async (req: Request, res: Response): Promise<void> => {
-    const { user } = req.body;
-    await User.updateOne({ _id: user._id }, { $set: { cart: [...user.cart] } });
-    res.status(200).json({ status: 'success', data: 'User cart added to database' });
+export const addToUserCart = async (req: Request, res: Response): Promise<Response> => {
+    try {
+        const { id } = req.body;
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { cart } = req.body;
+        const user = await User.findOne({ _id: id });
+        return res.status(200).send(user);
+
+        // await User.updateOne({ _id: loggedUser._id }, { $addToSet: { cart: { $each: [...userCart] } } });
+    } catch (error) {
+        return res.send(error);
+    }
 };
