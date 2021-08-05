@@ -91,12 +91,14 @@ export const getUserByToken = async (req: Request, res: Response): Promise<void>
 export const addToUserCart = async (req: Request, res: Response): Promise<Response> => {
     try {
         const { id } = req.body;
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const { cart } = req.body;
-        const user = await User.findOne({ _id: id });
-        return res.status(200).send(user);
-
-        // await User.updateOne({ _id: loggedUser._id }, { $addToSet: { cart: { $each: [...userCart] } } });
+        const user = await User.findOne({ id });
+        if (user) {
+            user.cart = [...req.body.cart];
+            await user.save();
+            console.log(req.body.cart);
+            return res.status(200).send(user);
+        }
+        return res.status(401).send('user ids not matching');
     } catch (error) {
         return res.send(error);
     }
