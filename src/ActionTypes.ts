@@ -37,12 +37,12 @@ export type IUser = {
     password: string;
     firstName: string;
     lastName: string;
-    phone?: string;
-    city?: string;
-    country?: string;
-    refreshToken?: string;
-    wishList?: IProduct[];
-    cart?: ICart[];
+    phone: string;
+    city: string;
+    country: string;
+    refreshToken: string;
+    wishList: IProduct[];
+    cart: ICart[];
 }
 
 export type AddToCartAction = {

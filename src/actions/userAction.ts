@@ -93,9 +93,9 @@ export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (
     }
     
 
-export const removeFromUserCart = (loggedUser: IUser, cart: ICart) => async (
+export const removeFromUserCart = (loggedUser: IUser, selectedCart: ICart) => async (
     dispatch: Dispatch<AppActions>) => {
-    const cartItems = loggedUser ? [...loggedUser.cart].filter((element) => element._id !== cart._id): [];
+    const cartItems = loggedUser ? [...loggedUser.cart].filter((element) => element._id !== selectedCart._id): [];
     loggedUser = { ...loggedUser, cart: [...cartItems] };
     const id = loggedUser._id;
     const cart = loggedUser.cart; 
