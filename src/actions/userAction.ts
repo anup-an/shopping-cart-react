@@ -83,7 +83,7 @@ export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (
     const id = loggedUser._id;
     const cart = loggedUser.cart; 
     await axios.post(
-        `https://shopping-cart-app-react.herokuapp.com/api/users/${loggedUser._id}/update-cart`, { id, cart });
+        `https://shopping-cart-app-react.herokuapp.com/api/users/${id}/update-cart`, { id, cart });
         dispatch({
             type: ADD_TO_CART_USER,
             payload: {

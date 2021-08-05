@@ -90,8 +90,7 @@ export const getUserByToken = async (req: Request, res: Response): Promise<void>
 
 export const addToUserCart = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const { id } = req.body;
-        const user = await User.findOne({ _id: id });
+        const user = await User.findOne({ _id: req.body.id });
         if (user) {
             user.cart = [...req.body.cart];
             await user.save();
