@@ -38,7 +38,7 @@ class CartDisplay extends React.Component<IProps> {
                 
                 <ul className="mx-5 flex flex-col space-y-4 text-sm mt-4">
                     
-                    {cartItems.map((item, index) => (index >= cartIndex && index < cartIndex + 5) ? (
+                    {cartItems.map((item) => (
                             <li key={item._id} className="flex flex-row items-center space-x-2">
                                 <div className="flex flex-row justify-between border shadow  p-2 items-center text-sm space-x-2 w-3/4">
                                     <div>
@@ -72,7 +72,7 @@ class CartDisplay extends React.Component<IProps> {
                                     </svg>
                                 </button>
                             </li>
-                    ) : '')}
+                    ))}
                 
                 </ul>
                     

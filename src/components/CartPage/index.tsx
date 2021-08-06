@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import { removeFromCart } from '../../actions/cartAction';
 import { removeFromUserCart } from '../../actions/userAction';
 import { AppState } from '../../store';
-import ViewCart from './ViewCart';
-import CartSum from './CartSum';
 import { IProduct, IUser } from '../../ActionTypes';
+import CartDisplay from './CartDisplay'
 
 type ICart = {
     _id: string;
@@ -89,4 +88,4 @@ const mapDispatchToProps = (dispatch: any): {actions: Actions} => ({
 }
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default connect(mapStateToProps, mapDispatchToProps)(CartPage);
