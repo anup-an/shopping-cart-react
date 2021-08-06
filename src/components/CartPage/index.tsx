@@ -56,7 +56,7 @@ class CartPage extends React.Component<IProps, IState> {
         return (
             <div>
                 {user._id != '' ?
-                    <div className="w-full flex flex-row justify-between mx-20">
+                    <div className="flex flex-row justify-between">
                         <div className="w-3/4">
                             <CartDisplay handleRemoveFromCart={this.handleRemoveFromCart} cartItems={user.cart} />
                         </div>
@@ -65,11 +65,11 @@ class CartPage extends React.Component<IProps, IState> {
                         </div>
     
                     </div> :
-                    <div className="w-full flex flex-row justify-between mx-20">
+                    <div className="flex flex-row justify-between">
                         <div className="w-3/4">
                             <CartDisplay handleRemoveFromCart={this.handleRemoveFromCart} cartItems={cartItems} />
                         </div>
-                        <div className="w-1/4">
+                        <div className="w-1/4 px-4">
                             <CartSummary cartItems={cartItems} />
                         </div>
                     </div>
