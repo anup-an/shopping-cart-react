@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import Body from '../Body';
 import Login from '../Header/login';
 import Register from '../Header/register';
+import CartPage from '../CartPage'
 
 const Routers = () => {
     return (
@@ -19,7 +20,9 @@ const Routers = () => {
             <Route path="/register">
                 <Register />
             </Route>
-            <Route path="/cart">Cart page coming soon...</Route>
+            <Route path="/cart">
+                <CartPage />
+            </Route>
         </Switch>
     );
 };

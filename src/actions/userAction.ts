@@ -101,7 +101,7 @@ export const removeFromUserCart = (loggedUser: IUser, selectedCart: ICart) => as
     const cart = loggedUser.cart; 
 
     await axios.post(
-        'https://shopping-cart-app-react.herokuapp.com/api/users/add-products', { id, cart });
+        `https://shopping-cart-app-react.herokuapp.com/api/users/${id}/update-cart`, { id, cart });
     dispatch({
         type: REMOVE_FROM_CART_USER,
         payload: {

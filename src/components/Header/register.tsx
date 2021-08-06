@@ -38,7 +38,7 @@ class Register extends React.Component<IProps, IState> {
     handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
         const { email, password, firstName, lastName } = this.state;
-        await axios.post('https://shopping-cart-app-react.herokuapp.com/api/signup', { email, password, firstName, lastName }).then((response) => {
+        axios.post('https://shopping-cart-app-react.herokuapp.com/api/signup', { email, password, firstName, lastName }).then((response) => {
             response.data.status == "success" ? this.props.actions.logInUser(this.state.email, this.state.password) : '';
         });
     };
@@ -68,12 +68,12 @@ class Register extends React.Component<IProps, IState> {
                             <div className="flex flex-col space-y-2">
                                 <label
                                     className="flex flex-row w-full border-b items-end justify-between"
-                                    htmlFor="firstname"
+                                    htmlFor="firstName"
                                 >
                                     <input
                                         className="focus:outline-none text-sm"
-                                        id="firstname"
-                                        name="firstname"
+                                        id="firstName"
+                                        name="firstName"
                                         placeholder="First Name"
                                         required
                                         onChange={this.handleInput}
@@ -96,12 +96,12 @@ class Register extends React.Component<IProps, IState> {
 
                                 <label
                                     className="flex flex-row w-full border-b items-end justify-between"
-                                    htmlFor="lastname"
+                                    htmlFor="lastName"
                                 >
                                     <input
                                         className="focus:outline-none text-sm"
-                                        id="firstname"
-                                        name="lastname"
+                                        id="firstName"
+                                        name="lastName"
                                         placeholder="Last Name"
                                         required
                                         onChange={this.handleInput}
