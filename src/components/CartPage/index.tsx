@@ -5,7 +5,8 @@ import { removeFromCart } from '../../actions/cartAction';
 import { removeFromUserCart } from '../../actions/userAction';
 import { AppState } from '../../store';
 import { IProduct, IUser } from '../../ActionTypes';
-import CartDisplay from './CartDisplay'
+import CartDisplay from './CartDisplay';
+import CartSummary from './CartSummary';
 
 type ICart = {
     _id: string;
@@ -55,11 +56,13 @@ class CartPage extends React.Component<IProps, IState> {
         return (
             <div>
                 {user._id != '' ?
-                    <div>
+                    <div className="flex flex-row justify-between">
                         <CartDisplay handleRemoveFromCart={this.handleRemoveFromCart} cartItems={user.cart} />
+                        <CartSummary cartItems={user.cart} /> 
                     </div> :
-                    <div>
+                    <div className="flex flex-row justify-between">
                         <CartDisplay handleRemoveFromCart={this.handleRemoveFromCart} cartItems={cartItems} />
+                        <CartSummary cartItems={user.cart} />
                     </div>
                 }
             </div>

@@ -160,6 +160,7 @@ class Register extends React.Component<IProps, IState> {
                                         placeholder="Password"
                                         required
                                         onChange={this.handleInput}
+                                        type="password"
                                     />
                                     <svg
                                         className="h-6 w-6 text-blue-400"
