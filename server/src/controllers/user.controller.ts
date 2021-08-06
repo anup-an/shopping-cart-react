@@ -1,10 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-expressions */
 import { Request, Response } from 'express';
+import mongoose from 'mongoose';
 import User from '../models/user';
 
 export interface IUser {
-    _id: string;
+    _id: mongoose.Types.ObjectId;
     email: string;
     password: string;
     firstName: string;
@@ -33,7 +34,7 @@ interface ICart {
     description: string;
     price: number;
     availableSizes: string[];
-    quantity: number;
+    count: number;
 }
 
 export const editUserById = async (req: Request, res: Response): Promise<void> => {
@@ -50,7 +51,7 @@ export const editUserById = async (req: Request, res: Response): Promise<void> =
 
 export const getUserById = async (req: Request, res: Response): Promise<void> => {
     try {
-        const user = await User.findById(req.params.id);
+        const user = await User.findById(req.params.id).exec();
         if (user) {
             res.status(200).json({ status: 'success', data: user });
         } else {
@@ -90,14 +91,17 @@ export const getUserByToken = async (req: Request, res: Response): Promise<void>
 
 export const addToUserCart = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const user = await User.findOne({ _id: req.body.id });
-        if (user) {
-            user.cart = [...req.body.cart];
-            await user.save();
-            console.log(req.body.cart);
-            return res.status(200).send(user);
+        if (mongoose.isValidObjectId(req.body.id)) {
+            const user = await User.findByIdAndUpdate(
+                { _id: mongoose.Types.ObjectId(req.body.id) },
+                { $addToSet: { cart: { $each: req.body.cart } } },
+            );
+            if (user) {
+                return res.status(200).json({ updatedUser: user });
+            }
+            return res.send('user not found');
         }
-        return res.status(401).send('user ids not matching');
+        return res.send('Not valid objectid');
     } catch (error) {
         return res.send(error);
     }

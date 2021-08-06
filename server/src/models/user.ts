@@ -2,19 +2,23 @@
 /* eslint-disable import/prefer-default-export */
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-import { v4 as uuidv4 } from 'uuid';
 
 export interface IUser extends mongoose.Document {
-    _id: string;
+    _id: mongoose.Types.ObjectId;
     email: string;
     password: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
+    city: string;
+    country: string;
     refreshToken: string;
     wishList: IProduct[];
     cart: ICart[];
 }
 
-interface IProduct {
-    id: string;
+export interface IProduct {
+    _id: string;
     title: string;
     image: string;
     description: string;
@@ -51,7 +55,6 @@ const ProductSchema = new mongoose.Schema({
 });
 
 const UserSchema = new mongoose.Schema({
-    _id: { type: String, default: uuidv4 },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     firstName: { type: String },

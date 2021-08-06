@@ -4,14 +4,39 @@
 import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-
+import mongoose from 'mongoose';
 import User from '../models/user';
 
 interface IUser {
-    _id: string;
+    _id: mongoose.Types.ObjectId;
     email: string;
     password: string;
+    firstName: string;
+    lastName: string;
+    phone: string;
+    city: string;
+    country: string;
     refreshToken: string;
+    wishList: IProduct[];
+    cart: ICart[];
+}
+
+interface IProduct {
+    _id: string;
+    title: string;
+    image: string;
+    description: string;
+    price: number;
+    availableSizes: string[];
+}
+interface ICart {
+    _id: string;
+    title: string;
+    image: string;
+    description: string;
+    price: number;
+    availableSizes: string[];
+    count?: number;
 }
 
 const generateToken = (user: IUser) => {
