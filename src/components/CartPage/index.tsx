@@ -56,7 +56,7 @@ class CartPage extends React.Component<IProps, IState> {
         const { isOpen } = this.state;
         return (
             <div>
-                {user.cart.length !== 0 ?
+                {user.cart.length !== 0 || cartItems.length !== 0 ?
                     <div>
                     {user._id != '' ?
                         <div className="flex flex-row justify-between">
