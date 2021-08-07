@@ -74,7 +74,7 @@ export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (
     } else {
         let searching = true;
         let i = 0;
-        while (searching) {    
+        while (searching && i < cartItems.length) {    
             if (cartItems[i]._id === product._id) {
                     cartItems[i].count ? cartItems[i].count = cartItems[i].count + 1:''
         
