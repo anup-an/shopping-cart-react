@@ -7,6 +7,7 @@ import { AppState } from '../../store';
 import { IProduct, IUser } from '../../ActionTypes';
 import CartDisplay from './CartDisplay';
 import CartSummary from './CartSummary';
+import EmptyCart from './EmptyCart';
 
 type ICart = {
     _id: string;
@@ -55,27 +56,33 @@ class CartPage extends React.Component<IProps, IState> {
         const { isOpen } = this.state;
         return (
             <div>
-                {user._id != '' ?
-                    <div className="flex flex-row justify-between">
-                        <div className="w-3/4">
-                            <CartDisplay handleRemoveFromCart={this.handleRemoveFromCart} cartItems={user.cart} />
-                        </div>
-                        <div className="w-1/4">
-                            <CartSummary cartItems={user.cart} />
-                        </div>
+                {user.cart.length !== 0 ?
+                    <div>
+                    {user._id != '' ?
+                        <div className="flex flex-row justify-between">
+                            <div className="w-3/4">
+                                <CartDisplay handleRemoveFromCart={this.handleRemoveFromCart} cartItems={user.cart} />
+                            </div>
+                            <div className="w-1/4">
+                                <CartSummary cartItems={user.cart} />
+                            </div>
     
+                        </div> :
+                        <div className="flex flex-row justify-between">
+                            <div className="w-3/4">
+                                <CartDisplay handleRemoveFromCart={this.handleRemoveFromCart} cartItems={cartItems} />
+                            </div>
+                            <div className="w-1/4 px-4">
+                                <CartSummary cartItems={cartItems} />
+                            </div>
+                        </div>
+                    }
                     </div> :
-                    <div className="flex flex-row justify-between">
-                        <div className="w-3/4">
-                            <CartDisplay handleRemoveFromCart={this.handleRemoveFromCart} cartItems={cartItems} />
-                        </div>
-                        <div className="w-1/4 px-4">
-                            <CartSummary cartItems={cartItems} />
-                        </div>
+                    <div className="h-screen flex items-center justify-center">
+                        <EmptyCart />
                     </div>
-                }
+            }
             </div>
-            
         );
     }
 }

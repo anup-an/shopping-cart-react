@@ -94,7 +94,7 @@ export const addToUserCart = async (req: Request, res: Response): Promise<Respon
         if (mongoose.isValidObjectId(req.body.id)) {
             const user = await User.findByIdAndUpdate(
                 { _id: mongoose.Types.ObjectId(req.body.id) },
-                { $addToSet: { cart: { $each: req.body.cart } } },
+                { $set: { cart: req.body.cart } },
             );
             if (user) {
                 return res.status(200).json({ updatedUser: user });
