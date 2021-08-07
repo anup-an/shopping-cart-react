@@ -69,9 +69,9 @@ export const logOutUser = () => async(dispatch: Dispatch<AppActions>): Promise<v
 export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (
     dispatch: Dispatch<AppActions>): Promise<void> => {
     const cartItems: ICart[] = loggedUser.cart;
-    if (cartItems === []) {
+    if (cartItems.length === 0) {
         cartItems.unshift({ ...product, count: 1 });
-    } else if (cartItems !== []){
+    } else {
         let searching = true;
         let i = 0;
         while (searching) {    
