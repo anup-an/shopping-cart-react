@@ -83,7 +83,7 @@ export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (
                 i += 1;
             }
         }
-        !searching ? cartItems.unshift({ ...product, count: 1 }) : '';
+        searching ? cartItems.unshift({ ...product, count: 1 }) : '';
         
     }
     
