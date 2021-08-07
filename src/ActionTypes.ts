@@ -19,7 +19,7 @@ export type ICart = {
     description: string;
     price: number;
     availableSizes: string[];
-    count?: number;
+    count: number;
 };
 
 export type IProduct = {

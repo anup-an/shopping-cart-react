@@ -22,7 +22,7 @@ type ICart = {
     description: string;
     price: number;
     availableSizes: string[];
-    count?: number;
+    count: number;
 };
 
 interface IProps {

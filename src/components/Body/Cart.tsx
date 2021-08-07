@@ -15,7 +15,7 @@ type ICart = {
     description: string;
     price: number;
     availableSizes: string[];
-    count?: number;
+    count: number;
 };
 
 type IProps = {
@@ -86,7 +86,7 @@ const mapStateToProps = (state: AppState): StateProps => ({
 const mapDispatchToProps = (dispatch: any): {actions: Actions} => ({
     actions: {
         removeFromCart: (cartItems: ICart[], item: ICart) => dispatch(removeFromCart(cartItems, item)),
-        removeFromUserCart: (user:IUser, item: IProduct) => dispatch(removeFromUserCart(user, item))
+        removeFromUserCart: (user:IUser, item: ICart) => dispatch(removeFromUserCart(user, item))
     }
 }
 );

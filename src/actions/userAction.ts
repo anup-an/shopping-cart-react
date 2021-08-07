@@ -10,7 +10,7 @@ export type ICart = {
     description: string;
     price: number;
     availableSizes: string[];
-    count?: number;
+    count: number;
 };
 
 const reIssueAccessToken = async () => {
@@ -68,20 +68,28 @@ export const logOutUser = () => async(dispatch: Dispatch<AppActions>): Promise<v
 
 export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (
     dispatch: Dispatch<AppActions>): Promise<void> => {
-    const cartItems = [...loggedUser.cart];
-    if (cartItems.length === 0) {
+    const cartItems: ICart[] = loggedUser.cart;
+    if (cartItems === []) {
         cartItems.unshift({ ...product, count: 1 });
-    } else if (cartItems.length !== 0) {
-        const cart = cartItems.find((item) => item._id === product._id);
-        if (cart && cart.count) {
-            cartItems[cartItems.indexOf(cart)].count = cart.count + 1;
-        } else if (!cart) {
-            cartItems.unshift({ ...product, count: 1 });
+    } else if (cartItems !== []){
+        let searching = true;
+        let i = 0;
+        while (searching) {    
+            if (cartItems[i]._id === product._id) {
+                    cartItems[i].count ? cartItems[i].count = cartItems[i].count + 1:''
+        
+                searching = false;
+            } else {
+                i += 1;
+            }
         }
+        !searching ? cartItems.unshift({ ...product, count: 1 }) : '';
+        
     }
+    
     loggedUser = { ...loggedUser, cart: [...cartItems] };
     const id = loggedUser._id;
-    const cart = loggedUser.cart; 
+    const cart = [...cartItems]; 
     await axios.post(
         `https://shopping-cart-app-react.herokuapp.com/api/users/${id}/update-cart`, { id, cart });
         dispatch({
@@ -90,9 +98,8 @@ export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (
                 user: loggedUser
             }
         })
-    }
+}
     
-
 export const removeFromUserCart = (loggedUser: IUser, selectedCart: ICart) => async (
     dispatch: Dispatch<AppActions>) => {
     const cartItems = loggedUser ? [...loggedUser.cart].filter((element) => element._id !== selectedCart._id): [];
