@@ -118,6 +118,9 @@ export const getUserFromToken = () => async (dispatch: Dispatch<AppActions>) => 
             user: loggedUser
         }
     })
+    setTimeout(() => {
+        reIssueAccessToken();
+    }, 5000)
 }
 
 export const editUserProfile = (loggedUser: IUser) => async (dispatch: Dispatch<AppActions>) => {
