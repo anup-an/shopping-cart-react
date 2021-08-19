@@ -88,7 +88,6 @@ class ViewCart extends React.Component<IProps, IState> {
                                 <div className="flex flex-row border shadow p-2 text-sm space-x-2 w-3/4">
                                     <div>
                                         <img
-                                            className="w-1/3 h-auto"
                                             loading="eager"
                                             src={`${item.image}`}
                                             alt={`${item.title}`}
@@ -96,7 +95,7 @@ class ViewCart extends React.Component<IProps, IState> {
                                         
                                     </div>
                                     <div className="flex flex-col items-start">
-                                        <div className="hidden lg:block h-1/2">{item.title}</div>
+                                        <div className="hidden lg:block h-2/3">{item.title}</div>
                                         <div className="flex flex-row space-x-2">
                                             <Counter 
                                                 handleDecrement={handleDecrement} 

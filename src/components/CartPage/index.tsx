@@ -82,7 +82,7 @@ class CartPage extends React.Component<IProps, IState> {
                 {user.cart.length !== 0 || cartItems.length !== 0 ?
                     <div>
                     {user._id != '' ?
-                        <div className="flex flex-row mx-10">
+                        <div className="flex flex-row space-x-4 mx-10">
                             <div className="w-2/3 border shadow rounded">
                                 <CartDisplay 
                                     handleRemoveFromCart={this.handleRemoveFromCart} 
@@ -96,7 +96,7 @@ class CartPage extends React.Component<IProps, IState> {
                             </div>
     
                         </div> :
-                        <div className="flex flex-row mx-10">
+                        <div className="flex flex-row space-x-4 mx-10">
                             <div className="w-2/3 border shadow rounded">
                                 <CartDisplay 
                                     handleRemoveFromCart={this.handleRemoveFromCart} 
