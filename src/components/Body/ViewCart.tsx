@@ -84,19 +84,19 @@ class ViewCart extends React.Component<IProps, IState> {
                     </li>
                     {cartItems.map((item, index) => (index >= cartIndex && index < cartIndex + 5) ? (
                         <Slide direction="right" key={item._id}>
-                            <li key={item._id} className="flex flex-row items-center space-x-2">
-                                <div className="flex flex-row justify-between border shadow  p-2 items-center text-sm space-x-2 w-3/4">
+                            <li key={item._id} className="flex flex-row space-x-2">
+                                <div className="flex flex-row border shadow p-2 text-sm space-x-2 w-3/4">
                                     <div>
                                         <img
-                                            className="w-20 h-auto"
+                                            className="w-1/3 h-auto"
                                             loading="eager"
                                             src={`${item.image}`}
                                             alt={`${item.title}`}
                                         />
                                         
                                     </div>
-                                    <div className="flex flex-col">
-                                        <div className="hidden lg:block">{item.title}</div>
+                                    <div className="flex flex-col items-start">
+                                        <div className="hidden lg:block h-1/2">{item.title}</div>
                                         <div className="flex flex-row space-x-2">
                                             <Counter 
                                                 handleDecrement={handleDecrement} 
@@ -104,7 +104,7 @@ class ViewCart extends React.Component<IProps, IState> {
                                                 item={item}
                                             />
                                             <div className="hidden lg:block">
-                                                {item.count} x €{item.price}
+                                                €{item.price}
                                             </div>
                                         </div>
                                     </div>
