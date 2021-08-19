@@ -17,9 +17,9 @@ class CartSummary extends React.Component<IProps> {
         const { cartItems } = this.props;
         return (
             <div>
-                <div className="bg-gray-300 border flex flex-col">
-                    <h2 className="px-2 py-2 text-gray-800 text-lg">Cart Summary</h2>
-                    <div>
+                <div className="border rounded shadow flex flex-col p-4">
+                    <h2 className="text-gray-800 text-lg border text-center font-semibold">Cart Summary</h2>
+                    <div className="flex flex-col space-y-2 m-2">
                         <div className="flex flex-row justify-between">
                             <p>Number of items: </p>
                             <p>{cartItems.length}</p>
@@ -30,12 +30,12 @@ class CartSummary extends React.Component<IProps> {
                         </div>
                         <div className="flex flex-row justify-between">
                             <p>Total: </p>
-                            <p>{cartItems
+                            <p>€{cartItems
                                 .map((item) => (item.count ? item.count * item.price : 0))
                                 .reduce((accumulator, currentValue) => accumulator + currentValue)}</p>
                         </div>
                         <button
-                            className="w-full flex items-center justify-center bg-blue-400 hover:bg-blue-800 text-white px-2 focus:outline-none"
+                            className="flex items-center justify-center boreder rounded bg-blue-400 hover:bg-blue-800 text-white p-2 focus:outline-none"
                             type="button"
                         >
                             <p>Checkout</p>

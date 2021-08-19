@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { ADD_PRODUCTS_CART, CartActionTypes, ICart, REMOVE_PRODUCTS_CART } from '../ActionTypes';
+import { ADD_PRODUCTS_CART, CartActionTypes, ICart, REMOVE_PRODUCTS_CART, REMOVE_CART } from '../ActionTypes';
 
 type ICartActionStates = {
     cartItems: ICart[];
@@ -15,6 +15,8 @@ const cartReducer = (state = cartDefaultState, action: CartActionTypes): ICartAc
         case ADD_PRODUCTS_CART:
             return { ...state, cartItems: [ ...action.payload.items ] };
         case REMOVE_PRODUCTS_CART:
+            return { ...state, cartItems: [ ...action.payload.items ] };
+        case REMOVE_CART:
             return { ...state, cartItems: [ ...action.payload.items ] };
         default:
             return { ...state };

@@ -1,4 +1,4 @@
-import { EDIT_PROFILE_USER, ADD_TO_CART_USER, REMOVE_FROM_CART_USER, GET_USER_FROM_TOKEN, ADD_TO_WISHLIST_USER, IUser, UserActionTypes, LOG_IN_USER } from '../ActionTypes';
+import { EDIT_PROFILE_USER, REMOVE_PRODUCTS_CART_USER, ADD_TO_CART_USER, REMOVE_FROM_CART_USER, GET_USER_FROM_TOKEN, ADD_TO_WISHLIST_USER, IUser, UserActionTypes, LOG_IN_USER } from '../ActionTypes';
 type IUserActionStates = {
     user: IUser;
 };
@@ -28,6 +28,8 @@ const userReducer = (state = userDefaultState, action: UserActionTypes): IUserAc
         case ADD_TO_CART_USER:
             return { ...state, user: { ...action.payload.user } };
         case REMOVE_FROM_CART_USER:
+            return { ...state, user: { ...action.payload.user } };
+        case REMOVE_PRODUCTS_CART_USER:
             return { ...state, user: { ...action.payload.user } };
         case ADD_TO_WISHLIST_USER:
             return { ...state, user: { ...action.payload.user } };

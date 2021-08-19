@@ -1,13 +1,24 @@
 import React from 'react';
 import { Slide } from 'react-awesome-reveal';
 import { connect } from 'react-redux';
-import { removeFromCart } from '../../actions/cartAction';
-import { removeFromUserCart } from '../../actions/userAction';
+import { removeFromCart, addToCart, removeItemsFromCart } from '../../actions/cartAction';
+import { removeFromUserCart, addToUserCart, removeItemsFromUserCart } from '../../actions/userAction';
 import { AppState } from '../../store';
-import { IProduct, IUser } from '../../ActionTypes';
+import { IUser } from '../../ActionTypes';
 import CartDisplay from './CartDisplay';
 import CartSummary from './CartSummary';
 import EmptyCart from './EmptyCart';
+
+type IProduct = {
+    _id: string;
+    title: string;
+    image: string;
+    description: string;
+    price: number;
+    availableSizes: string[];
+    count?: number;
+};
+
 
 type ICart = {
     _id: string;
@@ -27,7 +38,11 @@ type IProps = {
 
 type Actions = {
     removeFromCart: (cartItems: ICart[], item: ICart) => Promise<void>;
+    removeItemsFromCart: (cartItems: ICart[], product: IProduct) => Promise<void>; 
+    removeItemsFromUserCart: (user: IUser, item: IProduct) => Promise<void>; 
     removeFromUserCart: (user: IUser, item: ICart) => Promise<void>;
+    addToCart: (cartItems: ICart[], product: IProduct) => Promise<void>;
+    addToUserCart: (user: IUser, product: IProduct) => Promise<void>;
 }
 
 type IState = {
@@ -48,7 +63,14 @@ class CartPage extends React.Component<IProps, IState> {
     };
 
     handleRemoveFromCart = (item: ICart) => {
-        this.props.user._id != '' ? this.props.actions.removeFromUserCart(this.props.user, item) : this.props.actions.removeFromCart(this.props.cartItems, item);
+        this.props.user._id !== '' ? this.props.actions.removeFromUserCart(this.props.user, item) : this.props.actions.removeFromCart(this.props.cartItems, item);
+    }
+    handleIncrement = (item: IProduct) => {
+        this.props.user._id !== '' ? this.props.actions.addToUserCart(this.props.user, item) : this.props.actions.addToCart(this.props.cartItems, item); 
+    }
+    handleDecrement = (item: IProduct) => {
+        this.props.user._id === '' ? this.props.actions.removeItemsFromCart(this.props.cartItems, item): this.props.actions.removeItemsFromUserCart(this.props.user, item);
+
     }
 
     render(): JSX.Element {
@@ -56,23 +78,34 @@ class CartPage extends React.Component<IProps, IState> {
         const { isOpen } = this.state;
         return (
             <div>
+                <h1 className="text-center bg-gray-200 mt-10 mb-10 p-2">Welcome to your shopping cart! Click checkout to place the order.</h1>
                 {user.cart.length !== 0 || cartItems.length !== 0 ?
                     <div>
                     {user._id != '' ?
                         <div className="flex flex-row justify-between">
-                            <div className="w-3/4">
-                                <CartDisplay handleRemoveFromCart={this.handleRemoveFromCart} cartItems={user.cart} />
+                            <div className="w-2/3 border">
+                                <CartDisplay 
+                                    handleRemoveFromCart={this.handleRemoveFromCart} 
+                                    cartItems={user.cart} 
+                                    handleIncrement={this.handleIncrement} 
+                                    handleDecrement={this.handleDecrement}
+                                />
                             </div>
-                            <div className="w-1/4">
+                            <div className="w-1/3 border">
                                 <CartSummary cartItems={user.cart} />
                             </div>
     
                         </div> :
-                        <div className="flex flex-row justify-between">
-                            <div className="w-3/4">
-                                <CartDisplay handleRemoveFromCart={this.handleRemoveFromCart} cartItems={cartItems} />
+                        <div className="flex flex-row">
+                            <div className="w-2/3 border shadow rounded mx-10">
+                                <CartDisplay 
+                                    handleRemoveFromCart={this.handleRemoveFromCart} 
+                                    cartItems={cartItems} 
+                                    handleIncrement={this.handleIncrement}
+                                    handleDecrement={this.handleDecrement}
+                                />
                             </div>
-                            <div className="w-1/4 px-4">
+                            <div className="w-1/3 px-4">
                                 <CartSummary cartItems={cartItems} />
                             </div>
                         </div>
@@ -102,7 +135,12 @@ const mapStateToProps = (state: AppState): StateProps => ({
 const mapDispatchToProps = (dispatch: any): {actions: Actions} => ({
     actions: {
         removeFromCart: (cartItems: ICart[], item: ICart) => dispatch(removeFromCart(cartItems, item)),
-        removeFromUserCart: (user:IUser, item: ICart) => dispatch(removeFromUserCart(user, item))
+        removeItemsFromCart: (cartItems: ICart[], product: IProduct) => dispatch(removeItemsFromCart(cartItems, product)),
+        removeItemsFromUserCart: (user: IUser, item: IProduct) => dispatch(removeItemsFromUserCart(user, item)),
+        removeFromUserCart: (user:IUser, item: ICart) => dispatch(removeFromUserCart(user, item)),
+        addToCart: (cartItems: ICart[], product: IProduct) => dispatch(addToCart(cartItems, product)),
+        addToUserCart: (user: IUser, product: IProduct) => dispatch(addToUserCart(user, product))
+
     }
 }
 );

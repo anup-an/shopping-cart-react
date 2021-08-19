@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux';
 import axios from 'axios';
-import { EDIT_PROFILE_USER, LOG_IN_USER, ADD_TO_CART_USER, ADD_TO_WISHLIST_USER, GET_USER_FROM_TOKEN, IUser, IProduct, AppActions, REMOVE_FROM_CART_USER } from '../ActionTypes';
+import { EDIT_PROFILE_USER, LOG_IN_USER, ADD_TO_CART_USER, REMOVE_PRODUCTS_CART_USER, ADD_TO_WISHLIST_USER, GET_USER_FROM_TOKEN, IUser, IProduct, AppActions, REMOVE_FROM_CART_USER } from '../ActionTypes';
 axios.defaults.withCredentials = true;
 
 export type ICart = {
@@ -99,7 +99,36 @@ export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (
             }
         })
 }
+
+export const removeItemsFromUserCart = (loggedUser: IUser, product: IProduct) => async (
+    dispatch: Dispatch<AppActions>): Promise<void> => {
+    const cartItems: ICart[] = loggedUser.cart;
+    const userCartItems = []
     
+    for (let i=0; i < cartItems.length; i++ ){
+        if (cartItems[i]._id === product._id) {
+            if (cartItems[i].count && cartItems[i].count > 1){
+                cartItems[i].count -= 1;
+                userCartItems.push(cartItems[i]);
+            }
+        } else {
+            userCartItems.push(cartItems[i]);
+        }
+    }        
+    
+    loggedUser = { ...loggedUser, cart: [...userCartItems] };
+    const id = loggedUser._id;
+    const cart = loggedUser.cart; 
+    await axios.post(
+        `https://shopping-cart-app-react.herokuapp.com/api/users/${id}/update-cart`, { id, cart });
+        dispatch({
+            type: REMOVE_PRODUCTS_CART_USER,
+            payload: {
+                user: loggedUser
+            }
+        })
+}
+
 export const removeFromUserCart = (loggedUser: IUser, selectedCart: ICart) => async (
     dispatch: Dispatch<AppActions>) => {
     const cartItems = loggedUser ? [...loggedUser.cart].filter((element) => element._id !== selectedCart._id): [];

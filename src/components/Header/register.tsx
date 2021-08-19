@@ -100,7 +100,7 @@ class Register extends React.Component<IProps, IState> {
                                 >
                                     <input
                                         className="focus:outline-none text-sm"
-                                        id="firstName"
+                                        id="lastName"
                                         name="lastName"
                                         placeholder="Last Name"
                                         required

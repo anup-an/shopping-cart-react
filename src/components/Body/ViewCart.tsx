@@ -2,6 +2,7 @@ import React from 'react';
 import { Slide } from 'react-awesome-reveal';
 import Modal from 'react-modal';
 import Checkout from './Checkout';
+import Counter from '../CartPage/Counter';
 
 
 export type IProduct = {
@@ -27,6 +28,8 @@ export type ICart = {
 interface IProps {
     cartItems: ICart[];
     handleRemoveFromCart: (item: ICart) => void;
+    handleDecrement: (item: IProduct) => void;
+    handleIncrement: (item: IProduct) => void;
 }
 interface IState {
     cartIndex: number;
@@ -49,7 +52,7 @@ class ViewCart extends React.Component<IProps, IState> {
         
     }
     render() {
-        const { cartItems, handleRemoveFromCart } = this.props;
+        const { cartItems, handleRemoveFromCart, handleDecrement, handleIncrement } = this.props;
         const { cartIndex } = this.state;
         return (
             <div className="flex flex-col">
@@ -92,6 +95,11 @@ class ViewCart extends React.Component<IProps, IState> {
                                         />
                                         <div className="hidden lg:block">{item.title}</div>
                                     </div>
+                                    <Counter 
+                                        handleDecrement={handleDecrement} 
+                                        handleIncrement={handleIncrement} 
+                                        item={item}
+                                    />
                                     <div className="hidden lg:block">
                                         {item.count} x €{item.price}
                                     </div>

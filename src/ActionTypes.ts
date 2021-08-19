@@ -3,6 +3,8 @@ export const FILTER_PRODUCTS_SIZE = 'FILTER_PRODUCTS_SIZE';
 export const SORT_PRODUCTS_PRICE = 'SORT_PRODUCTS_PRICE';
 export const ADD_PRODUCTS_CART = 'ADD_PRODUCTS_CART';
 export const REMOVE_PRODUCTS_CART = 'REMOVE_PRODUCTS_CART';
+export const REMOVE_PRODUCTS_CART_USER = 'REMOVE_PRODUCTS_CART_USER';
+export const REMOVE_CART = 'REMOVE_CART';
 export const SEARCH_PRODUCTS = 'SEARCH_PRODUCTS';
 export const EDIT_PROFILE_USER = 'EDIT_PROFILE_USER';
 export const ADD_TO_CART_USER = 'ADD_TO_CART_USER';
@@ -54,6 +56,13 @@ export type AddToCartAction = {
 
 export type RemoveFromCartAction = {
     type: typeof REMOVE_PRODUCTS_CART;
+    payload: {
+        items: ICart[];
+    };
+};
+
+export type RemoveCartAction = {
+    type: typeof REMOVE_CART;
     payload: {
         items: ICart[];
     };
@@ -111,6 +120,13 @@ export type RemoveFromCartUserAction = {
     }
 }
 
+export type RemoveProductsCartUserAction = {
+    type: typeof REMOVE_PRODUCTS_CART_USER;
+    payload: {
+        user: IUser;
+    }
+}
+
 export type AddToWishlistUserAction = {
     type: typeof ADD_TO_WISHLIST_USER;
     payload: {
@@ -132,7 +148,7 @@ export type getUserFromTokenAction = {
     }
 }
 
-export type CartActionTypes = AddToCartAction | RemoveFromCartAction;
+export type CartActionTypes = AddToCartAction | RemoveFromCartAction | RemoveCartAction;
 
 export type ProductsActionTypes =
     | FetchProductsAction
@@ -140,6 +156,6 @@ export type ProductsActionTypes =
     | SortProductsAction
     | SearchProductsAction;
 
-export type UserActionTypes = EditProfileUserAction | AddToCartUserAction | AddToWishlistUserAction | RemoveFromCartUserAction | LogInUserAction | getUserFromTokenAction;
+export type UserActionTypes = EditProfileUserAction | AddToCartUserAction | AddToWishlistUserAction | RemoveFromCartUserAction | LogInUserAction | getUserFromTokenAction | RemoveProductsCartUserAction;
 
 export type AppActions = ProductsActionTypes | CartActionTypes | UserActionTypes;
