@@ -93,16 +93,22 @@ class ViewCart extends React.Component<IProps, IState> {
                                             src={`${item.image}`}
                                             alt={`${item.title}`}
                                         />
+                                        
+                                    </div>
+                                    <div className="flex flex-col">
                                         <div className="hidden lg:block">{item.title}</div>
+                                        <div className="flex flex-row space-x-2">
+                                            <Counter 
+                                                handleDecrement={handleDecrement} 
+                                                handleIncrement={handleIncrement} 
+                                                item={item}
+                                            />
+                                            <div className="hidden lg:block">
+                                                {item.count} x €{item.price}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <Counter 
-                                        handleDecrement={handleDecrement} 
-                                        handleIncrement={handleIncrement} 
-                                        item={item}
-                                    />
-                                    <div className="hidden lg:block">
-                                        {item.count} x €{item.price}
-                                    </div>
+                                    
                                 </div>
                                 <button onClick={() => handleRemoveFromCart(item)} type="button">
                                     

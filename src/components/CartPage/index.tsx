@@ -82,8 +82,8 @@ class CartPage extends React.Component<IProps, IState> {
                 {user.cart.length !== 0 || cartItems.length !== 0 ?
                     <div>
                     {user._id != '' ?
-                        <div className="flex flex-row justify-between">
-                            <div className="w-2/3 border">
+                        <div className="flex flex-row">
+                            <div className="w-2/3 border shadow rounded mx-10">
                                 <CartDisplay 
                                     handleRemoveFromCart={this.handleRemoveFromCart} 
                                     cartItems={user.cart} 
@@ -105,7 +105,7 @@ class CartPage extends React.Component<IProps, IState> {
                                     handleDecrement={this.handleDecrement}
                                 />
                             </div>
-                            <div className="w-1/3 px-4">
+                            <div className="w-1/3 border">
                                 <CartSummary cartItems={cartItems} />
                             </div>
                         </div>
