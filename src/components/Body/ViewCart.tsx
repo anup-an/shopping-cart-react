@@ -61,7 +61,7 @@ class ViewCart extends React.Component<IProps, IState> {
                 </div>
                 
                 <ul className="mx-5 flex flex-col space-y-4 text-sm mt-4">
-                    <li>
+                    <li className="flex justify-center">
                         <button
                             type="button"
                             className={`border shadow 
@@ -84,7 +84,7 @@ class ViewCart extends React.Component<IProps, IState> {
                     </li>
                     {cartItems.map((item, index) => (index >= cartIndex && index < cartIndex + 5) ? (
                         <Slide direction="right" key={item._id}>
-                            <li key={item._id} className="flex flex-row space-x-2">
+                            <li key={item._id} className="flex flex-row space-x-2 justify-center">
                                 <div className="flex flex-row border shadow p-2 text-sm space-x-2 w-3/4">
                                     <div>
                                         <img
@@ -96,13 +96,13 @@ class ViewCart extends React.Component<IProps, IState> {
                                     </div>
                                     <div className="flex flex-col items-start">
                                         <div className="hidden lg:block h-2/3">{item.title}</div>
-                                        <div className="flex flex-row items-end space-x-2">
+                                        <div className="flex flex-row items-center space-x-2">
                                             <button 
                                                 onClick={() => handleRemoveFromCart(item)} 
                                                 type="button"
                                             >
                                                 <svg 
-                                                    className="text-red-500 w-4 h-4 hover:bg-red-500 hover:text-white"
+                                                    className="text-red-500 w-6 h-6 hover:bg-red-500 hover:text-white"
                                                     xmlns="http://www.w3.org/2000/svg" 
                                                     fill="none" 
                                                     stroke="currentColor" 
