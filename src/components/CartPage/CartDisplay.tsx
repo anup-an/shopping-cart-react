@@ -38,10 +38,10 @@ class CartDisplay extends React.Component<IProps> {
         return (
             <div>
                 
-                <ul className="flex flex-col space-y-4 text-sm p-4">
+                <ul className="flex flex-col text-sm p-4">
                     
-                    {cartItems.map((item) => (
-                            <li key={item._id} className="flex flex-row justify-between items-center border rounded">
+                    {cartItems.map((item, index) => (
+                            <li key={item._id} className={`flex flex-row justify-between items-center ${index < cartItems.length - 1 ? 'border-b': ''}`}>
                                 
                                 <div className="grid grid-cols-3 grid-flow-row gap-4 p-4 w-full">
                                     <div className="flex items-center justify-center p-2">

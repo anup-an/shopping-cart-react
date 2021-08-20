@@ -132,7 +132,7 @@ class ViewCart extends React.Component<IProps, IState> {
                             </li>
                         </Slide>
                     ) : '')}
-                <li>
+                <li className="flex justify-center">
                     <button
                         type="button"
                         className={`border shadow 
