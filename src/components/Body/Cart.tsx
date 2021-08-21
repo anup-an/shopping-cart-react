@@ -76,15 +76,16 @@ class Cart extends React.Component<IProps, IState> {
                             handleRemoveFromCart={this.handleRemoveFromCart} 
                             cartItems={user.cart}  
                         />
-                        <CartSum cartItems={user.cart} />
+                        <CartSum cartItems={user.cart} user={user}/>
                     </div> :
                     <div>
                         <ViewCart 
-                        handleIncrement={this.handleIncrement}
-                        handleDecrement={this.handleDecrement}
-                        handleRemoveFromCart={this.handleRemoveFromCart} 
-                        cartItems={cartItems} />
-                        <CartSum cartItems={cartItems} />
+                            handleIncrement={this.handleIncrement}
+                            handleDecrement={this.handleDecrement}
+                            handleRemoveFromCart={this.handleRemoveFromCart} 
+                            cartItems={cartItems} 
+                        />
+                        <CartSum cartItems={cartItems} user={user}/>
                     </div>
                 }
             </div>

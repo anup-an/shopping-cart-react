@@ -1,7 +1,9 @@
 /* eslint-disable react/no-unused-state */
 import React from 'react';
 import { Fade } from 'react-awesome-reveal';
-import connect from 'react-redux';
+import { connect } from 'react-redux';
+import { IUser } from '../../ActionTypes';
+import { AppState } from '../../store';
 import axios from 'axios';
 
 interface IProps {
@@ -27,6 +29,7 @@ interface IState {
     postcode: string;
     city: string;
     country: string;
+    isSubmitted: boolean;
 }
 
 interface ICart {
@@ -55,23 +58,22 @@ class Checkout extends React.Component<IProps, IState> {
 
     generateOrder = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        const { name, email, address, postcode, city, country } = this.state;
-        const { user } = this.props;
+        const { name, email, address, postcode, city, country, isSubmitted } = this.state;
         const order = {
             "name": name,
-            "user_id": user._id,
+            "user_id": this.props.user._id,
             "email": email,
             "address": address,
             "postcode": postcode,
             "city": city,
             "country": country,
-            "cart": user.cart,
+            "cart": this.props.user.cart,
         };
         axios.post('https://shopping-cart-app-react.herokuapp.com/api/orders', { order }).then((response) => {
-            response.status == 200 ? this.setState({ ...state, isSubmitted: true}): ''
-        }).catch(error){
+            response.status == 200 ? this.setState({ ...this.state, isSubmitted: true}): ''
+        }).catch((error) => {
             console.log(error);
-        }
+        });
 
     };
 
@@ -84,6 +86,7 @@ class Checkout extends React.Component<IProps, IState> {
     };
 
     render(): JSX.Element {
+        const { isSubmitted } = this.state;
         return (
             <div className="mx-5 p-2 z-20">
                 {isSubmitted ? 
@@ -189,7 +192,6 @@ class Checkout extends React.Component<IProps, IState> {
                             <button
                                 type="submit"
                                 className="p-2 bg-blue-400 hover:bg-blue-800 text-white border rounded"
-                                onClick=
                             >
                                 Submit
                             </button>
@@ -198,12 +200,9 @@ class Checkout extends React.Component<IProps, IState> {
                 </Fade>
                 }
             </div>
-        );
+        )
+        
     }
 }
 
-const mapStateToProps = (state: AppState) => ({
-    user: state.user.user
-})
-
-export default connect(mapStateToProps, null)(Checkout);
+export default Checkout;

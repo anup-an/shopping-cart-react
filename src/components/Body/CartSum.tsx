@@ -1,10 +1,11 @@
 import React from 'react';
 import Modal from 'react-modal';
 import Checkout from './Checkout';
-
+import { IUser } from '../../ActionTypes';
 
 interface IProps {
     cartItems: ICart[];
+    user:IUser;
 }
 interface IState {
     isOpen: boolean;
@@ -34,7 +35,7 @@ class CartSum extends React.Component<IProps, IState>{
     };
 
     render() {
-        const { cartItems } = this.props;
+        const { cartItems, user } = this.props;
         return (
             <div>
                 {cartItems.length > 0 ? (
@@ -83,7 +84,7 @@ class CartSum extends React.Component<IProps, IState>{
                                 </button>
                             </div>
                         </div>
-                        <Checkout cartItems={cartItems} />
+                        <Checkout cartItems={cartItems} user={user}/>
                     </Modal>
                 </div>
             </div>
