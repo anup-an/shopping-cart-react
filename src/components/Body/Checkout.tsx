@@ -1,16 +1,21 @@
 /* eslint-disable react/no-unused-state */
 import React from 'react';
 import { Fade } from 'react-awesome-reveal';
+import connect from 'react-redux';
+import axios from 'axios';
 
 interface IProps {
     cartItems: ICart[];
+    user: IUser;
 }
 
 interface IOrder {
+    _id: string;
+    user_id: string;
     name: string;
     email: string;
     address: string;
-    postalcode: string;
+    postcode: string;
     city: string;
     country: string;
 }
@@ -19,10 +24,11 @@ interface IState {
     name: string;
     email: string;
     address: string;
-    postalcode: string;
+    postcode: string;
     city: string;
     country: string;
 }
+
 interface ICart {
     _id: string;
     title: string;
@@ -40,25 +46,35 @@ class Checkout extends React.Component<IProps, IState> {
             name: '',
             email: '',
             address: '',
-            postalcode: '',
+            postcode: '',
             city: '',
             country: '',
+            isSubmitted: false,
         };
     }
 
     generateOrder = (event: React.FormEvent<HTMLFormElement>): void => {
         event.preventDefault();
-        const { name, email, address, postalcode, city, country } = this.state;
+        const { name, email, address, postcode, city, country } = this.state;
+        const { user } = this.props;
         const order = {
-            name,
-            email,
-            address,
-            postalcode,
-            city,
-            country,
-            cartItems: this.props,
+            "name": name,
+            "user_id": user._id,
+            "email": email,
+            "address": address,
+            "postcode": postcode,
+            "city": city,
+            "country": country,
+            "cart": user.cart,
         };
+        axios.post('https://shopping-cart-app-react.herokuapp.com/api/orders', { order }).then((response) => {
+            response.status == 200 ? this.setState({ ...state, isSubmitted: true}): ''
+        }).catch(error){
+            console.log(error);
+        }
+
     };
+
 
     handleInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
         this.setState((state) => ({
@@ -70,6 +86,8 @@ class Checkout extends React.Component<IProps, IState> {
     render(): JSX.Element {
         return (
             <div className="mx-5 p-2 z-20">
+                {isSubmitted ? 
+                <div>Order submitted successfully</div>:
                 <Fade>
                     <div className="text-2xl font-medium text-center text-blue-500">Checkout Form</div>
                     <div className="text-center text-sm mb-4">
@@ -123,13 +141,13 @@ class Checkout extends React.Component<IProps, IState> {
                             </label>
                         </div>
                         <div>
-                            <label htmlFor="postalcode" className=" flex flex-col">
+                            <label htmlFor="postcode" className=" flex flex-col">
                                 {' '}
                                 <div>Postal code</div>
                                 <input
                                     type="text"
-                                    id="postalcode"
-                                    name="postalcode"
+                                    id="postcode"
+                                    name="postcode"
                                     placeholder="Type here"
                                     className="p-2 border rounded"
                                     required
@@ -171,15 +189,21 @@ class Checkout extends React.Component<IProps, IState> {
                             <button
                                 type="submit"
                                 className="p-2 bg-blue-400 hover:bg-blue-800 text-white border rounded"
+                                onClick=
                             >
                                 Submit
                             </button>
                         </div>
                     </form>
                 </Fade>
+                }
             </div>
         );
     }
 }
 
-export default Checkout;
+const mapStateToProps = (state: AppState) => ({
+    user: state.user.user
+})
+
+export default connect(mapStateToProps, null)(Checkout);

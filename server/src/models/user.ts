@@ -35,7 +35,7 @@ export interface ICart {
     count?: number;
 }
 
-const CartSchema = new mongoose.Schema({
+export const CartSchema = new mongoose.Schema({
     id: { type: String },
     title: { type: String },
     image: { type: String },
@@ -45,7 +45,7 @@ const CartSchema = new mongoose.Schema({
     count: { type: Number },
 });
 
-const ProductSchema = new mongoose.Schema({
+export const ProductSchema = new mongoose.Schema({
     id: { type: String },
     title: { type: String },
     image: { type: String },

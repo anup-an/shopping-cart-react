@@ -55,7 +55,7 @@ class ViewCart extends React.Component<IProps, IState> {
         const { cartItems, handleRemoveFromCart, handleDecrement, handleIncrement } = this.props;
         const { cartIndex } = this.state;
         return (
-            <div className="flex flex-col">
+            <div className="flex flex-col hidden lg:block">
                 <div className="flex flex-row justify-center h-16 items-center border-b-2 mx-4">
                     <div className="text-sm">{cartItems.length} items in cart</div>
                 </div>
