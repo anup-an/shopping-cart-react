@@ -59,6 +59,7 @@ class CartSummary extends React.Component<IProps, IState> {
                         <button
                             className="flex items-center justify-center boreder rounded bg-blue-400 hover:bg-blue-800 text-white p-2 focus:outline-none"
                             type="button"
+                            onClick={this.openModal}
                         >
                             <p>Checkout</p>
                         </button>
