@@ -1,14 +1,11 @@
 import React from 'react';
-import Modal from 'react-modal';
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import Checkout from './Checkout';
 import { IUser } from '../../ActionTypes';
 
-interface IProps {
+interface IProps extends RouteComponentProps {
     cartItems: ICart[];
-    user:IUser;
-}
-interface IState {
-    isOpen: boolean;
+    user: IUser;
 }
 
 export type ICart = {
@@ -21,21 +18,10 @@ export type ICart = {
     count?: number;
 };
 
-class CartSum extends React.Component<IProps, IState>{
-    constructor(props: IProps) {
-        super(props);
-        this.state = { isOpen: false };
-    }
-    closeModal = (): void => {
-        this.setState({ isOpen: false });
-    };
-
-    openModal = (): void => {
-        this.setState({ isOpen: true });
-    };
+class CartSum extends React.Component<IProps>{    
 
     render() {
-        const { cartItems, user } = this.props;
+        const { cartItems, user, history } = this.props;
         return (
             <div>
                 {cartItems.length > 0 ? (
@@ -47,17 +33,17 @@ class CartSum extends React.Component<IProps, IState>{
                                 .reduce((accumulator, currentValue) => accumulator + currentValue)}
                         </div>
                         <button
-                            onClick={this.openModal}
+                            onClick={() => history.push('/cart')}
                             className="bg-blue-400 hover:bg-blue-800 border rounded text-white p-2 focus:outline-none"
                             type="button"
                         >
-                            Checkout
+                            Go To Cart
                         </button>
                     </div>
                 ) : (
                     ''
                 )}
-                <div>
+                {/* <div>
                     <Modal
                         isOpen={this.state.isOpen}
                         onRequestClose={this.closeModal}
@@ -86,10 +72,10 @@ class CartSum extends React.Component<IProps, IState>{
                         </div>
                         <Checkout cartItems={cartItems} user={user}/>
                     </Modal>
-                </div>
+                </div> */}
             </div>
         )
     }
 }
 
-export default CartSum;
+export default withRouter(CartSum);

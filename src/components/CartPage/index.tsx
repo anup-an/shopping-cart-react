@@ -92,7 +92,7 @@ class CartPage extends React.Component<IProps, IState> {
                                 />
                             </div>
                             <div className="w-1/3">
-                                <CartSummary cartItems={user.cart} />
+                                <CartSummary cartItems={user.cart} user={user}/>
                             </div>
     
                         </div> :
@@ -106,7 +106,7 @@ class CartPage extends React.Component<IProps, IState> {
                                 />
                             </div>
                             <div className="w-1/3">
-                                <CartSummary cartItems={cartItems} />
+                                <CartSummary cartItems={cartItems} user={user} />
                             </div>
                         </div>
                     }
