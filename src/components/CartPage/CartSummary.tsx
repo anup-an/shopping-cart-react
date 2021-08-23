@@ -71,7 +71,7 @@ class CartSummary extends React.Component<IProps, IState> {
                         isOpen={this.state.isOpen}
                         onRequestClose={this.closeModal}
                         overlayClassName="fixed inset-0 flex justify-center items-center bg-blue-800 bg-opacity-75"
-                        className="relative bg-white overflow-y-auto rounded-lg focus:outline-none"
+                        className="relative bg-white overflow-y-auto rounded-lg focus:outline-none w-screen h-3/4"
                     >
                         <div className="p-1">
                             <div className="flex justify-end">
