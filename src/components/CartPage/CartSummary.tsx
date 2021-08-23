@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
 import { IUser } from '../../ActionTypes';
+import Login from '../Header/login';
 import Checkout from './Checkout';
 
 
@@ -92,7 +93,10 @@ class CartSummary extends React.Component<IProps, IState> {
                                 </button>
                             </div>
                         </div>
-                        <Checkout cartItems={cartItems} user={user}/>
+                        {user._id !== '' ? 
+                            <Checkout cartItems={cartItems} user={user} /> :
+                            <Login />
+                        }
                     </Modal>
                 </div>
             </div>
