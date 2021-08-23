@@ -40,7 +40,7 @@ class Login extends React.Component<IProps, IState> {
         return (
             <div>
                 {user?._id == "" ?
-                    <div className="flex flex-row flex items-center justify-center h-screen">
+                    <div className="flex flex-row flex items-center justify-center">
                         <div className="bg-white border rounded-lg shadow-xl w-2/3 flex flex-row bg-blue-800">
                             <div className="h-96 w-1/2 text-white p-4 flex items-center justify-center flex-col">
                                 <div className="text-2xl">Welcome to the E-Shop!</div>
