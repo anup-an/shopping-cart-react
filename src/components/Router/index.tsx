@@ -15,12 +15,14 @@ const Routers = () => {
                 <Body />
             </Route>
             <Route path="/login">
-                <div className="h-screen">
+                <div className="h-screen flex justify-center items-center">
                     <Login />
                 </div>
             </Route>
             <Route path="/register">
-                <Register />
+                <div className="h-screen flex justify-center items-center">
+                    <Register />
+                </div>
             </Route>
             <Route path="/cart">
                 <CartPage />
