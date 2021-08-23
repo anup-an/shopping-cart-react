@@ -15,7 +15,9 @@ const Routers = () => {
                 <Body />
             </Route>
             <Route path="/login">
-                <Login />
+                <div className="flex items-center justify-center">
+                    <Login />
+                </div>
             </Route>
             <Route path="/register">
                 <Register />
