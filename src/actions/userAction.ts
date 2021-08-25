@@ -48,6 +48,7 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
                     "price": cartItems[j].price,
                     "availableSizes": cartItems[j].availableSizes,
                 }
+                console.log(i, j, loggedUser, product)
                 addToUserCart(loggedUser, product);
             }            
         }
