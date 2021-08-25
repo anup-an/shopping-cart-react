@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { logInUser } from '../../actions/userAction';
-import { IUser, IProduct } from '../../ActionTypes';
+import { IUser, IProduct, ICart } from '../../ActionTypes';
 import { AppState } from '../../store';
 
 
@@ -20,10 +20,11 @@ interface IState {
 interface IProps {
     actions: Actions;
     user: IUser;
+    cartItems: ICart[];
 }
 
 interface Actions {
-    logInUser: (email: string, password: string) => Promise<void>;
+    logInUser: (email: string, password: string, cartItems: ICart[]) => Promise<void>;
 }
 
 
@@ -39,7 +40,7 @@ class Register extends React.Component<IProps, IState> {
         event?.preventDefault();
         const { email, password, firstName, lastName } = this.state;
         axios.post('https://shopping-cart-app-react.herokuapp.com/api/signup', { email, password, firstName, lastName }).then((response) => {
-            response.data.status == "success" ? this.props.actions.logInUser(this.state.email, this.state.password) : '';
+            response.data.status == "success" ? this.props.actions.logInUser(this.state.email, this.state.password, this.props.cartItems) : '';
         });
     };
     render() {
@@ -193,17 +194,20 @@ class Register extends React.Component<IProps, IState> {
         );
     }
 }
+
 interface StateProps {
     user: IUser;
+    cartItems: ICart[];
 }
 
 const mapStateToProps = (state: AppState): StateProps => ({
     user: state.user.user,
+    cartItems: state.cartProducts.cartItems,
 });
 
 const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
     actions: {
-        logInUser: (email: string, password: string) => dispatch(logInUser(email,password))
+        logInUser: (email: string, password: string, cartItems: ICart[]) => dispatch(logInUser(email, password, cartItems))
     },
 });
 

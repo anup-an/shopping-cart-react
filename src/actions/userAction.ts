@@ -1,5 +1,6 @@
 import { Dispatch } from 'redux';
 import axios from 'axios';
+import { removeFromCart } from './cartAction';
 import { EDIT_PROFILE_USER, LOG_IN_USER, ADD_TO_CART_USER, REMOVE_PRODUCTS_CART_USER, ADD_TO_WISHLIST_USER, GET_USER_FROM_TOKEN, IUser, IProduct, AppActions, REMOVE_FROM_CART_USER } from '../ActionTypes';
 axios.defaults.withCredentials = true;
 
@@ -24,17 +25,34 @@ const runInLoop = () => {
     }, 5000)
 }
 
-export const logInUser = (email: string, password: string) => async (
+export const logInUser = (email: string, password: string, cartItems: ICart[]) => async (
     dispatch: Dispatch<AppActions>): Promise<void> => {
     
     const loggedUser: IUser = await (await axios.post(
         'https://shopping-cart-app-react.herokuapp.com/api/login', { email, password }, { withCredentials: true })).data.data;
+    
     dispatch({
         type: LOG_IN_USER,
         payload: {
             user: loggedUser
         }
     })
+    if (cartItems !== []) {
+        for (let j = 0; j++; j < cartItems.length){
+            for (let i = 0; i++; i < cartItems[j].count){
+                let product: IProduct = {
+                    "_id": cartItems[j]._id,
+                    "title": cartItems[j].title,
+                    "image": cartItems[j].image,
+                    "description": cartItems[j].description,
+                    "price": cartItems[j].price,
+                    "availableSizes": cartItems[j].availableSizes,
+                }
+                addToUserCart(loggedUser, product);
+            }            
+        }
+        localStorage.setItem('cartItems', JSON.stringify([]));
+    }
     setTimeout(() => {
         reIssueAccessToken();
     }, 5000)

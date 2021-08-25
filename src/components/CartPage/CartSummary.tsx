@@ -95,7 +95,10 @@ class CartSummary extends React.Component<IProps, IState> {
                         </div>
                         {user._id !== '' ? 
                             <Checkout cartItems={cartItems} user={user} /> :
-                            <Login />
+                            <div className="flex flex-col justify-center items-center">
+                                <Login />
+                                <p className="text-center text-xl text-blue-400 text-semibold">Please login to continue...</p>
+                            </div>
                         }
                     </Modal>
                 </div>

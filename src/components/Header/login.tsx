@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { logInUser } from '../../actions/userAction';
-import { IUser, IProduct } from '../../ActionTypes';
+import { IUser, IProduct, ICart } from '../../ActionTypes';
 import { AppState } from '../../store';
 
 interface IState {
@@ -15,10 +15,11 @@ interface IState {
 interface IProps {
     actions: Actions;
     user: IUser;
+    cartItems: ICart[];
 }
 
 interface Actions {
-    logInUser: (email: string, password: string) => Promise<void>;
+    logInUser: (email: string, password: string, cartItems: ICart[]) => Promise<void>;
 }
 
 class Login extends React.Component<IProps, IState> {
@@ -31,7 +32,7 @@ class Login extends React.Component<IProps, IState> {
     };
     handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
-        this.props.actions.logInUser(this.state.email, this.state.password);
+        this.props.actions.logInUser(this.state.email, this.state.password, this.props.cartItems);
     };
     render(): JSX.Element {
         const { email, password } = this.state;
@@ -149,15 +150,17 @@ class Login extends React.Component<IProps, IState> {
 
 interface StateProps {
     user: IUser;
+    cartItems: ICart[];
 }
 
 const mapStateToProps = (state: AppState): StateProps => ({
     user: state.user.user,
+    cartItems: state.cartProducts.cartItems,
 });
 
 const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
     actions: {
-        logInUser: (email: string, password: string) => dispatch(logInUser(email,password))
+        logInUser: (email: string, password: string, cartItems: ICart[]) => dispatch(logInUser(email, password, cartItems))
     },
 });
 
