@@ -38,6 +38,7 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
         }
     })
     if (cartItems !== []) {
+        console.log(cartItems);
         for (let j = 0; j++; j < cartItems.length){
             for (let i = 0; i++; i < cartItems[j].count){
                 let product: IProduct = {
@@ -48,7 +49,6 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
                     "price": cartItems[j].price,
                     "availableSizes": cartItems[j].availableSizes,
                 }
-                console.log(i, j, loggedUser, product)
                 addToUserCart(loggedUser, product);
             }            
         }
