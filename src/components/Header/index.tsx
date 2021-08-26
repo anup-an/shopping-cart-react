@@ -1,6 +1,7 @@
 import React from 'react';
 import Modal from 'react-modal';
-import { Route, Switch } from 'react-router-dom';
+import { Route, RouteComponentProps, Switch } from 'react-router-dom';
+import { withRouter } from "react-router";
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { searchProducts } from '../../actions/productAction';
@@ -15,7 +16,7 @@ type Actions = {
     logOutUser: () => Promise<void>;
 };
 
-type IProps = {
+interface IProps extends RouteComponentProps {
     actions: Actions;
     user: IUser;
 };
@@ -45,6 +46,7 @@ class Header extends React.Component<IProps, IState> {
     handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         this.props.actions.searchProducts(this.state.keywords);
+        this.props.history.push(`/search:keyword=${this.state.keywords}`);
     };
     handleLogOut = () => {
         const { user } = this.props;
@@ -148,4 +150,4 @@ const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
         logOutUser: () => dispatch(logOutUser()),
     },
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));

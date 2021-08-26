@@ -23,7 +23,7 @@ class CartSum extends React.Component<IProps>{
     render() {
         const { cartItems, user, history } = this.props;
         return (
-            <div>
+            <div className="hidden lg:block">
                 {cartItems.length > 0 ? (
                     <div className="flex flex-col md:flex-row justify-between items-center mx-5 mt-10 text-sm">
                         <div>

@@ -11,6 +11,9 @@ const Routers = () => {
             <Route exact path="/">
                 <Body />
             </Route>
+            <Route path="/search">
+                <Body />
+            </Route>
             <Route path="/user">
                 <Body />
             </Route>
