@@ -44,7 +44,7 @@ class CartDisplay extends React.Component<IProps> {
                             <li key={item._id} className={`flex flex-row justify-between items-center ${index < cartItems.length - 1 ? 'border-b': ''}`}>
                                 
                                 <div className="grid grid-cols-2 lg:grid-cols-3 grid-flow-row gap-4 p-4 w-full">
-                                    <div className="flex items-center justify-center p-2">
+                                    <div className="flex lg:items-center justify-center p-2">
                                         <img
                                             loading="eager"
                                             src={`${item.image}`}
@@ -56,7 +56,7 @@ class CartDisplay extends React.Component<IProps> {
                                             <p className="text-lg font-semibold">{item.title}</p>
                                             <p>PRICE: €{item.price}</p>
                                         </div>
-                                        <div className="flex lg:items-end">
+                                        <div className="flex items-end">
                                             <button 
                                                 onClick={() => handleRemoveFromCart(item)} 
                                                 type="button"
