@@ -27,8 +27,8 @@ class App extends React.Component<IProps>{
                 <div className="fixed w-full z-10">
                     <Header />
                 </div>
-                <div className="h-screen w-full mt-20">
-                        <Routers />
+                <div className="w-full mt-20 border">
+                    <Routers />
                 </div>
             </div>
         </BrowserRouter>
