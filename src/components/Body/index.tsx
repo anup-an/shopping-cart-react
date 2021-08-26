@@ -31,7 +31,7 @@ class Body extends React.Component<IProps>{
             <div>
                 {!isLoading ?
                     <div className="flex flex-row justify-between w-full">
-                        <div className="w-full lg:w-3/4">
+                        <div className="w-full xl:w-3/4">
                             <div className="mx-10 mt-4">
                                 <Filter />
                             </div>
