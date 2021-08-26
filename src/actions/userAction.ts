@@ -31,16 +31,10 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
     const loggedUser: IUser = await (await axios.post(
         'https://shopping-cart-app-react.herokuapp.com/api/login', { email, password }, { withCredentials: true })).data.data;
     
-    dispatch({
-        type: LOG_IN_USER,
-        payload: {
-            user: loggedUser
-        }
-    })
+    const items = loggedUser.cart;
+
     if (cartItems.length > 0) {
-        console.log(cartItems)
         for (let j = 0; j < cartItems.length; j++){
-            console.log(cartItems[j]);
             for (let i = 0; i < cartItems[j].count; i++){
                 let product: IProduct = {
                     "_id": cartItems[j]._id,
@@ -50,12 +44,34 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
                     "price": cartItems[j].price,
                     "availableSizes": cartItems[j].availableSizes,
                 }
-                console.log(product);
-                addToUserCart(loggedUser, product);
+                if (items.length === 0) {
+                    items.unshift({...product, count: 1})
+                } else {
+                    for (let i = 0; i < items.length; i++){
+                        if (product._id === items[i]._id) {
+                            items[i].count += 1
+                        } else {
+                            items.unshift({ ...product, count: 1 })
+                        }
+                    }
+                }
             }            
         }
         localStorage.setItem('cartItems', JSON.stringify([]));
     }
+    loggedUser.cart = [...items];
+    const id = loggedUser._id;
+    const cart = loggedUser.cart; 
+    await axios.post(
+        `https://shopping-cart-app-react.herokuapp.com/api/users/${id}/update-cart`, { id, cart });
+    
+    dispatch({
+        type: LOG_IN_USER,
+        payload: {
+            user: loggedUser
+        }
+    })
+    
     setTimeout(() => {
         reIssueAccessToken();
     }, 5000)
