@@ -57,14 +57,14 @@ class Header extends React.Component<IProps, IState> {
             <div className="flex flex-row bg-blue-800 text-white text-xl justify-between p-4 items-center">
                 <div className="block lg:hidden">
                     <svg
-                        className="w-6 h-6 text-white"
                         xmlns="http://www.w3.org/2000/svg"
                         width="24" height="24"
                         fill="none"
                         stroke="currentColor"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        strokeWidth="2" class="feather feather-align-justify"
+                        strokeWidth="2"
+                        className="feather feather-align-justify w-6 h-6 text-white"
                     >
                         <path d="M21 10H3M21 6H3M21 14H3M21 18H3" />
                     </svg>
