@@ -37,8 +37,9 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
             user: loggedUser
         }
     })
-    if (cartItems !== []) {
+    if (cartItems.length > 0) {
         for (let j = 0; j < cartItems.length; j++){
+            console.log(cartItems[j]);
             for (let i = 0; i < cartItems[j].count; i++){
                 let product: IProduct = {
                     "_id": cartItems[j]._id,
@@ -48,6 +49,7 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
                     "price": cartItems[j].price,
                     "availableSizes": cartItems[j].availableSizes,
                 }
+                console.log(product);
                 addToUserCart(loggedUser, product);
             }            
         }
