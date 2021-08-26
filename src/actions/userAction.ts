@@ -72,12 +72,6 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
     await axios.post(
         `https://shopping-cart-app-react.herokuapp.com/api/users/${id}/update-cart`, { id, cart });
     
-    dispatch({
-            type: ADD_TO_CART_USER,
-            payload: {
-                user: loggedUser
-            }
-    })
     
     setTimeout(() => {
         reIssueAccessToken();
