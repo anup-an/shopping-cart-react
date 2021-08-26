@@ -46,7 +46,7 @@ class Header extends React.Component<IProps, IState> {
     handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         this.props.actions.searchProducts(this.state.keywords);
-        this.props.history.push(`/search:keyword=${this.state.keywords}`);
+        this.props.history.push(`/search`);
     };
     handleLogOut = () => {
         const { user } = this.props;

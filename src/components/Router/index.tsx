@@ -28,6 +28,11 @@ const Routers = () => {
             <Route path="/cart">
                 <CartPage />
             </Route>
+            <Route>
+                <div>
+                    Error 404. Page not found.
+                </div>
+            </Route>
         </Switch>
     );
 };
