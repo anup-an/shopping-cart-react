@@ -28,7 +28,9 @@ class App extends React.Component<IProps>{
                     <Header />
                 </div>
                 <div className="h-screen flex items-center justify-center w-full">
-                    <Routers />
+                    <div className="mt-20">
+                        <Routers />
+                    </div>
                 </div>
             </div>
         </BrowserRouter>

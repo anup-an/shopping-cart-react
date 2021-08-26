@@ -9,19 +9,13 @@ const Routers = () => {
     return (
         <Switch>
             <Route exact path="/">
-                <div className="w-full flex justify-center items-center mt-20">
-                    <Body />
-                </div>
+                <Body />
             </Route>
             <Route path="/search">
-                <div className="w-full flex justify-center items-center mt-20">
-                    <Body />
-                </div>
+                <Body />
             </Route>
             <Route path="/user">
-                <div className="w-full flex justify-center items-center mt-20">
-                    <Body />
-                </div>
+                <Body />
             </Route>
             <Route path="/login">
                 <div className="w-full flex justify-center items-center">
@@ -32,9 +26,7 @@ const Routers = () => {
                 <Register />
             </Route>
             <Route path="/cart">
-                <div className="w-full flex justify-center items-center mt-20">
-                    <CartPage />
-                </div>
+                <CartPage />
             </Route>
             <Route>
                 <div>

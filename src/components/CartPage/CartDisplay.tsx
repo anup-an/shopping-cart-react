@@ -46,6 +46,7 @@ class CartDisplay extends React.Component<IProps> {
                                 <div className="grid grid-cols-2 lg:grid-cols-3 grid-flow-row gap-4 p-4 w-full">
                                     <div className="flex lg:items-center justify-center p-2">
                                         <img
+                                            className="w-full h-auto"                                       
                                             loading="eager"
                                             src={`${item.image}`}
                                             alt={`${item.title}`}
