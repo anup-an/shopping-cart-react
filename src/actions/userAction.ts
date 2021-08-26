@@ -39,7 +39,7 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
     })
     
 
-    if (cartItems.length > 0) {
+    /* if (cartItems.length > 0) {
         const items = loggedUser.cart;
         for (let j = 0; j < cartItems.length; j++){
             for (let i = 0; i < cartItems[j].count; i++){
@@ -77,7 +77,7 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
                     user: loggedUser
                 }
         })
-    }
+    } */
     
     setTimeout(() => {
         reIssueAccessToken();
