@@ -38,9 +38,9 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
         }
     })
     
-    const items = loggedUser.cart;
 
     if (cartItems.length > 0) {
+        const items = loggedUser.cart;
         for (let j = 0; j < cartItems.length; j++){
             for (let i = 0; i < cartItems[j].count; i++){
                 let product: IProduct = {
@@ -65,13 +65,19 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
             }            
         }
         localStorage.setItem('cartItems', JSON.stringify([]));
+        loggedUser.cart = [...items];
+        const id = loggedUser._id;
+        const cart = loggedUser.cart; 
+        await axios.post(
+            `https://shopping-cart-app-react.herokuapp.com/api/users/${id}/update-cart`, { id, cart });
+        
+        dispatch({
+                type: ADD_TO_CART_USER,
+                payload: {
+                    user: loggedUser
+                }
+        })
     }
-    loggedUser.cart = [...items];
-    const id = loggedUser._id;
-    const cart = loggedUser.cart; 
-    await axios.post(
-        `https://shopping-cart-app-react.herokuapp.com/api/users/${id}/update-cart`, { id, cart });
-    
     
     setTimeout(() => {
         reIssueAccessToken();
