@@ -31,6 +31,13 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
     const loggedUser: IUser = await (await axios.post(
         'https://shopping-cart-app-react.herokuapp.com/api/login', { email, password }, { withCredentials: true })).data.data;
     
+    dispatch({
+        type: LOG_IN_USER,
+        payload: {
+            user: loggedUser
+        }
+    })
+    
     const items = loggedUser.cart;
 
     if (cartItems.length > 0) {
@@ -66,10 +73,10 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
         `https://shopping-cart-app-react.herokuapp.com/api/users/${id}/update-cart`, { id, cart });
     
     dispatch({
-        type: LOG_IN_USER,
-        payload: {
-            user: loggedUser
-        }
+            type: ADD_TO_CART_USER,
+            payload: {
+                user: loggedUser
+            }
     })
     
     setTimeout(() => {
