@@ -78,12 +78,16 @@ class CartPage extends React.Component<IProps, IState> {
         const { isOpen } = this.state;
         return (
             <div>
-                <h1 className="text-center bg-gray-200 mt-16 mb-16 p-2">Welcome to your shopping cart! Click checkout to place the order.</h1>
                 {user.cart.length !== 0 || cartItems.length !== 0 ?
+            
+
                     <div>
+                    <h1 className="text-center bg-gray-200 lg:mt-16 mb-16 p-2">
+                        Welcome to your shopping cart! Click checkout to place the order.
+                    </h1>
                     {user._id != '' ?
-                        <div className="flex flex-row space-x-4 mx-10">
-                            <div className="w-2/3 border shadow rounded">
+                        <div className="flex flex-col lg:flex-row space-x-4 mx-10">
+                            <div className="w-full lg:w-2/3 border shadow rounded">
                                 <CartDisplay 
                                     handleRemoveFromCart={this.handleRemoveFromCart} 
                                     cartItems={user.cart} 
@@ -91,13 +95,13 @@ class CartPage extends React.Component<IProps, IState> {
                                     handleDecrement={this.handleDecrement}
                                 />
                             </div>
-                            <div className="w-1/3">
+                            <div className="w-full lg:w-1/3">
                                 <CartSummary cartItems={user.cart} user={user}/>
                             </div>
     
                         </div> :
-                        <div className="flex flex-row space-x-4 mx-10">
-                            <div className="w-2/3 border shadow rounded">
+                        <div className="flex flex-col lg:flex-row space-x-4 mx-10">
+                            <div className="w-full lg:w-2/3 border shadow rounded">
                                 <CartDisplay 
                                     handleRemoveFromCart={this.handleRemoveFromCart} 
                                     cartItems={cartItems} 
@@ -105,13 +109,13 @@ class CartPage extends React.Component<IProps, IState> {
                                     handleDecrement={this.handleDecrement}
                                 />
                             </div>
-                            <div className="w-1/3">
+                            <div className="w-full lg:w-1/3">
                                 <CartSummary cartItems={cartItems} user={user} />
                             </div>
                         </div>
                     }
                     </div> :
-                    <div className="flex items-center justify-center">
+                    <div className="w-full flex items-center justify-center">
                         <EmptyCart />
                     </div>
             }

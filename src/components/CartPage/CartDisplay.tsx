@@ -43,7 +43,7 @@ class CartDisplay extends React.Component<IProps> {
                     {cartItems.map((item, index) => (
                             <li key={item._id} className={`flex flex-row justify-between items-center ${index < cartItems.length - 1 ? 'border-b': ''}`}>
                                 
-                                <div className="grid grid-cols-3 grid-flow-row gap-4 p-4 w-full">
+                                <div className="grid grid-cols-2 lg:grid-cols-3 grid-flow-row gap-4 p-4 w-full">
                                     <div className="flex items-center justify-center p-2">
                                         <img
                                             loading="eager"
@@ -52,47 +52,47 @@ class CartDisplay extends React.Component<IProps> {
                                         />
                                     </div>
                                     <div className="grid grid-rows-2">
-                                    <div>
-                                    <p className="text-lg font-semibold">{item.title}</p>
-                                    <p>PRICE: €{item.price}</p>
-                                    </div>
-                                    <div className="flex items-end">
-                                    <button 
-                                        onClick={() => handleRemoveFromCart(item)} 
-                                        type="button"
-                                        className="flex flex-row"
-                                    >
-                                            <svg 
-                                                className="text-red-500 w-5 h-5 hover:bg-red-500 hover:text-white"
-                                                xmlns="http://www.w3.org/2000/svg" 
-                                                fill="none" 
-                                                stroke="currentColor" 
-                                                viewBox="0 0 24 24"
+                                        <div>
+                                            <p className="text-lg font-semibold">{item.title}</p>
+                                            <p>PRICE: €{item.price}</p>
+                                        </div>
+                                        <div className="flex lg:items-end">
+                                            <button 
+                                                onClick={() => handleRemoveFromCart(item)} 
+                                                type="button"
+                                                className="flex flex-row"
                                             >
-                                                <path 
-                                                    strokeLinecap="round" 
-                                                    strokeLinejoin="round" 
-                                                    strokeWidth="2" 
-                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-                                                />
-                                            </svg>
-                                            <p>REMOVE ITEM</p>
-                                        </button>
-                                    </div>
+                                                <svg 
+                                                    className="text-red-500 w-5 h-5 hover:bg-red-500 hover:text-white"
+                                                    xmlns="http://www.w3.org/2000/svg" 
+                                                    fill="none" 
+                                                    stroke="currentColor" 
+                                                    viewBox="0 0 24 24"
+                                                >
+                                                    <path 
+                                                        strokeLinecap="round" 
+                                                        strokeLinejoin="round" 
+                                                        strokeWidth="2" 
+                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                                                    />
+                                                </svg>
+                                                <p>REMOVE ITEM</p>
+                                            </button>
+                                        </div>
                                     </div>
                                     
                                     <div className="grid grid-rows-2">
-                                    <div className="flex items-start">
-                                    <Counter 
-                                        handleIncrement={handleIncrement} 
-                                        handleDecrement={handleDecrement}
-                                        item={item}
-                                    />
-                                    </div>
-                                    <div className="flex flex-row items-end">
-                                        <p>TOTAL: €{item.count* item.price}</p>
+                                        <div className="flex lg:items-start">
+                                            <Counter 
+                                                handleIncrement={handleIncrement} 
+                                                handleDecrement={handleDecrement}
+                                                item={item}
+                                            />
+                                        </div>
+                                        <div className="flex flex-row items-end">
+                                            <p>TOTAL: €{item.count* item.price}</p>
                                         
-                                    </div>
+                                        </div>
                                     </div>
                                     
 

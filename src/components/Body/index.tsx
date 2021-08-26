@@ -31,19 +31,19 @@ class Body extends React.Component<IProps>{
             <div>
                 {!isLoading ?
                     <div className="flex flex-row justify-between w-full">
-                        <div className="w-3/4">
+                        <div className="w-full lg:w-3/4">
                             <div className="mx-10 mt-4">
-                            <Filter />
+                                <Filter />
                             </div>
                             <div className="mt-4 border-t-2 mx-4">
                                 <Products filteredItems={filteredItems}/>
                             </div>
                         </div>
-                        <div className="fixed right-0 w-1/4">
+                        <div className="hidden lg:block fixed right-0 lg:w-1/4">
                             <Cart />
                         </div>
                     </div> :
-                    <div className="flex h-screen items-center justify-center">
+                    <div className="flex items-center justify-center">
                         <Loader />
                     </div>
                 }
