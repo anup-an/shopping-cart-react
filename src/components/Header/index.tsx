@@ -55,7 +55,21 @@ class Header extends React.Component<IProps, IState> {
         const { user } = this.props;
         return (
             <div className="flex flex-row bg-blue-800 text-white text-xl justify-between p-4 items-center">
-                <Link to="/" className="border border-blue-800 focus:border-white p-2">
+                <div className="block lg:hidden">
+                    <svg
+                        className="w-6 h-6 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24" height="24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2" class="feather feather-align-justify"
+                    >
+                        <path d="M21 10H3M21 6H3M21 14H3M21 18H3" />
+                    </svg>
+                </div>
+                <Link to="/" className="hidden lg:block border border-blue-800 focus:border-white p-2">
                     Home
                 </Link>
                 <form className="flex flex-row items-center border rounded border-white" onSubmit={this.handleSearch}>
@@ -89,11 +103,11 @@ class Header extends React.Component<IProps, IState> {
                 </form>
                 <div className="flex flex-row justify-between items-center gap-x-10">
                     {user._id == "" ?
-                        <Link to="/login" className="border border-blue-800 focus:border-white p-2">
+                        <Link to="/login" className="hidden lg:block border border-blue-800 focus:border-white p-2">
                             Login
                         </Link> : <p className="text text-sm">Welcome {user.firstName}!!</p>}
                     {user._id == "" ?
-                        <Link to="/register" className="border border-blue-800 focus:border-white p-2">
+                        <Link to="/register" className="hidden lg:block border border-blue-800 focus:border-white p-2">
                             Register
                         </Link> : <button onClick={this.handleLogOut} type="button"
                             className="border border-blue-800 focus:border-white p-2">Logout</button>}
