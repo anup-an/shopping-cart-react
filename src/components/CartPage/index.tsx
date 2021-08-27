@@ -86,7 +86,7 @@ class CartPage extends React.Component<IProps, IState> {
                         Welcome to your shopping cart! Click checkout to place the order.
                     </h1>
                     {user._id != '' ?
-                        <div className="flex flex-col lg:flex-row space-y-4 lg:space-x-4 lg:mx-10 items-center justify-center">
+                        <div className="flex flex-col lg:flex-row space-y-4 lg:space-x-4 lg:mx-10 lg:items-start justify-center">
                             <div className="w-full lg:w-2/3 border shadow rounded">
                                 <CartDisplay 
                                     handleRemoveFromCart={this.handleRemoveFromCart} 

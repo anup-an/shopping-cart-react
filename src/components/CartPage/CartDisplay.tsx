@@ -38,7 +38,7 @@ class CartDisplay extends React.Component<IProps> {
         return (
             <div>
                 
-                <ul className="flex flex-col text-sm p-4">
+                <ul className="flex flex-col text-sm p-2 lg:p-4">
                     
                     {cartItems.map((item, index) => (
                             <li key={item._id} className={`flex flex-row justify-between items-center ${index < cartItems.length - 1 ? 'border-b': ''}`}>

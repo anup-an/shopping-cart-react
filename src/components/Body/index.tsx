@@ -43,7 +43,7 @@ class Body extends React.Component<IProps>{
                             <Cart />
                         </div>
                     </div> :
-                    <div className="flex items-center justify-center">
+                    <div className="flex items-center justify-center text-center">
                         <Loader />
                     </div>
                 }
