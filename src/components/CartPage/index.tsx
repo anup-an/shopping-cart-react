@@ -95,7 +95,7 @@ class CartPage extends React.Component<IProps, IState> {
                                     handleDecrement={this.handleDecrement}
                                 />
                             </div>
-                            <div className="w-full lg:w-1/3">
+                            <div className="w-full lg:w-1/3 mb-16">
                                 <CartSummary cartItems={user.cart} user={user}/>
                             </div>
     
@@ -109,7 +109,7 @@ class CartPage extends React.Component<IProps, IState> {
                                     handleDecrement={this.handleDecrement}
                                 />
                             </div>
-                            <div className="w-full lg:w-1/3 mb-6">
+                            <div className="w-full lg:w-1/3 mb-16">
                                 <CartSummary cartItems={cartItems} user={user} />
                             </div>
                         </div>
