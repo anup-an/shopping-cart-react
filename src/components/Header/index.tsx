@@ -107,7 +107,7 @@ class Header extends React.Component<IProps, IState> {
                     {user._id == "" ?
                         <Link to="/login" className="hidden lg:block border border-blue-800 focus:border-white p-2">
                             Login
-                        </Link> : <p className="text text-sm">Welcome {user.firstName}!!</p>}
+                        </Link> : <p className="hidden lg:block text text-sm">Welcome {user.firstName}!!</p>}
                     {user._id == "" ?
                         <Link to="/register" className="hidden lg:block border border-blue-800 focus:border-white p-2">
                             Register
