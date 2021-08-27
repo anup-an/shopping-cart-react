@@ -57,18 +57,19 @@ class Header extends React.Component<IProps, IState> {
         const { user } = this.props;
         return (
             <div className="flex flex-row bg-blue-800 text-white text-xl justify-between p-4 items-center">
-                <div className="block lg:hidden">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24" height="24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        className="feather feather-align-justify w-6 h-6 text-white"
+                <Link to="/" className="block lg:hidden">
+                    <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        fill="none" stroke="currentColor" 
+                        viewBox="0 0 24 24"
+                        className="w-6 h-6 text-white"
                     >
-                        <path d="M21 10H3M21 6H3M21 14H3M21 18H3" />
+                        <path 
+                            strokeLinecap="round" 
+                            strokeLinejoin="round" 
+                            strokeWidth="2" 
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                        />
                     </svg>
                 </div>
                 <Link to="/" className="hidden lg:block border border-blue-800 focus:border-white p-2">
