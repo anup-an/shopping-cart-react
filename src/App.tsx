@@ -27,7 +27,7 @@ class App extends React.Component<IProps>{
                 <div className="fixed w-full z-10">
                     <Header />
                 </div>
-                <div className="w-full mt-20 border">
+                <div className="w-full mt-20">
                     <Routers />
                 </div>
             </div>

@@ -52,7 +52,7 @@ class ProductDetails extends React.Component<IProps> {
         <div>
             {console.log(user)}
             {product ? (
-                <div className="flex flex-row space-x-10 items-center">
+                <div className="flex flex-col lg:flex-row space-x-10 items-center">
                     <img className="w-1/3 h-auto" src={`${product?.image}`} loading="eager" alt={`${product?.title}`} />
                     <div className="flex flex-col space-y-6">
                         <div className="text-lg font-bold">{product?.title}</div>
