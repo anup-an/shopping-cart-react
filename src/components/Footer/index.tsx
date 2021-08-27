@@ -21,7 +21,7 @@ class Footer extends React.Component<IProps> {
     render() {
         const { user } = this.props;
         return (
-            <div className="bg-blue-800 p-4 text-sm text-white flex flex-row justify-between items-center">
+            <div className="bg-blue-800 p-2 text-sm text-white flex flex-row justify-between items-center">
                 <div className="flex flex-row justify-between items-center gap-x-10">
                     {user._id == "" ?
                         <Link to="/login" className="border border-blue-800 flex flex-row items-center focus:border-white p-2">

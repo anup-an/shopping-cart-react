@@ -35,7 +35,7 @@ class Body extends React.Component<IProps>{
                             <div className="mx-10 mt-4">
                                 <Filter />
                             </div>
-                            <div className="mt-4 border-t-2 mx-4">
+                            <div className="mt-4 border-t-2 mx-4 mb-6">
                                 <Products filteredItems={filteredItems}/>
                             </div>
                         </div>
