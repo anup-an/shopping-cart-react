@@ -112,7 +112,7 @@ class Header extends React.Component<IProps, IState> {
                         <Link to="/register" className="hidden lg:block border border-blue-800 focus:border-white p-2">
                             Register
                         </Link> : <button onClick={this.handleLogOut} type="button"
-                            className="border border-blue-800 focus:border-white p-2">Logout</button>}
+                            className="hidden lg:block border border-blue-800 focus:border-white p-2">Logout</button>}
                     <Link to="/cart" className="border border-blue-800 focus:border-white p-2">
                         <svg
                             className="focus:outline-none h-6 w-6 text-white"
