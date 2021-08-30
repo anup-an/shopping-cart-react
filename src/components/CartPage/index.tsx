@@ -81,7 +81,7 @@ class CartPage extends React.Component<IProps, IState> {
                 {user.cart.length !== 0 || cartItems.length !== 0 ?
             
 
-                    <div>
+                    <div className="fixed top-20">
                     <h1 className="text-center bg-gray-200 mb-4 lg:mb-16 p-2">
                         Welcome to your shopping cart! Click checkout to place the order.
                     </h1>
@@ -95,12 +95,12 @@ class CartPage extends React.Component<IProps, IState> {
                                     handleDecrement={this.handleDecrement}
                                 />
                             </div>
-                            <div className="w-full lg:w-1/3 mb-16">
+                            <div className="w-full lg:w-1/3">
                                 <CartSummary cartItems={user.cart} user={user}/>
                             </div>
     
                         </div> :
-                        <div className="flex flex-col lg:flex-row space-y-4 lg:space-x-4 mx-10 items-center justify-center mb-16">
+                        <div className="flex flex-col lg:flex-row space-y-4 lg:space-x-4 mx-10 items-center justify-center">
                             <div className="w-full lg:w-2/3 border shadow rounded">
                                 <CartDisplay 
                                     handleRemoveFromCart={this.handleRemoveFromCart} 
@@ -115,7 +115,7 @@ class CartPage extends React.Component<IProps, IState> {
                         </div>
                     }
                     </div> :
-                    <div className="w-full flex items-center justify-center fixed top-1/2">
+                    <div className="w-full flex items-center justify-center fixed bottom-1/2">
                         <EmptyCart />
                     </div>
             }
