@@ -18,10 +18,14 @@ const Routers = () => {
                 <Body />
             </Route>
             <Route path="/login">
-                <Login />
+                <div className="fixed bottom-1/4 w-full">
+                    <Login />
+                </div>
             </Route>
             <Route path="/register">
+                    <div className="fixed bottom-1/4 w-full">
                 <Register />
+                </div>
             </Route>
             <Route path="/cart">
                 <CartPage />
