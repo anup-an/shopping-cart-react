@@ -28,7 +28,7 @@ class Body extends React.Component<IProps>{
     render() {
         const { filteredItems, isLoading } = this.props;
         return (
-            <div className="fixed top-20">
+            <div className="top-20">
                 {!isLoading ?
                     <div className="flex flex-row justify-between w-full">
                         <div className="w-full xl:w-3/4">

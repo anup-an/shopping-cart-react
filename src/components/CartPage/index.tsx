@@ -81,7 +81,7 @@ class CartPage extends React.Component<IProps, IState> {
                 {user.cart.length !== 0 || cartItems.length !== 0 ?
             
 
-                    <div className="fixed top-20">
+                    <div className="top-20">
                     <h1 className="text-center bg-gray-200 mb-4 lg:mb-16 p-2">
                         Welcome to your shopping cart! Click checkout to place the order.
                     </h1>
