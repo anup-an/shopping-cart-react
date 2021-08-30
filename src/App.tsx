@@ -24,11 +24,11 @@ class App extends React.Component<IProps>{
     render() {
     return (
         <BrowserRouter>
-            <div className="flex flex-col">
+            <div className="flex flex-col h-screen">
                 <div className="fixed w-full z-10">
                     <Header />
                 </div>
-                <div className="w-full mt-20">
+                <div className="fixed bottom-1/4 w-full">
                     <Routers />
                 </div>
                 <div className="fixed bottom-0 lg:hidden w-full">
