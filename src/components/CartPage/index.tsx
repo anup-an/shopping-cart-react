@@ -100,7 +100,7 @@ class CartPage extends React.Component<IProps, IState> {
                             </div>
     
                         </div> :
-                        <div className="flex flex-col lg:flex-row space-y-4 lg:space-x-4 mx-10 items-center justify-center">
+                        <div className="flex flex-col lg:flex-row space-y-4 lg:space-x-4 lg:items-start mx-10 items-center justify-center mb-16">
                             <div className="w-full lg:w-2/3 border shadow rounded">
                                 <CartDisplay 
                                     handleRemoveFromCart={this.handleRemoveFromCart} 
