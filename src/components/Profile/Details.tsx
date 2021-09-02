@@ -7,10 +7,10 @@ class Details extends React.Component{
     render() {
         return (
             <div className="border rounded shadow-xl w-full h-full p-4 flex flex-col space-y-10">
-                <p className="text-2xl">My details</p>
+                <p className="text-xl lg:text-2xl">My details</p>
                 <form className="flex flex-col space-y-6" onSubmit={this.handleSave}>
                     <p className="py-2 border-b w-full">Personal information</p>
-                    <div className="flex flex-row items-start space-x-10">
+                    <div className="flex flex-col space-y-4 lg:flex-row items-start lg:space-x-10">
                         <div>Edit the fields and click save to update your details.</div>
                         <div className="flex flex-col space-y-6">
                             <div className="flex flex-row space-x-12">
@@ -58,7 +58,7 @@ class Details extends React.Component{
                 </form>
                 <form className="flex flex-col space-y-6" onSubmit={this.handleSave}>
                     <p className="py-2 border-b w-full">E-mail address</p>
-                    <div className="flex flex-row items-start space-x-10">
+                    <div className="flex flex-col space-y-4 lg:flex-row items-start lg:space-x-10">
                         <div>Edit the fields and click save to update your details.</div>
                         <div className="flex flex-col space-y-6">
                             <div className="flex flex-row space-x-12">

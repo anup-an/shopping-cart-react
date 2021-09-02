@@ -46,13 +46,13 @@ const Routers = () => {
                 <div className="fixed w-full z-10">
                     <Header focus="profile"/>
                 </div>
-                <div className="flex flex-row items-start mt-20">
-                    <div className="w-1/3 flex justify-center">
-                        <div className="w-1/2">
+                <div className="flex flex-col lg:flex-row lg:mt-20 mt-24">
+                    <div className="lg:w-1/3 flex justify-center mx-10">
+                        <div className="w-full lg:w-1/2 flex justify-center">
                             <Profile focus="details"/>
                         </div>
                     </div>
-                    <div className="mt-20 w-full mx-10">
+                    <div className="mt-10 lg:mt-20 lg:w-full mx-10">
                         <Details />
                     </div>
                 </div>
@@ -64,13 +64,13 @@ const Routers = () => {
                 <div className="fixed w-full z-10">
                     <Header focus="profile"/>
                 </div>
-                <div className="flex flex-row items-start mt-20">
-                    <div className="w-1/3 flex justify-center">
-                        <div className="w-1/2">
+                <div className="flex flex-col lg:flex-row lg:mt-20 mt-24">
+                    <div className="lg:w-1/3 flex justify-center mx-10">
+                        <div className="w-full lg:w-1/2 flex justify-center">
                             <Profile focus="address"/>
                         </div>
                     </div>
-                    <div className="mt-20 w-full mx-10">
+                    <div className="mt-10 lg:mt-20 lg:w-full mx-10">
                         <Address />
                     </div>
                 </div>
@@ -82,13 +82,13 @@ const Routers = () => {
                 <div className="fixed w-full z-10">
                     <Header focus="profile"/>
                 </div>
-                <div className="flex flex-row items-start mt-20">
-                    <div className="w-1/3 flex justify-center">
-                        <div className="w-1/2">
+                <div className="flex flex-col lg:flex-row lg:mt-20 mt-24">
+                    <div className="lg:w-1/3 flex justify-center mx-10">
+                        <div className="w-full lg:w-1/2 flex justify-center">
                             <Profile focus="orders"/>
                         </div>
                     </div>
-                    <div className="mt-20 w-full mx-10">
+                    <div className="mt-10 lg:mt-20 lg:w-full mx-10">
                         <Orders />
                     </div>
                 </div>

@@ -14,9 +14,9 @@ class Profile extends React.Component<IComponentProps>{
         const user = this.props.location.state;
         const { focus } = this.props;
         return (
-            <div className="flex flex-col space-y-10">
-            <div className="text-3xl p-2 mt-10">My Account</div>
-            <div className="flex flex-col space-y-6">
+            <div className="w-full flex flex-row lg:flex-col lg:space-y-10">
+            <div className="hidden lg:block text-2xl lg:text-3xl p-2 mt-10">My Account</div>
+            <div className="w-full flex flex-row justify-between lg:flex-col lg:space-y-6">
                 <button
                     type="button"
                     onClick={() => this.props.history.push('/user/profile')} 

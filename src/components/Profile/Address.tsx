@@ -10,7 +10,7 @@ class Address extends React.Component{
                 <p className="text-2xl">My address</p>
                 <form className="flex flex-col space-y-6" onSubmit={this.handleSave}>
                     <p className="py-2 border-b w-full">Shipping address</p>
-                    <div className="flex flex-row items-start space-x-10">
+                    <div className="flex flex-col space-y-4 lg:flex-row items-start lg:space-x-10">
                         <div>Edit the fields and click save to update your details.</div>
                         <div className="flex flex-col space-y-6">
                             
