@@ -8,6 +8,7 @@ import { AppState } from '../../store';
 interface IProps {
     user: IUser;
     actions: Actions;
+    focus: string;
 }
 interface Actions {
     logOutUser: () => Promise<void>;
@@ -24,7 +25,7 @@ class Footer extends React.Component<IProps> {
             <div className="bg-blue-800 p-2 text-sm text-white flex flex-row justify-between items-center">
                 <div className="flex flex-row justify-between items-center gap-x-10">
                     {user._id == "" ?
-                        <Link to="/login" className="border border-blue-800 flex flex-row items-center focus:border-white p-2">
+                        <Link to="/login" className={`border ${this.props.focus === "login" ? "border-white": "border-blue-800"} flex flex-row items-center p-1`}>
                             <p>Login</p>
                             <svg
                                 className="text-white w-6 h-6"
@@ -43,7 +44,7 @@ class Footer extends React.Component<IProps> {
                         <p className="hidden lg:block text text-sm">Welcome {user.firstName}!!</p>
                     }
                     {user._id == "" ?
-                        <Link to="/register" className="flex flex-row items-center border border-blue-800 focus:border-white p-2">
+                        <Link to="/register" className={`flex flex-row items-center p-1 border ${this.props.focus === "register" ? "border-white": "border-blue-800"}`}>
                             <p>Register</p>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

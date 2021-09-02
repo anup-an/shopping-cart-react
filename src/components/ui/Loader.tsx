@@ -3,7 +3,7 @@ import React from 'react';
 class Loader extends React.Component{
     render() {
         return (
-            <div className="flex justify-center items-center">
+            <div className="flex justify-center items-center border rounded shadow-xl p-4">
                     <div className="flex flex-col justify-center">
                         <div className="animate-spin w-8 h-8">
                             <svg

@@ -115,7 +115,7 @@ class CartPage extends React.Component<IProps, IState> {
                         </div>
                     }
                     </div> :
-                    <div className="w-full flex items-center justify-center fixed bottom-1/2">
+                    <div className="w-full flex items-center justify-center fixed top-1/3">
                         <EmptyCart />
                     </div>
             }

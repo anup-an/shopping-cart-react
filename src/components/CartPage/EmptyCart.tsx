@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 class EmptyCart extends React.Component {
     render() {
         return (
-            <div>
+            <div className="border rounded shadow-xl p-4">
                 <div>
                     <svg
                         className="w-20 h-20 text-red-500"

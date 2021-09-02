@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Header from './components/Header';
 import { BrowserRouter } from 'react-router-dom';
 import { getUserFromToken } from './actions/userAction';
 import Footer from './components/Footer';
@@ -25,15 +24,11 @@ class App extends React.Component<IProps>{
     return (
         <BrowserRouter>
             <div className="flex flex-col h-screen">
-                <div className="fixed w-full z-10">
-                    <Header />
-                </div>
+                
                 <div className="w-full">
                     <Routers />
                 </div>
-                <div className="fixed bottom-0 lg:hidden w-full">
-                    <Footer />
-                </div>
+                
             </div>
         </BrowserRouter>
     )
