@@ -58,7 +58,7 @@ class Header extends React.Component<IProps, IState> {
         const { user, focus } = this.props;
         return (
             <div className={`flex flex-row bg-blue-800 text-white text-xl justify-between p-4 items-center`}>
-                <Link to="/" className={`block border lg:hidden p-2 ${focus==="home" ? "border-white" : "border-blue-800"}`}>
+                <Link to="/" className={`block border hover:border-white lg:hidden p-2 ${focus==="home" ? "border-white" : "border-blue-800"}`}>
                     <svg 
                         xmlns="http://www.w3.org/2000/svg" 
                         fill="none" stroke="currentColor" 
@@ -73,7 +73,7 @@ class Header extends React.Component<IProps, IState> {
                         />
                     </svg>
                 </Link>
-                <Link to="/" className={`hidden lg:block border border-blue-800 ${focus==="home" ? "lg:border-white" : ""} p-2`}>
+                <Link to="/" className={`hidden lg:block border lg:hover:border-white ${focus==="home" ? "lg:border-white" : "border-blue-800"} p-2`}>
                     Home
                 </Link>
                 <form className="flex flex-row items-center border rounded border-white" onSubmit={this.handleSearch}>
@@ -107,27 +107,27 @@ class Header extends React.Component<IProps, IState> {
                 </form>
                 <div className="flex flex-row justify-between items-center gap-x-10">
                     {user._id == "" ?
-                        <Link to="/login" className={`hidden lg:block border ${focus==="login" ? "lg:border-white" : "lg:border-blue-800"} focus:outline-none p-2`}>
+                        <Link to="/login" className={`hidden lg:block border lg:hover:border-white ${focus==="login" ? "lg:border-white" : "lg:border-blue-800"} focus:outline-none p-2`}>
                             Login
-                        </Link> : <div className="flex flex-row items-center">
-                            <p className="hidden lg:block text text-sm">Welcome {user.firstName}!!</p>
+                        </Link> : <div className="flex flex-row items-center space-x-4">
+                            <p className="hidden lg:block text text-sm">Welcome {user.firstName}!</p>
                             <button
                                 type="button"
                                 onClick={() => this.props.history.push({
                                     pathname: "/user/profile",
                                     state: user,
                                 })}
-                                className={`hidden lg:block border ${focus==="profile" ? "lg:border-white" : "lg:border-blue-800"} focus:outline-none p-2`}
+                                className={`hidden lg:block lg:hover:border-white border ${focus==="profile" ? "lg:border-white" : "lg:border-blue-800"} focus:outline-none p-2`}
                             >
                             My account
                             </button>
                             </div>}
                     {user._id == "" ?
-                        <Link to="/register" className={`hidden lg:block border ${focus==="register" ? "lg:border-white" : "lg:border-blue-800"} p-2`}>
+                        <Link to="/register" className={`hidden lg:block lg:hover:border-white border ${focus==="register" ? "lg:border-white" : "lg:border-blue-800"} p-2`}>
                             Register
                         </Link> : <button onClick={this.handleLogOut} type="button"
-                            className="hidden lg:block border border-blue-800 focus:border-white p-2">Logout</button>}
-                    <Link to="/cart" className={`border ${focus==="cart" ? "border-white" : "border-blue-800"} p-2`}>
+                            className="hidden lg:block lg:hover:border-white border border-blue-800 p-2">Logout</button>}
+                    <Link to="/cart" className={`border hover:border-white ${focus==="cart" ? "border-white" : "border-blue-800"} p-2`}>
                         <svg
                             className="focus:outline-none h-6 w-6 text-white"
                             xmlns="http://www.w3.org/2000/svg"

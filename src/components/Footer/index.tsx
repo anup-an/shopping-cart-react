@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { withRouter } from "react-router";
 import { logOutUser } from '../../actions/userAction';
 import { IUser } from '../../ActionTypes';
 import { AppState } from '../../store';
 
-interface IProps {
+interface IProps extends RouteComponentProps {
     user: IUser;
     actions: Actions;
     focus: string;
@@ -25,7 +26,7 @@ class Footer extends React.Component<IProps> {
             <div className="bg-blue-800 p-2 text-sm text-white flex flex-row justify-between items-center">
                 <div className="flex flex-row justify-between items-center gap-x-10">
                     {user._id == "" ?
-                        <Link to="/login" className={`border ${this.props.focus === "login" ? "border-white": "border-blue-800"} flex flex-row items-center p-1`}>
+                        <Link to="/login" className={`border hover:border-white ${this.props.focus === "login" ? "border-white": "border-blue-800"} flex flex-row items-center p-1`}>
                             <p>Login</p>
                             <svg
                                 className="text-white w-6 h-6"
@@ -41,10 +42,22 @@ class Footer extends React.Component<IProps> {
                                 />
                             </svg>
                         </Link> :
-                        <p className="hidden lg:block text text-sm">Welcome {user.firstName}!!</p>
+                        <div className="flex flex-row items-center space-x-4">
+                            <p className="text text-sm">Welcome {user.firstName}!</p>
+                            <button
+                                type="button"
+                                onClick={() => this.props.history.push({
+                                    pathname: "/user/profile",
+                                    state: user,
+                                })}
+                                className={`border hover:border-white ${this.props.focus==="profile" ? "lg:border-white" : "lg:border-blue-800"} focus:outline-none p-2`}
+                            >
+                            My account
+                            </button>
+                            </div>
                     }
                     {user._id == "" ?
-                        <Link to="/register" className={`flex flex-row items-center p-1 border ${this.props.focus === "register" ? "border-white": "border-blue-800"}`}>
+                        <Link to="/register" className={`flex flex-row items-center p-1 border hover:border-white ${this.props.focus === "register" ? "border-white": "border-blue-800"}`}>
                             <p>Register</p>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -101,4 +114,4 @@ const mapDispatchToProps = (dispatch: any) => ({
     }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Footer);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Footer));
