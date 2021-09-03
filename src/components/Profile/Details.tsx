@@ -1,8 +1,43 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { editUserProfile } from '../../actions/userAction';
+import { IUser } from '../../ActionTypes';
+import { AppState } from '../../store';
 
-class Details extends React.Component{
-    handleSave = () => {
-        console.log("submit")
+
+interface IProps {
+    user: IUser;
+    actions: Actions;
+}
+
+interface Actions {
+    editUserProfile: (loggedUser: IUser) => void;
+}
+
+class Details extends React.Component<IProps>{
+    constructor(props: IProps) {
+        super(props);
+        this.state = { "firstName": "", "lastName": "", "phone": "", "email": "", "password": ""}
+    }
+    handleSave = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const { user } = this.props;
+        const loggedUser = { ...user, ...this.state };
+        this.props.actions.editUserProfile(loggedUser);
+    }
+
+    handleInput = (event: React.ChangeEvent<HTMLInputElement>)  => {
+        this.setState({ ...this.state, [event.target.name]: event.target.value })
+    }
+    componentDidMount = () => {
+        const { user } = this.props;
+        this.setState({
+            "firstName": user.firstName,
+            "lastName": user.lastName,
+            "phone": user.phone,
+            "email": user.email,
+            "password": user.password,
+        })
     }
     render() {
         return (
@@ -16,10 +51,10 @@ class Details extends React.Component{
                             <div className="flex flex-row space-x-12">
                                 <div>
                                     <p>First Name</p>
-                                    <label htmlFor="firstname">
+                                    <label htmlFor="firstName">
                                         <input
-                                            name="firstname"
-                                            id="firstname"
+                                            name="firstName"
+                                            id="firstName"
                                             className="p-2 bg-gray-200 border rounded"
                                             required
                                         />
@@ -27,10 +62,10 @@ class Details extends React.Component{
                                 </div>
                                 <div>
                                     <p>Last Name</p>
-                                    <label htmlFor="lastname">
+                                    <label htmlFor="lastName">
                                         <input
-                                            name="lastname"
-                                            id="lastname"
+                                            name="lastName"
+                                            id="lastName"
                                             className="p-2 bg-gray-200 border rounded"
                                             required
                                         />
@@ -75,10 +110,10 @@ class Details extends React.Component{
                                 </div>
                                 <div className="invisible">
                                     <p>Last Name</p>
-                                    <label htmlFor="lastname">
+                                    <label htmlFor="lastName">
                                         <input
-                                            name="lastname"
-                                            id="lastname"
+                                            name="lastName"
+                                            id="lastName"
                                             className="p-2 bg-gray-200 border rounded"
                                             required
                                         />
@@ -98,6 +133,7 @@ class Details extends React.Component{
                                 </label>
                             </div>
                             <button
+                                type="submit"
                                 className="w-1/4 border rounded focus:outline-none p-2 bg-blue-400 hover:bg-blue-800 text-white"
                             >
                                 Save
@@ -110,4 +146,18 @@ class Details extends React.Component{
     }
 }
 
-export default Details;
+interface StateProps {
+    user: IUser;
+}
+
+const mapStateToProps = (state: AppState): StateProps => ({
+    user:state.user.user,
+})
+
+const mapDispatchToProps = (dispatch: any): { actions: Actions} => ({
+    actions: {
+        editUserProfile: (loggedUser: IUser) => dispatch(editUserProfile(loggedUser)),
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Details);

@@ -208,7 +208,7 @@ export const getUserFromToken = () => async (dispatch: Dispatch<AppActions>) => 
 export const editUserProfile = (loggedUser: IUser) => async (dispatch: Dispatch<AppActions>) => {
     const id = loggedUser._id;
     const user = loggedUser;
-    await axios.post(`https://shopping-cart-app-react.herokuapp.com/api/users/:${id}`, { user });
+    await axios.post(`https://shopping-cart-app-react.herokuapp.com/api/users/${id}`, { user });
     dispatch({
         type: EDIT_PROFILE_USER,
         payload: {
