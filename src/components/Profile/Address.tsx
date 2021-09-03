@@ -18,9 +18,11 @@ class Address extends React.Component<IProps>{
         super(props);
         this.state = { "address": "", "postcode": "", "city": "", "country": "" }
     }
-    handleSave = () => {
-        const user = this.props;
-        const loggedUser = {...user, ...this.state}
+    handleSave = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const { user } = this.props;
+        const loggedUser = { ...user, ...this.state };
+        this.props.actions.editUserProfile(loggedUser);
     }
 
     handleInput = (event: React.ChangeEvent<HTMLInputElement>)  => {
@@ -96,6 +98,7 @@ class Address extends React.Component<IProps>{
                                 </label>
                             </div>
                             <button
+                                type="submit"
                                 className="w-1/4 border rounded focus:outline-none p-2 bg-blue-400 hover:bg-blue-800 text-white"
                             >
                                 Save
