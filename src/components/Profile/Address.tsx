@@ -50,7 +50,7 @@ class Address extends React.Component<IProps>{
                                         name="address"
                                         id="address"
                                         className="p-2 bg-gray-200 border rounded w-full"
-                                        placeholder={user.address}
+                                        value={user.address}
                                         onChange={this.handleInput}
                                         required
                                     />
@@ -64,7 +64,7 @@ class Address extends React.Component<IProps>{
                                             name="postcode"
                                             id="postcode"
                                             className="p-2 bg-gray-200 border rounded"
-                                            placeholder={user.postcode}
+                                            value={user.postcode}
                                             onChange={this.handleInput}
                                             required
                                         />
@@ -77,7 +77,7 @@ class Address extends React.Component<IProps>{
                                             name="city"
                                             id="city"
                                             className="p-2 bg-gray-200 border rounded"
-                                            placeholder={user.city}
+                                            value={user.city}
                                             onChange={this.handleInput}
                                             required
                                         />
@@ -91,7 +91,7 @@ class Address extends React.Component<IProps>{
                                         name="country"
                                         id="country"
                                         className="p-2 bg-gray-200 border rounded"
-                                        placeholder={user.country}
+                                        value={user.country}
                                         onChange={this.handleInput}
                                         required
                                     />

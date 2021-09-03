@@ -57,7 +57,7 @@ class Details extends React.Component<IProps>{
                                             name="firstName"
                                             id="firstName"
                                             className="p-2 bg-gray-200 border rounded"
-                                            placeholder={user.firstName}
+                                            value={user.firstName}
                                             required
                                         />
                                     </label>
@@ -69,7 +69,7 @@ class Details extends React.Component<IProps>{
                                             name="lastName"
                                             id="lastName"
                                             className="p-2 bg-gray-200 border rounded"
-                                            placeholder={user.lastName}
+                                            value={user.lastName}
                                             required
                                         />
                                     </label>
@@ -82,7 +82,7 @@ class Details extends React.Component<IProps>{
                                         name="phone"
                                         id="phone"
                                         className="p-2 bg-gray-200 border rounded"
-                                        placeholder={user.phone}
+                                        value={user.phone}
                                         required
                                     />
                                 </label>
@@ -108,7 +108,7 @@ class Details extends React.Component<IProps>{
                                             name="email"
                                             id="email"
                                             className="p-2 bg-gray-200 border rounded"
-                                            placeholder={user.email}
+                                            value={user.email}
                                             required
                                         />
                                     </label>
@@ -132,7 +132,7 @@ class Details extends React.Component<IProps>{
                                         name="password"
                                         id="password"
                                         className="p-2 bg-gray-200 border rounded"
-                                        placeholder={user.password}
+                                        value={user.password}
                                         type="password"
                                         required
                                     />
