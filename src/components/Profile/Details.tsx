@@ -40,6 +40,7 @@ class Details extends React.Component<IProps>{
         })
     }
     render() {
+        const { user } = this.props;
         return (
             <div className="border rounded shadow-xl w-full h-full p-4 flex flex-col space-y-10">
                 <p className="text-xl lg:text-2xl">My details</p>
@@ -56,6 +57,7 @@ class Details extends React.Component<IProps>{
                                             name="firstName"
                                             id="firstName"
                                             className="p-2 bg-gray-200 border rounded"
+                                            placeholder={user.firstName}
                                             required
                                         />
                                     </label>
@@ -67,6 +69,7 @@ class Details extends React.Component<IProps>{
                                             name="lastName"
                                             id="lastName"
                                             className="p-2 bg-gray-200 border rounded"
+                                            placeholder={user.lastName}
                                             required
                                         />
                                     </label>
@@ -79,6 +82,7 @@ class Details extends React.Component<IProps>{
                                         name="phone"
                                         id="phone"
                                         className="p-2 bg-gray-200 border rounded"
+                                        placeholder={user.phone}
                                         required
                                     />
                                 </label>
@@ -104,6 +108,7 @@ class Details extends React.Component<IProps>{
                                             name="email"
                                             id="email"
                                             className="p-2 bg-gray-200 border rounded"
+                                            placeholder={user.email}
                                             required
                                         />
                                     </label>
@@ -127,6 +132,7 @@ class Details extends React.Component<IProps>{
                                         name="password"
                                         id="password"
                                         className="p-2 bg-gray-200 border rounded"
+                                        placeholder={user.password}
                                         type="password"
                                         required
                                     />

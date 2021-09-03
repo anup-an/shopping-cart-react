@@ -40,8 +40,8 @@ interface ICart {
 }
 
 export const editUserById = async (req: Request, res: Response): Promise<void> => {
-    const user: IUser = req.body;
-    User.findByIdAndUpdate(req.params.id, { user }, { upsert: true }, (err, response) => {
+    const { user } = req.body;
+    User.findByIdAndUpdate({ _id: mongoose.Types.ObjectId(req.params.id) }, { ...user }, (err, response) => {
         if (err) {
             console.log(`Error updating user data ${err}`);
             res.status(400).json({ status: 'Error', data: 'User data not updated' });
