@@ -52,7 +52,6 @@ class Address extends React.Component<IProps>{
                                         className="p-2 bg-gray-200 border rounded w-full"
                                         value={user.address}
                                         onChange={this.handleInput}
-                                        required
                                     />
                                 </label>
                             </div>
@@ -66,7 +65,6 @@ class Address extends React.Component<IProps>{
                                             className="p-2 bg-gray-200 border rounded"
                                             value={user.postcode}
                                             onChange={this.handleInput}
-                                            required
                                         />
                                     </label>
                                 </div>
@@ -79,7 +77,6 @@ class Address extends React.Component<IProps>{
                                             className="p-2 bg-gray-200 border rounded"
                                             value={user.city}
                                             onChange={this.handleInput}
-                                            required
                                         />
                                     </label>
                                 </div>
@@ -93,7 +90,6 @@ class Address extends React.Component<IProps>{
                                         className="p-2 bg-gray-200 border rounded"
                                         value={user.country}
                                         onChange={this.handleInput}
-                                        required
                                     />
                                 </label>
                             </div>

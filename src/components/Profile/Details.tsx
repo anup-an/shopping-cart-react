@@ -83,7 +83,6 @@ class Details extends React.Component<IProps>{
                                         id="phone"
                                         className="p-2 bg-gray-200 border rounded"
                                         value={user.phone}
-                                        required
                                     />
                                 </label>
                             </div>
@@ -109,7 +108,6 @@ class Details extends React.Component<IProps>{
                                             id="email"
                                             className="p-2 bg-gray-200 border rounded"
                                             value={user.email}
-                                            required
                                         />
                                     </label>
                                 </div>
