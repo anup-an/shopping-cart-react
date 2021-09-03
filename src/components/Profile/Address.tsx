@@ -1,10 +1,37 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { editUserProfile } from '../../actions/userAction';
+import { IUser } from '../../ActionTypes';
+import { AppState } from '../../store';
 
-class Address extends React.Component{
+
+interface IProps {
+    user: IUser;
+    actions: Actions;
+}
+
+interface Actions {
+    editUserProfile: (loggedUser: IUser) => void;
+}
+class Address extends React.Component<IProps>{
+    constructor(props: IProps) {
+        super(props);
+        this.state = { "address": "", "postcode": "", "city": "", "country": "" }
+    }
     handleSave = () => {
-        console.log("submit")
+        const user = this.props;
+        const loggedUser = {...user, ...this.state}
+    }
+
+    handleInput = (event: React.ChangeEvent<HTMLInputElement>)  => {
+        this.setState({ ...this.state, [event.target.name]: event.target.value })
+    }
+    componentDidMount = () => {
+        const { user } = this.props;
+        this.setState({ "address": user.address, "postcode": user.postcode, "city": user.city, "country": user.country})
     }
     render() {
+        const { user } = this.props;
         return (
             <div className="border rounded shadow-xl w-full h-full p-4 flex flex-col space-y-10">
                 <p className="text-2xl">My address</p>
@@ -21,6 +48,8 @@ class Address extends React.Component{
                                         name="address"
                                         id="address"
                                         className="p-2 bg-gray-200 border rounded w-full"
+                                        placeholder={user.address}
+                                        onChange={this.handleInput}
                                         required
                                     />
                                 </label>
@@ -33,6 +62,8 @@ class Address extends React.Component{
                                             name="postcode"
                                             id="postcode"
                                             className="p-2 bg-gray-200 border rounded"
+                                            placeholder={user.postcode}
+                                            onChange={this.handleInput}
                                             required
                                         />
                                     </label>
@@ -44,6 +75,8 @@ class Address extends React.Component{
                                             name="city"
                                             id="city"
                                             className="p-2 bg-gray-200 border rounded"
+                                            placeholder={user.city}
+                                            onChange={this.handleInput}
                                             required
                                         />
                                     </label>
@@ -56,6 +89,8 @@ class Address extends React.Component{
                                         name="country"
                                         id="country"
                                         className="p-2 bg-gray-200 border rounded"
+                                        placeholder={user.country}
+                                        onChange={this.handleInput}
                                         required
                                     />
                                 </label>
@@ -73,4 +108,18 @@ class Address extends React.Component{
     }
 }
 
-export default Address;
+interface StateProps {
+    user: IUser;
+}
+
+const mapStateToProps = (state: AppState): StateProps => ({
+    user:state.user.user,
+})
+
+const mapDispatchToProps = (dispatch: any): { actions: Actions} => ({
+    actions: {
+        editUserProfile: (loggedUser: IUser) => dispatch(editUserProfile(loggedUser)),
+    }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Address);

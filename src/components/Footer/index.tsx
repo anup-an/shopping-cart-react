@@ -11,6 +11,7 @@ interface IProps extends RouteComponentProps {
     actions: Actions;
     focus: string;
 }
+
 interface Actions {
     logOutUser: () => Promise<void>;
 }

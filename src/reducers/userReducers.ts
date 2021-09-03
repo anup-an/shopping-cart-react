@@ -10,6 +10,8 @@ const userDefaultState: IUserActionStates = {
     "password": '',
     "firstName": '',
     "lastName": '',
+    "address": '',
+    "postcode": '',
     "phone": '',
     "city": '',
     "country": '',

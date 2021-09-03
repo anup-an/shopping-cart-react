@@ -39,6 +39,8 @@ export type IUser = {
     password: string;
     firstName: string;
     lastName: string;
+    address: string;
+    postcode: string;
     phone: string;
     city: string;
     country: string;

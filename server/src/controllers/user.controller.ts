@@ -10,6 +10,8 @@ export interface IUser {
     password: string;
     firstName: string;
     lastName: string;
+    address: string;
+    postcode: string;
     phone: string;
     city: string;
     country: string;
@@ -76,6 +78,7 @@ export const getUserByToken = async (req: Request, res: Response): Promise<void>
                       password: '',
                       firstName: '',
                       lastName: '',
+                      address: '',
                       phone: '',
                       city: '',
                       country: '',
