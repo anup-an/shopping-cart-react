@@ -20,7 +20,7 @@ const userDefaultState: IUserActionStates = {
     "refreshToken": '',
     "wishList": [],
     "cart": [],
-}
+    }
 }
 
 const userReducer = (state = userDefaultState, action: UserActionTypes): IUserActionStates => {
@@ -40,7 +40,7 @@ const userReducer = (state = userDefaultState, action: UserActionTypes): IUserAc
         case EDIT_PROFILE_USER:
             return { ...state, user: { ...action.payload.user } };
         case GET_ORDERS_BY_USER_ID:
-            return { ...state, orders: { ...action.payload.orders } };
+            return { ...state, orders: [ ...action.payload.orders ] };
         default:
             return { ...state };
     }
