@@ -5,6 +5,6 @@ import { createOrderForUser, getOrdersByUserId } from '../controllers/order.cont
 const router = Router();
 
 router.post('/', verifyUser, createOrderForUser);
-router.get('/:id', verifyUser, getOrdersByUserId);
+router.get('/:id/get-orders', verifyUser, getOrdersByUserId);
 
 export default router;

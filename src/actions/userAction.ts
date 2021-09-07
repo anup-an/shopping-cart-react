@@ -208,7 +208,7 @@ export const getUserFromToken = () => async (dispatch: Dispatch<AppActions>) => 
 export const editUserProfile = (loggedUser: IUser) => async (dispatch: Dispatch<AppActions>) => {
     const id = loggedUser._id;
     const user = loggedUser;
-    await axios.post(`https://shopping-cart-app-react.herokuapp.com/api/users/${id}/get-orders`, { user });
+    await axios.post(`https://shopping-cart-app-react.herokuapp.com/api/users/${id}`, { user });
     dispatch({
         type: EDIT_PROFILE_USER,
         payload: {
@@ -219,7 +219,7 @@ export const editUserProfile = (loggedUser: IUser) => async (dispatch: Dispatch<
 
 export const getOrdersByUserId = (loggedUser: IUser) => async (dispatch: Dispatch<AppActions>) => {
     const id = loggedUser._id;
-    const orders = await (await axios.get(`https://shopping-cart-app-react.herokuapp.com/api/orders/${id}`)).data.data;
+    const orders = await (await axios.get(`https://shopping-cart-app-react.herokuapp.com/api/orders/${id}/get-orders`)).data.data;
     dispatch({
         type: GET_ORDERS_BY_USER_ID,
         payload: {
