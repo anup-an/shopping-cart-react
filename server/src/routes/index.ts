@@ -10,7 +10,7 @@ const routes = (): Router => {
     router.use('/api/products', productRoutes);
     router.use('/api', authenticationRoutes);
     router.use('/api/users', userRoutes);
-    router.use('/api/orders', orderRoutes)
+    router.use('/api/orders', orderRoutes);
     return router;
 };
 

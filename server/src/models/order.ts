@@ -1,12 +1,22 @@
-/* eslint-disable import/prefer-default-export */
+/* eslint-disable camelcase */
 import mongoose from 'mongoose';
-import { uuid } from 'uuidv4';
-import { CartSchema } from './user';
+import { CartSchema, ICart } from './user';
 
-export const Order = mongoose.model(
+export interface IOrder extends mongoose.Document {
+    _id: mongoose.Types.ObjectId;
+    name: string;
+    user_id: mongoose.Types.ObjectId;
+    email: string;
+    address: string;
+    postcode: string;
+    city: string;
+    country: string;
+    cart: ICart[];
+}
+
+export const Order = mongoose.model<IOrder>(
     'orders',
     new mongoose.Schema({
-        _id: { type: String, default: uuid },
         name: String,
         user_id: String,
         email: String,

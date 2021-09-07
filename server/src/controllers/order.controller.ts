@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import { Order } from '../models/order';
 import { ICart } from '../models/user';
 
-interface IOrder {
+interface IOrder extends mongoose.Document {
     _id: mongoose.Types.ObjectId;
     name: string;
     user_id: mongoose.Types.ObjectId;
@@ -14,7 +14,7 @@ interface IOrder {
     postcode: string;
     city: string;
     country: string;
-    cart: ICart;
+    cart: ICart[];
 }
 
 export const createOrderForUser = async (req: Request, res: Response): Promise<Response> => {
@@ -28,12 +28,13 @@ export const createOrderForUser = async (req: Request, res: Response): Promise<R
     }
 };
 
-export const getOrdersByUserId = async (req: Request, res: Response) => {
+export const getOrdersByUserId = async (req: Request, res: Response): Promise<Response> => {
     try {
-        const { _id } = req.params;
-        console.log(_id);
-        res.send('Orders sent');
+        const orders = await Order.find({});
+        const user_orders = orders.filter((order) => order.user_id === mongoose.Types.ObjectId(req.params.id));
+        return res.status(200).json({ status: 'orders retrieved successfully', data: user_orders });
     } catch (error) {
+        return res.send('Error getting user orders');
         console.log(error);
     }
 };

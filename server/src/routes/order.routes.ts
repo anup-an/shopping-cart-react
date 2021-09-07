@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import verifyUser from '../middlewares/authenticate';
-import { createOrderForUser, getOrdersByUserId} from '../controllers/order.controller';
+import { createOrderForUser, getOrdersByUserId } from '../controllers/order.controller';
 
 const router = Router();
 

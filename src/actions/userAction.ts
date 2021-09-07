@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import axios from 'axios';
 import { removeFromCart } from './cartAction';
-import { EDIT_PROFILE_USER, LOG_IN_USER, ADD_TO_CART_USER, REMOVE_PRODUCTS_CART_USER, ADD_TO_WISHLIST_USER, GET_USER_FROM_TOKEN, IUser, IProduct, AppActions, REMOVE_FROM_CART_USER } from '../ActionTypes';
+import { EDIT_PROFILE_USER, GET_ORDERS_BY_USER_ID, LOG_IN_USER, ADD_TO_CART_USER, REMOVE_PRODUCTS_CART_USER, ADD_TO_WISHLIST_USER, GET_USER_FROM_TOKEN, IUser, IProduct, AppActions, REMOVE_FROM_CART_USER } from '../ActionTypes';
 axios.defaults.withCredentials = true;
 
 export type ICart = {
@@ -213,6 +213,17 @@ export const editUserProfile = (loggedUser: IUser) => async (dispatch: Dispatch<
         type: EDIT_PROFILE_USER,
         payload: {
             user: loggedUser
+        }
+    })
+}
+
+export const getOrdersByUserId = (loggedUser: IUser) => async (dispatch: Dispatch<AppActions>) => {
+    const id = loggedUser._id;
+    const orders = await (await axios.get(`https://shopping-cart-app-react.herokuapp.com/api/orders/${id}`)).data.data;
+    dispatch({
+        type: GET_ORDERS_BY_USER_ID,
+        payload: {
+            orders: orders
         }
     })
 }

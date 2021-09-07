@@ -12,6 +12,7 @@ export const REMOVE_FROM_CART_USER = 'REMOVE_FROM_CART_USER';
 export const ADD_TO_WISHLIST_USER = 'ADD_TO_WISHLIST_USER';
 export const LOG_IN_USER = 'LOG_IN_USER';
 export const GET_USER_FROM_TOKEN = 'GET_USER_FROM_TOKEN';
+export const GET_ORDERS_BY_USER_ID = 'GET_ORDERS_BY_USER_ID';
 
 
 export type ICart = {
@@ -46,6 +47,18 @@ export type IUser = {
     country: string;
     refreshToken: string;
     wishList: IProduct[];
+    cart: ICart[];
+}
+
+export type IOrder = {
+    _id: string;
+    name: string;
+    user_id: string;
+    email: string;
+    address: string;
+    postcode: string;
+    city: string;
+    country: string;
     cart: ICart[];
 }
 
@@ -149,6 +162,12 @@ export type getUserFromTokenAction = {
         user: IUser;
     }
 }
+export type getOrdersByUserIdAction = {
+    type: typeof GET_ORDERS_BY_USER_ID;
+    payload: {
+        orders: IOrder[];
+    }
+}
 
 export type CartActionTypes = AddToCartAction | RemoveFromCartAction | RemoveCartAction;
 
@@ -158,6 +177,6 @@ export type ProductsActionTypes =
     | SortProductsAction
     | SearchProductsAction;
 
-export type UserActionTypes = EditProfileUserAction | AddToCartUserAction | AddToWishlistUserAction | RemoveFromCartUserAction | LogInUserAction | getUserFromTokenAction | RemoveProductsCartUserAction;
+export type UserActionTypes = EditProfileUserAction | AddToCartUserAction | AddToWishlistUserAction | RemoveFromCartUserAction | LogInUserAction | getUserFromTokenAction | RemoveProductsCartUserAction | getOrdersByUserIdAction;
 
 export type AppActions = ProductsActionTypes | CartActionTypes | UserActionTypes;
