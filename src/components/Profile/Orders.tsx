@@ -24,7 +24,7 @@ class Orders extends React.Component<IProps>{
                 <div className="border rounded shadow-xl w-full h-full p-4 flex flex-col space-y-10">
                     <p className="text-2xl">My orders</p>
                     <div>
-                        {orders.map(order => order._id)}
+                        {orders}
 
                         {/* {orders.map(order => {
                             <div className="flex flex-col">
