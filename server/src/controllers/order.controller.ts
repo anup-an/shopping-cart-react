@@ -31,8 +31,9 @@ export const createOrderForUser = async (req: Request, res: Response): Promise<R
 export const getOrdersByUserId = async (req: Request, res: Response): Promise<Response> => {
     try {
         const orders = await Order.find({});
-        const user_orders = orders.filter((order) => order.user_id === mongoose.Types.ObjectId(req.params.id));
-        return res.status(200).json({ status: 'orders retrieved successfully', data: user_orders });
+        res.send(orders);
+        // const user_orders = orders.filter((order) => order.user_id === mongoose.Types.ObjectId(req.params.id));
+        // return res.status(200).json({ status: 'orders retrieved successfully', data: user_orders });
     } catch (error) {
         return res.send('Error getting user orders');
         console.log(error);
