@@ -18,13 +18,14 @@ class Orders extends React.Component<IProps>{
         this.props.user._id !== "" ? this.props.actions.getOrdersByUserId(this.props.user) : '';
     }
     render() {
-        const { orders } = this.props;
+        const { orders, user } = this.props;
         return (
             <div>
                 <div className="border rounded shadow-xl w-full h-full p-4 flex flex-col space-y-10">
                     <p className="text-2xl">My orders</p>
                     <div>
-                        {orders.map(order => {
+                        {user._id}
+                        {/* {orders.map(order => {
                             <div className="flex flex-col">
                                 <p className="p-2 border">Order# {order._id}</p>
                                 <div className="flex flex-col space-y-4">
@@ -39,8 +40,7 @@ class Orders extends React.Component<IProps>{
                                     })}
                                 </div>
                             </div>
-                        })}
-                        
+                        })} */}                        
                     </div>
                 </div>
                 

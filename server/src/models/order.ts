@@ -5,7 +5,7 @@ import { CartSchema, ICart } from './user';
 export interface IOrder extends mongoose.Document {
     _id: mongoose.Types.ObjectId;
     name: string;
-    user_id: mongoose.Types.ObjectId;
+    user_id: string;
     email: string;
     address: string;
     postcode: string;
