@@ -30,7 +30,7 @@ class Orders extends React.Component<IProps>{
                                 <div className="flex flex-col space-y-4">
                                     {order.cart.map(cart => (
                                         <div className="flex flex-row spaxe-x-4 border-b p-2">
-                                            <img src={cart.image} />
+                                            <img src={cart.image} className="w-1/4 h-auto" />
                                             <div>
                                                 <p>{cart.title}</p>
                                                 <p>€{cart.price}</p>
