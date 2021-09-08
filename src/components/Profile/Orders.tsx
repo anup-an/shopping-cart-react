@@ -24,11 +24,11 @@ class Orders extends React.Component<IProps>{
                 <div className="border rounded shadow-xl w-full h-full p-4 flex flex-col space-y-10">
                     <p className="text-2xl">My orders</p>
                     <div>
-                        {orders.map(order => {
+                        {orders.map(order => (
                             <div className="flex flex-col">
                                 <p className="p-2 border">Order# {order._id}</p>
                                 <div className="flex flex-col space-y-4">
-                                    {order.cart.map(cart => {
+                                    {order.cart.map(cart => (
                                         <div className="flex flex-row spaxe-x-4 border-b p-2">
                                             <img src={cart.image} />
                                             <div>
@@ -36,10 +36,10 @@ class Orders extends React.Component<IProps>{
                                                 <p>€{cart.price}</p>
                                             </div>
                                         </div>
-                                    })}
+                                    ))}
                                 </div>
                             </div>
-                        })}                      
+                        ))}                      
                     </div>
                 </div>
                 
