@@ -82,7 +82,7 @@ class ViewCart extends React.Component<IProps, IState> {
                         </button>
 
                     </li>
-                    {cartItems.map((item, index) => (index >= cartIndex && index < cartIndex + 5) ? (
+                    {cartItems.map((item, index) => (index >= cartIndex && index < cartIndex + 4) ? (
                         <Slide direction="right" key={item._id}>
                             <li key={item._id} className="flex flex-row space-x-2 justify-center">
                                 <div className="flex flex-row border shadow p-2 text-sm space-x-2 w-3/4">
