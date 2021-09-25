@@ -39,10 +39,9 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
             }
         })
         return '' 
-    } else if (responseObject.status === 'error') {
-        return responseObject.data;
+    } else {
+        return responseObject.status;
     }
-    return ''
     
     
 
