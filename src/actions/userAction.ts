@@ -30,8 +30,10 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
     
     const responseObject = await (await axios.post(
         'https://shopping-cart-app-react.herokuapp.com/api/login', { email, password }, { withCredentials: true })).data;
-    if (responseObject.status === 'success') {
-        
+    
+    if (responseObject.status === 'error') {
+        return responseObject.data;
+    }else if (responseObject.status === 'success') {
         dispatch({
             type: LOG_IN_USER,
             payload: {
@@ -39,10 +41,9 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
             }
         })
         return '' 
-    } else if (responseObject.status === 'error') {
-        return responseObject.data;
-    }
-    return ''
+    } else {
+        return ''
+    } 
     
     
 
