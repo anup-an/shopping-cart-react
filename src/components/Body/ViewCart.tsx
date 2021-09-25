@@ -41,12 +41,12 @@ class ViewCart extends React.Component<IProps, IState> {
         this.state = { cartIndex: 0};
     }
     scrollUpCart = (cartIndex: number) => {
-        if (this.props.cartItems.length > 5) {
-            cartIndex < this.props.cartItems.length - 5 ? this.setState({ cartIndex: this.state.cartIndex + 1 }) : '';
+        if (this.props.cartItems.length > 4) {
+            cartIndex < this.props.cartItems.length - 4 ? this.setState({ cartIndex: this.state.cartIndex + 1 }) : '';
         }        
     }
     scrollDownCart = (cartIndex: number) => {
-        if (this.props.cartItems.length > 5) {
+        if (this.props.cartItems.length > 4) {
             cartIndex < this.props.cartItems.length && cartIndex > 0 ? this.setState({ cartIndex: this.state.cartIndex - 1 }) : '';
         }
         
@@ -65,7 +65,7 @@ class ViewCart extends React.Component<IProps, IState> {
                         <button
                             type="button"
                             className={`border shadow 
-                                        ${cartIndex < this.props.cartItems.length - 5 && this.props.cartItems.length > 5 ? 'visible':'invisible'}
+                                        ${cartIndex < this.props.cartItems.length - 4 && this.props.cartItems.length > 4 ? 'visible':'invisible'}
                                         w-3/4 text text-gray-500 hover:text-white hover:bg-blue-800 focus:outline-none
                                         flex items-center justify-center`}
                             onClick={() => this.scrollUpCart(cartIndex)}
@@ -136,7 +136,7 @@ class ViewCart extends React.Component<IProps, IState> {
                     <button
                         type="button"
                         className={`border shadow 
-                            ${cartIndex < this.props.cartItems.length && cartIndex > 0 && this.props.cartItems.length > 5 ? 'visible':'invisible'}
+                            ${cartIndex < this.props.cartItems.length && cartIndex > 0 && this.props.cartItems.length > 4 ? 'visible':'invisible'}
                             w-3/4 text text-gray-500 hover:text-white hover:bg-blue-800 focus:outline-none
                             flex items-center justify-center`}
                         onClick={() => this.scrollDownCart(cartIndex)}
