@@ -66,7 +66,7 @@ class Login extends React.Component<IProps, IState> {
                                     </Link>
                                 </div>
                                 <div className="text-2xl text-blue-800 text-left">Login</div>
-                                <p className={`${error === '' ? 'invisible': 'visible'} text-red-500`}>{error}</p>
+                                <p className={`text-red-500`}>{error}</p>
 
                                 <form onSubmit={this.handleLogin} className="flex flex-col space-y-4 w-full">
                                     <div>
