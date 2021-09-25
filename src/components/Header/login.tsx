@@ -27,7 +27,7 @@ class Login extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
-            email: '', password: '', error: ''};
+            email: '', password: '', error: 'error'};
     }
     handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState((state) => ({ ...state, [event.target.name]: event.target.value }));
