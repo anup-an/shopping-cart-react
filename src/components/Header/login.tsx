@@ -32,9 +32,9 @@ class Login extends React.Component<IProps, IState> {
     handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState((state) => ({ ...state, [event.target.name]: event.target.value }));
     };
-    handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
-        const errorMessage = await this.props.actions.logInUser(this.state.email, this.state.password, this.props.cartItems);
+        const errorMessage = this.props.actions.logInUser(this.state.email, this.state.password, this.props.cartItems);
         this.setState((state) => ({ ...state, error: 'error' }));                
 
     };
