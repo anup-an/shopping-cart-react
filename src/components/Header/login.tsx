@@ -10,6 +10,7 @@ import { AppState } from '../../store';
 interface IState {
     email: string;
     password: string;
+    error: string;
 }
 
 interface IProps {
@@ -19,23 +20,28 @@ interface IProps {
 }
 
 interface Actions {
-    logInUser: (email: string, password: string, cartItems: ICart[]) => Promise<void>;
+    logInUser: (email: string, password: string, cartItems: ICart[]) => Promise<string>;
 }
 
 class Login extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
-        this.state = { email: '', password: '' };
+        this.state = {
+            email: '', password: '', error: ''};
     }
     handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState((state) => ({ ...state, [event.target.name]: event.target.value }));
     };
-    handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
+    handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
-        this.props.actions.logInUser(this.state.email, this.state.password, this.props.cartItems);
+        const errorMessage = this.props.actions.logInUser(this.state.email, this.state.password, this.props.cartItems);
+        errorMessage.then(err =>
+            this.setState((state) => ({...state, error: err}))
+        )
+
     };
     render(): JSX.Element {
-        const { email, password } = this.state;
+        const { email, password, error } = this.state;
         const { user } = this.props;
 
         return (
@@ -57,6 +63,7 @@ class Login extends React.Component<IProps, IState> {
                                     </Link>
                                 </div>
                                 <div className="text-2xl text-blue-800 text-left">Login</div>
+                                <p className={`${error === '' ? 'invisible': ''} text-red-500`}>{error}</p>
 
                                 <form onSubmit={this.handleLogin} className="flex flex-col space-y-4 w-full">
                                     <div>
