@@ -40,7 +40,7 @@ class Login extends React.Component<IProps, IState> {
             if (this.props.user._id == "") {
                 this.setState({ ...this.state, error: 'Incorrect user details. Please try again' });
             }
-        },100)
+        },1000)
 
     };
     render(): JSX.Element {
