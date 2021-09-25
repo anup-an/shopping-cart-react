@@ -1,6 +1,5 @@
 {
     "name": "shopping-cart-app",
-    "proxy": "https://shopping-cart-app-react.herokuapp.com/",
     "version": "0.1.0",
     "private": true,
     "dependencies": {
