@@ -22,7 +22,7 @@ class App extends React.Component<IProps>{
     }
     render() {
     return (
-        <HashRouter>
+        <BrowserRouter>
             <div className="flex flex-col h-screen">
                 
                 <div className="w-full">
@@ -30,7 +30,7 @@ class App extends React.Component<IProps>{
                 </div>
                 
             </div>
-        </HashRouter>
+        </BrowserRouter>
     )
     }
 };
