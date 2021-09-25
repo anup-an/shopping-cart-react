@@ -35,7 +35,7 @@ class Login extends React.Component<IProps, IState> {
     handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
         const errorMessage = await this.props.actions.logInUser(this.state.email, this.state.password, this.props.cartItems);
-        this.setState((state) => ({ ...state, error: errorMessage }));                
+        await this.setState((state) => ({ ...state, error: errorMessage }));                
 
     };
     render(): JSX.Element {
