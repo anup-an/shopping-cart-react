@@ -26,24 +26,21 @@ const runInLoop = () => {
 }
 
 export const logInUser = (email: string, password: string, cartItems: ICart[]) => async (
-    dispatch: Dispatch<AppActions>): Promise<string> => {
+    dispatch: Dispatch<AppActions>): Promise<void> => {
     
     const responseObject = await (await axios.post(
-        'https://shopping-cart-app-react.herokuapp.com/api/login', { email, password }, { withCredentials: true })).data;
+        'https://shopping-cart-app-react.herokuapp.com/api/login', { email, password }, { withCredentials: true })).data;    
     
-    if (responseObject.status === 'error') {
-        return responseObject.data;
-    }else if (responseObject.status === 'success') {
+    if (responseObject.status === 'success') {
+        
         dispatch({
             type: LOG_IN_USER,
             payload: {
                 user: responseObject.data,
             }
         })
-        return '' 
-    } else {
-        return ''
-    } 
+    }
+
     
     
 

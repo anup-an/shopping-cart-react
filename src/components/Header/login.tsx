@@ -34,8 +34,8 @@ class Login extends React.Component<IProps, IState> {
     };
     handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
-        const errorMessage = this.props.actions.logInUser(this.state.email, this.state.password, this.props.cartItems);
-        errorMessage.then(err => this.setState((state) => ({ ...state, error: 'error' })));
+        this.props.actions.logInUser(this.state.email, this.state.password, this.props.cartItems);
+        this.setState({ ...this.state, error: 'Incorrect user details. Please try again' });
 
     };
     render(): JSX.Element {
