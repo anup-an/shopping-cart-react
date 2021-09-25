@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 import { getUserFromToken } from './actions/userAction';
 import Footer from './components/Footer';
 
@@ -22,7 +22,7 @@ class App extends React.Component<IProps>{
     }
     render() {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <div className="flex flex-col h-screen">
                 
                 <div className="w-full">
@@ -30,7 +30,7 @@ class App extends React.Component<IProps>{
                 </div>
                 
             </div>
-        </BrowserRouter>
+        </HashRouter>
     )
     }
 };
