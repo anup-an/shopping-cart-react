@@ -17,7 +17,7 @@ interface Actions {
 class Details extends React.Component<IProps>{
     constructor(props: IProps) {
         super(props);
-        this.state = { "firstName": "", "lastName": "", "phone": "", "email": "", "password": ""}
+        this.state = { "firstName": "", "lastName": "", "phone": "", "email": ""}
     }
     handleSave = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -36,7 +36,6 @@ class Details extends React.Component<IProps>{
             "lastName": user.lastName,
             "phone": user.phone,
             "email": user.email,
-            "password": user.password,
         })
     }
     render() {
@@ -120,7 +119,7 @@ class Details extends React.Component<IProps>{
                                     </label>
                                 </div>
                             </div>
-                            <div>
+                            {/* <div>
                                 <p>Change Password</p>
                                 <label htmlFor="password">
                                     <input
@@ -130,7 +129,7 @@ class Details extends React.Component<IProps>{
                                         type="password"
                                     />
                                 </label>
-                            </div>
+                            </div> */}
                             <button
                                 type="submit"
                                 className="w-1/4 border rounded focus:outline-none p-2 bg-blue-400 hover:bg-blue-800 text-white"
