@@ -50,7 +50,7 @@ class Address extends React.Component<IProps>{
                                         name="address"
                                         id="address"
                                         className="p-2 bg-gray-200 border rounded w-full"
-                                        value={user.address}
+                                        defaultValue={user.address}
                                         onChange={this.handleInput}
                                     />
                                 </label>
@@ -63,7 +63,7 @@ class Address extends React.Component<IProps>{
                                             name="postcode"
                                             id="postcode"
                                             className="p-2 bg-gray-200 border rounded"
-                                            value={user.postcode}
+                                            defaultValue={user.postcode}
                                             onChange={this.handleInput}
                                         />
                                     </label>
@@ -75,7 +75,7 @@ class Address extends React.Component<IProps>{
                                             name="city"
                                             id="city"
                                             className="p-2 bg-gray-200 border rounded"
-                                            value={user.city}
+                                            defaultValue={user.city}
                                             onChange={this.handleInput}
                                         />
                                     </label>
@@ -88,7 +88,7 @@ class Address extends React.Component<IProps>{
                                         name="country"
                                         id="country"
                                         className="p-2 bg-gray-200 border rounded"
-                                        value={user.country}
+                                        defaultValue={user.country}
                                         onChange={this.handleInput}
                                     />
                                 </label>
