@@ -113,10 +113,8 @@ class Details extends React.Component<IProps>{
                                 </div>
                                 <div className="invisible">
                                     <p>Last Name</p>
-                                    <label htmlFor="lastName">
+                                    <label >
                                         <input
-                                            name="lastName"
-                                            id="lastName"
                                             className="p-2 bg-gray-200 border rounded"
                                             required
                                         />
