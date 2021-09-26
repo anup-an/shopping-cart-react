@@ -116,7 +116,6 @@ class Details extends React.Component<IProps>{
                                     <label >
                                         <input
                                             className="p-2 bg-gray-200 border rounded"
-                                            required
                                         />
                                     </label>
                                 </div>
