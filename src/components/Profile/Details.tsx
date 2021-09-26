@@ -17,7 +17,7 @@ interface Actions {
 class Details extends React.Component<IProps>{
     constructor(props: IProps) {
         super(props);
-        this.state = { "firstName": "", "lastName": "", "phone": "", "email": ""}
+        this.state = { "firstName": "", "lastName": "", "phone": "", "email": "", "password": ""}
     }
     handleSave = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -57,6 +57,7 @@ class Details extends React.Component<IProps>{
                                             id="firstName"
                                             className="p-2 bg-gray-200 border rounded"
                                             defaultValue={user.firstName}
+                                            onChange={this.handleInput}
                                             required
                                         />
                                     </label>
@@ -69,6 +70,7 @@ class Details extends React.Component<IProps>{
                                             id="lastName"
                                             className="p-2 bg-gray-200 border rounded"
                                             defaultValue={user.lastName}
+                                            onChange={this.handleInput}
                                             required
                                         />
                                     </label>
@@ -82,6 +84,7 @@ class Details extends React.Component<IProps>{
                                         id="phone"
                                         className="p-2 bg-gray-200 border rounded"
                                         defaultValue={user.phone}
+                                        onChange={this.handleInput}
                                     />
                                 </label>
                             </div>
@@ -107,6 +110,7 @@ class Details extends React.Component<IProps>{
                                             id="email"
                                             className="p-2 bg-gray-200 border rounded"
                                             defaultValue={user.email}
+                                            onChange={this.handleInput}
                                         />
                                     </label>
                                 </div>
@@ -119,7 +123,7 @@ class Details extends React.Component<IProps>{
                                     </label>
                                 </div>
                             </div>
-                            {/* <div>
+                            <div>
                                 <p>Change Password</p>
                                 <label htmlFor="password">
                                     <input
@@ -127,9 +131,10 @@ class Details extends React.Component<IProps>{
                                         id="password"
                                         className="p-2 bg-gray-200 border rounded"
                                         type="password"
+                                        onChange={this.handleInput}
                                     />
                                 </label>
-                            </div> */}
+                            </div>
                             <button
                                 type="submit"
                                 className="w-1/4 border rounded focus:outline-none p-2 bg-blue-400 hover:bg-blue-800 text-white"
