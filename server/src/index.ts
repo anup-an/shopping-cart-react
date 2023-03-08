@@ -18,14 +18,15 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-mongoose.connect(
-    process.env.MONGO_URI || 'http://localhost:5001',
-    {
-        useNewUrlParser: true,
-        useCreateIndex: true,
-        useUnifiedTopology: true,
-    },
-);
+const mongoUri =
+    process.env.username && process.env.password
+        ? `mongodb+srv://${process.env.username}:${process.env.password}@cluster0.f4upd.mongodb.net/shopping-cart-db?retryWrites=true&w=majority`
+        : '';
+mongoose.connect(mongoUri, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true,
+});
 
 app.use(passport.initialize());
 passport.use(strategy);
