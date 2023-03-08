@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 mongoose.connect(
-    process.env.MONGO_URI,
+    process.env.MONGO_URI || 'http://localhost:5001',
     {
         useNewUrlParser: true,
         useCreateIndex: true,
