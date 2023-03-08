@@ -24,7 +24,6 @@ export const createOrderForUser = async (req: Request, res: Response): Promise<R
         return res.status(200).json({ status: 'success', data: 'Order saved successfully' });
     } catch (error) {
         return res.send('Error');
-        console.log(error);
     }
 };
 
@@ -35,6 +34,5 @@ export const getOrdersByUserId = async (req: Request, res: Response): Promise<Re
         return res.status(200).json({ status: 'orders retrieved successfully', data: user_orders });
     } catch (error) {
         return res.send('Error getting user orders');
-        console.log(error);
     }
 };

@@ -40,15 +40,19 @@ interface ICart {
 }
 
 export const editUserById = async (req: Request, res: Response): Promise<void> => {
-    const { user } = req.body;
-    User.findByIdAndUpdate({ _id: mongoose.Types.ObjectId(req.params.id) }, { ...user }, (err, response) => {
-        if (err) {
-            console.log(`Error updating user data ${err}`);
-            res.status(400).json({ status: 'Error', data: 'User data not updated' });
-        }
-        console.log(`Reponse from database ${response}`);
-        res.json({ status: 'success', data: 'User data updated' });
-    });
+    try {
+        const { user } = req.body;
+        User.findByIdAndUpdate({ _id: mongoose.Types.ObjectId(req.params.id) }, { ...user }, (err, response) => {
+            if (err) {
+                console.log(`Error updating user data ${err}`);
+                res.status(400).json({ status: 'Error', data: 'User data not updated' });
+            }
+            console.log(`Reponse from database ${response}`);
+            res.json({ status: 'success', data: 'User data updated' });
+        });
+    } catch (error) {
+        res.send(error);
+    }
 };
 
 export const getUserById = async (req: Request, res: Response): Promise<void> => {
@@ -88,7 +92,7 @@ export const getUserByToken = async (req: Request, res: Response): Promise<void>
                   },
               });
     } catch (error) {
-        console.log(error);
+        res.send(error);
     }
 };
 

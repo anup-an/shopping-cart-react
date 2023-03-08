@@ -14,11 +14,15 @@ interface IProduct {
 }
 
 export const getProducts = async (req: Request, res: Response) => {
-    await Product.find({}, (err, products) => {
-        err
-            ? res.status(500).json({ status: 'error', data: err.message })
-            : res.status(200).json({ status: 'success', data: products });
-    });
+    try {
+        await Product.find({}, (err, products) => {
+            err
+                ? res.status(500).json({ status: 'error', data: err.message })
+                : res.status(200).json({ status: 'success', data: products });
+        });
+    } catch (error) {
+        res.send(error);
+    }
 };
 
 export const getProductById = async (req: Request, res: Response) => {
@@ -35,11 +39,15 @@ export const getProductById = async (req: Request, res: Response) => {
 };
 
 export const createProducts = async (req: Request, res: Response) => {
-    await new Product(req.body).save((err, products) => {
-        err
-            ? res.status(500).json({ status: 'error', data: err.stack })
-            : res.status(200).json({ status: 'success', data: products });
-    });
+    try {
+        await new Product(req.body).save((err, products) => {
+            err
+                ? res.status(500).json({ status: 'error', data: err.stack })
+                : res.status(200).json({ status: 'success', data: products });
+        });
+    } catch (error) {
+        res.send(error);
+    }
 };
 
 export const deleteProducts = async (req: Request, res: Response) => {
