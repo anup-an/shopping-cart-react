@@ -37,6 +37,8 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
+        "tsc-build": "tsc",
+        "server-start": "node server/src/index.js",
         "heroku-postbuild": "npm install && npm run build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
