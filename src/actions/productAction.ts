@@ -11,7 +11,7 @@ import {
 } from '../ActionTypes';
 
 export const fetchProducts = () => async (dispatch: Dispatch<AppActions>): Promise<void> => {
-    await axios.get('https://shopping-cart-app-react.herokuapp.com/api/products').then((response) => {
+    await axios.get('https://my-eshop.onrender.com/api/products').then((response) => {
         dispatch({
             type: FETCH_PRODUCTS,
             payload: { items: response.data.data, isLoading: false },
@@ -72,7 +72,7 @@ export const sortProducts = (sort: string, size: string, products: IProduct[] | 
 };
 
 export const searchProducts = (keywords: string) => async (dispatch: Dispatch<AppActions>): Promise<void> => {
-    axios.get(`https://shopping-cart-app-react.herokuapp.com/api/products/search/:${keywords}`).then((response) => {
+    axios.get(`https://my-eshop.onrender.com/api/products/search/:${keywords}`).then((response) => {
         console.log(response.data);
         dispatch({
             type: SEARCH_PRODUCTS,

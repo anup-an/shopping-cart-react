@@ -15,7 +15,7 @@ export type ICart = {
 };
 
 const reIssueAccessToken = async () => {
-    await axios.get('https://shopping-cart-app-react.herokuapp.com/api/reissue-token');
+    await axios.get('https://my-eshop.onrender.com/api/reissue-token');
     runInLoop();
 }
 
@@ -29,7 +29,7 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
     dispatch: Dispatch<AppActions>): Promise<void> => {
     
     const responseObject = await (await axios.post(
-        'https://shopping-cart-app-react.herokuapp.com/api/login', { email, password }, { withCredentials: true })).data;    
+        'https://my-eshop.onrender.com/api/login', { email, password }, { withCredentials: true })).data;    
     
     if (responseObject.status === 'success') {
         
@@ -90,7 +90,7 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
 }
 
 export const logOutUser = () => async(dispatch: Dispatch<AppActions>): Promise<void> => {
-    const status: string = await (await axios.post('https://shopping-cart-app-react.herokuapp.com/api/logout')).data.status;
+    const status: string = await (await axios.post('https://my-eshop.onrender.com/api/logout')).data.status;
     if (status == "success") {
         const loggedUser: IUser = {
             "_id": '',
@@ -142,7 +142,7 @@ export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (
     const id = loggedUser._id;
     const cart = loggedUser.cart; 
     await axios.post(
-        `https://shopping-cart-app-react.herokuapp.com/api/users/${id}/update-cart`, { id, cart });
+        `https://my-eshop.onrender.com/api/users/${id}/update-cart`, { id, cart });
         dispatch({
             type: ADD_TO_CART_USER,
             payload: {
@@ -171,7 +171,7 @@ export const removeItemsFromUserCart = (loggedUser: IUser, product: IProduct) =>
     const id = loggedUser._id;
     const cart = loggedUser.cart; 
     await axios.post(
-        `https://shopping-cart-app-react.herokuapp.com/api/users/${id}/update-cart`, { id, cart });
+        `https://my-eshop.onrender.com/api/users/${id}/update-cart`, { id, cart });
         dispatch({
             type: REMOVE_PRODUCTS_CART_USER,
             payload: {
@@ -188,7 +188,7 @@ export const removeFromUserCart = (loggedUser: IUser, selectedCart: ICart) => as
     const cart = loggedUser.cart; 
 
     await axios.post(
-        `https://shopping-cart-app-react.herokuapp.com/api/users/${id}/update-cart`, { id, cart });
+        `https://my-eshop.onrender.com/api/users/${id}/update-cart`, { id, cart });
     dispatch({
         type: REMOVE_FROM_CART_USER,
         payload: {
@@ -198,7 +198,7 @@ export const removeFromUserCart = (loggedUser: IUser, selectedCart: ICart) => as
 }
 
 export const getUserFromToken = () => async (dispatch: Dispatch<AppActions>) => {
-    const loggedUser: IUser = await (await axios.get('https://shopping-cart-app-react.herokuapp.com/api/users/')).data.data;
+    const loggedUser: IUser = await (await axios.get('https://my-eshop.onrender.com/api/users/')).data.data;
     dispatch({
         type: GET_USER_FROM_TOKEN,
         payload: {
@@ -213,7 +213,7 @@ export const getUserFromToken = () => async (dispatch: Dispatch<AppActions>) => 
 export const editUserProfile = (loggedUser: IUser) => async (dispatch: Dispatch<AppActions>) => {
     const id = loggedUser._id;
     const user = loggedUser;
-    await axios.post(`https://shopping-cart-app-react.herokuapp.com/api/users/${id}`, { user });
+    await axios.post(`https://my-eshop.onrender.com/api/users/${id}`, { user });
     dispatch({
         type: EDIT_PROFILE_USER,
         payload: {
@@ -224,7 +224,7 @@ export const editUserProfile = (loggedUser: IUser) => async (dispatch: Dispatch<
 
 export const getOrdersByUserId = (loggedUser: IUser) => async (dispatch: Dispatch<AppActions>) => {
     const id = loggedUser._id;
-    const orders = await (await axios.get(`https://shopping-cart-app-react.herokuapp.com/api/orders/${id}/get-orders`)).data.data;
+    const orders = await (await axios.get(`https://my-eshop.onrender.com/api/orders/${id}/get-orders`)).data.data;
     dispatch({
         type: GET_ORDERS_BY_USER_ID,
         payload: {
