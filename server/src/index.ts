@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 mongoose.connect(
-    'mongodb+srv://anup-an:IvNT46LZr37Vz0IN@cluster0.f4upd.mongodb.net/shopping-cart-db?retryWrites=true&w=majority',
+    process.env.MONGO_URI,
     {
         useNewUrlParser: true,
         useCreateIndex: true,
