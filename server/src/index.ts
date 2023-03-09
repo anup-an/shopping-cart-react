@@ -33,7 +33,7 @@ passport.use(strategy);
 app.get('/', (req, res) => res.send('This is the server homepage'));
 app.use(routes());
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT;
 app.listen(port, () => {
     console.log(`Listening to http://localhost:${port}`);
 });
