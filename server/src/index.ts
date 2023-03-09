@@ -14,7 +14,6 @@ require('dotenv').config();
 const app = express();
 
 app.use(cors({ credentials: true, origin: [/http\:\/\/localhost\:\d+/, 'https://lucid-lewin-704e07.netlify.app'] }));
-app.options('*', cors());
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -31,7 +30,13 @@ mongoose.connect(mongoUri, {
 });
 
 app.use(passport.initialize());
+
 passport.use(strategy);
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'https://lucid-lewin-704e07.netlify.app'); // update to match the domain you will make the request from
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+});
 app.get('/', (req, res) => res.send('This is the server homepage'));
 app.use(routes());
 
