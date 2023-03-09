@@ -31,7 +31,7 @@ app.use(passport.initialize());
 
 passport.use(strategy);
 app.use(function (req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'https://lucid-lewin-704e07.netlify.app'); // update to match the domain you will make the request from
+    res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
 });
