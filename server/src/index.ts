@@ -12,7 +12,7 @@ import strategy from './middlewares/passport';
 require('dotenv').config();
 
 const app = express();
-app.use(cors({ credentials: true, origin: [/http\:\/\/localhost\:\d+/, 'https://lucid-lewin-704e07.netlify.app'] }));
+app.use(cors({ credentials: true, origin: true }));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
