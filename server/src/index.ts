@@ -31,7 +31,7 @@ app.use(passport.initialize());
 
 passport.use(strategy);
 app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', 'https://lucid-lewin-704e07.netlify.app/');
+    res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
     next();
 });
