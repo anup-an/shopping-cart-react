@@ -13,6 +13,7 @@ require('dotenv').config();
 
 const app = express();
 
+app.use(cors({ credentials: true, origin: [/http\:\/\/localhost\:\d+/, 'https://lucid-lewin-704e07.netlify.app'] }));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
@@ -30,11 +31,6 @@ mongoose.connect(mongoUri, {
 app.use(passport.initialize());
 
 passport.use(strategy);
-app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-});
 app.get('/', (req, res) => res.send('This is the server homepage'));
 app.use(routes());
 
