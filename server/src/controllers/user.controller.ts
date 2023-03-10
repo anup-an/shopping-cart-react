@@ -3,6 +3,7 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import User from '../models/user';
+import _ from 'lodash';
 
 export interface IUser {
     _id: mongoose.Types.ObjectId;
@@ -70,26 +71,27 @@ export const getUserById = async (req: Request, res: Response): Promise<void> =>
 
 export const getUserByToken = async (req: Request, res: Response): Promise<void> => {
     try {
+        const guestUser = {
+            _id: '',
+            email: '',
+            password: '',
+            firstName: '',
+            lastName: '',
+            address: '',
+            phone: '',
+            city: '',
+            country: '',
+            refreshToken: '',
+            wishList: [],
+            cart: [],
+        }
         const { token } = req.cookies;
         const user = await User.findOne({ refreshToken: token.refreshToken });
         user
-            ? res.status(200).json({ status: 'Logged user found.', data: user })
+            ? res.status(200).json({ status: 'Logged user found.', data: _.isEmpty(user) ? guestUser : user })
             : res.status(401).json({
                   status: 'Refresh token not found in the database. Token has expired or user has not logged in.',
-                  data: {
-                      _id: '',
-                      email: '',
-                      password: '',
-                      firstName: '',
-                      lastName: '',
-                      address: '',
-                      phone: '',
-                      city: '',
-                      country: '',
-                      refreshToken: '',
-                      wishList: [],
-                      cart: [],
-                  },
+                  data: guestUser,
               });
     } catch (error) {
         res.send(error);
