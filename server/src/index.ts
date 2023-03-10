@@ -13,7 +13,7 @@ require('dotenv').config();
 
 const app = express();
 
-app.use(cors({ credentials: true, origin: [/http\:\/\/localhost\:\d+/, 'https://lucid-lewin-704e07.netlify.app'] }));
+app.use(cors({ credentials: true, origin: [/http\:\/\/localhost\:\d+/, 'https://shopping-cart-react-express.onrender.com/'] }));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cookieParser());
