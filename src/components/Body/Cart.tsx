@@ -68,7 +68,7 @@ class Cart extends React.Component<IProps, IState> {
         const { isOpen } = this.state;
         return (
             <div>
-                {user._id != '' ?
+                {user._id ?
                     <div>
                         <ViewCart 
                             handleIncrement={this.handleIncrement}
