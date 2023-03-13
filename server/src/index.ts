@@ -21,6 +21,17 @@ app.use(
             'https://lucid-lewin-704e07.netlify.app/',
             'https://shopping-cart-react-express.onrender.com/',
         ],
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
+        allowedHeaders: [
+            'Content-Type',
+            'Origin',
+            'X-Requested-With',
+            'Accept',
+            'x-client-key',
+            'x-client-token',
+            'x-client-secret',
+            'Authorization',
+        ],
     }),
 );
 app.use(express.urlencoded({ extended: false }));
