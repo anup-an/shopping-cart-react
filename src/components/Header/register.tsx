@@ -49,7 +49,7 @@ class Register extends React.Component<IProps, IState> {
 
         return (
             <div className="flex flex-row flex items-center justify-center w-full">
-                {user?._id == '' ? (
+                {!user?._id ? (
                     <div className="bg-white border rounded-lg shadow-xl w-full lg:w-2/3 flex flex-row items-center lg:bg-blue-800">
                         <div className="hidden lg:block w-1/2 text-white p-4 flex items-center justify-center text-center flex-col">
                             <div className="text-xl">Welcome to the E-Shop!</div>

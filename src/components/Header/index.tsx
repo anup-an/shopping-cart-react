@@ -106,7 +106,7 @@ class Header extends React.Component<IProps, IState> {
                     </label>
                 </form>
                 <div className="flex flex-row justify-between items-center gap-x-10">
-                    {user._id == "" ?
+                    {!user._id ?
                         <Link to="/login" className={`hidden lg:block border lg:hover:border-white ${focus==="login" ? "lg:border-white" : "lg:border-blue-800"} focus:outline-none p-2`}>
                             Login
                         </Link> : <div className="flex flex-row items-center space-x-4">
@@ -122,7 +122,7 @@ class Header extends React.Component<IProps, IState> {
                             My account
                             </button>
                             </div>}
-                    {user._id == "" ?
+                    {!user._id ?
                         <Link to="/register" className={`hidden lg:block lg:hover:border-white border ${focus==="register" ? "lg:border-white" : "lg:border-blue-800"} p-2`}>
                             Register
                         </Link> : <button onClick={this.handleLogOut} type="button"
