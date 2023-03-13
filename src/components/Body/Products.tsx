@@ -51,7 +51,7 @@ class Products extends React.Component<IProps, IState> {
     };
 
     handleAddToCart = (product: IProduct) => {
-        this.props.user._id != '' ? this.props.actions.addToUserCart(this.props.user, product) : this.props.actions.addToCart(this.props.cartItems, product);
+        this.props.user._id ? this.props.actions.addToUserCart(this.props.user, product) : this.props.actions.addToCart(this.props.cartItems, product);
     };
 
     render(): JSX.Element {

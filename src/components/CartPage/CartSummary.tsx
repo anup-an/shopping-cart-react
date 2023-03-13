@@ -93,7 +93,7 @@ class CartSummary extends React.Component<IProps, IState> {
                                 </button>
                             </div>
                         </div>
-                        {user._id !== '' ? 
+                        {user._id ? 
                             <Checkout cartItems={cartItems} user={user} /> :
                             <div className="flex flex-col justify-center items-center">
                                 <Login />

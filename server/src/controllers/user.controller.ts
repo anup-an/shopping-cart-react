@@ -2,6 +2,8 @@
 /* eslint-disable no-unused-expressions */
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
+
 import User from '../models/user';
 import _ from 'lodash';
 
@@ -42,8 +44,12 @@ interface ICart {
 
 export const editUserById = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { user } = req.body;
-        User.findByIdAndUpdate({ _id: mongoose.Types.ObjectId(req.params.id) }, { ...user }, (err, response) => {
+    const { user } = req.body;
+    const newPassword = await bcrypt.hash(user.password, 10);
+    User.findByIdAndUpdate(
+        { _id: mongoose.Types.ObjectId(req.params.id) },
+        { ...user, password: newPassword },
+        (err, response) => {
             if (err) {
                 console.log(`Error updating user data ${err}`);
                 res.status(400).json({ status: 'Error', data: 'User data not updated' });

@@ -53,13 +53,13 @@ class Cart extends React.Component<IProps, IState> {
     };
 
     handleRemoveFromCart = (item: ICart) => {
-        this.props.user._id != '' ? this.props.actions.removeFromUserCart(this.props.user, item) : this.props.actions.removeFromCart(this.props.cartItems, item);
+        this.props.user._id ? this.props.actions.removeFromUserCart(this.props.user, item) : this.props.actions.removeFromCart(this.props.cartItems, item);
     }
     handleIncrement = (item: IProduct) => {
-        this.props.user._id !== '' ? this.props.actions.addToUserCart(this.props.user, item) : this.props.actions.addToCart(this.props.cartItems, item); 
+        this.props.user._id ? this.props.actions.addToUserCart(this.props.user, item) : this.props.actions.addToCart(this.props.cartItems, item); 
     }
     handleDecrement = (item: IProduct) => {
-        this.props.user._id === '' ? this.props.actions.removeItemsFromCart(this.props.cartItems, item): this.props.actions.removeItemsFromUserCart(this.props.user, item);
+        this.props.user._id ? this.props.actions.removeItemsFromUserCart(this.props.user, item): this.props.actions.removeItemsFromCart(this.props.cartItems, item);
 
     }
 

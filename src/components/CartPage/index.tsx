@@ -63,13 +63,13 @@ class CartPage extends React.Component<IProps, IState> {
     };
 
     handleRemoveFromCart = (item: ICart) => {
-        this.props.user._id !== '' ? this.props.actions.removeFromUserCart(this.props.user, item) : this.props.actions.removeFromCart(this.props.cartItems, item);
+        this.props.user._id ? this.props.actions.removeFromUserCart(this.props.user, item) : this.props.actions.removeFromCart(this.props.cartItems, item);
     }
     handleIncrement = (item: IProduct) => {
-        this.props.user._id !== '' ? this.props.actions.addToUserCart(this.props.user, item) : this.props.actions.addToCart(this.props.cartItems, item); 
+        this.props.user._id ? this.props.actions.addToUserCart(this.props.user, item) : this.props.actions.addToCart(this.props.cartItems, item); 
     }
     handleDecrement = (item: IProduct) => {
-        this.props.user._id === '' ? this.props.actions.removeItemsFromCart(this.props.cartItems, item): this.props.actions.removeItemsFromUserCart(this.props.user, item);
+        this.props.user._id ? this.props.actions.removeItemsFromUserCart(this.props.user, item): this.props.actions.removeItemsFromCart(this.props.cartItems, item);
 
     }
 
@@ -78,14 +78,12 @@ class CartPage extends React.Component<IProps, IState> {
         const { isOpen } = this.state;
         return (
             <div>
-                {user.cart.length !== 0 || cartItems.length !== 0 ?
-            
-
+                {user.cart?.length || cartItems.length !== 0 ?
                     <div className="mt-20">
                     <h1 className="text-center bg-gray-200 mb-4 lg:mb-16 p-2">
                         Welcome to your shopping cart! Click checkout to place the order.
                     </h1>
-                    {user._id != '' ?
+                    {user._id ?
                         <div className="flex flex-col lg:flex-row space-y-4 lg:space-x-4 lg:mx-10 lg:items-start justify-center mb-16">
                             <div className="w-full lg:w-2/3 border shadow rounded">
                                 <CartDisplay 
