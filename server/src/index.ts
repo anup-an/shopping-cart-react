@@ -17,8 +17,8 @@ app.use(
     cors({
         credentials: true,
         origin: [
-            'https://lucid-lewin-704e07.netlify.app/',
-            'https://shopping-cart-react-express.onrender.com/',
+            'https://lucid-lewin-704e07.netlify.app',
+            'https://shopping-cart-react-express.onrender.com',
             /http\:\/\/localhost\:\d+/,
         ],
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
