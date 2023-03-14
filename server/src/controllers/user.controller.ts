@@ -93,13 +93,17 @@ export const getUserByToken = async (req: Request, res: Response): Promise<void>
             cart: [],
         };
         const { token } = req.cookies;
-        const user = await User.findOne({ refreshToken: token.refreshToken });
-        !_.isEmpty(user)
-            ? res.status(200).json({ status: 'Logged user found.', data: user })
-            : res.status(401).json({
-                  status: 'Refresh token not found in the database. Token has expired or user has not logged in.',
-                  data: guestUser,
-              });
+        if (token) {
+            const user = await User.findOne({ refreshToken: token.refreshToken });
+            !_.isEmpty(user)
+                ? res.status(200).json({ status: 'Logged user found.', data: user })
+                : res.status(401).json({
+                      status: 'Unauthorized user.',
+                      data: guestUser,
+                  });
+        } else {
+            res.status(200).json({ status: 'Guest user.', data: guestUser });
+        }
     } catch (error) {
         res.send(error);
     }
