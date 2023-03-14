@@ -3,9 +3,9 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import _ from 'lodash';
 
 import User from '../models/user';
-import _ from 'lodash';
 
 export interface IUser {
     _id: mongoose.Types.ObjectId;
@@ -44,19 +44,20 @@ interface ICart {
 
 export const editUserById = async (req: Request, res: Response): Promise<void> => {
     try {
-    const { user } = req.body;
-    const newPassword = await bcrypt.hash(user.password, 10);
-    User.findByIdAndUpdate(
-        { _id: mongoose.Types.ObjectId(req.params.id) },
-        { ...user, password: newPassword },
-        (err, response) => {
-            if (err) {
-                console.log(`Error updating user data ${err}`);
-                res.status(400).json({ status: 'Error', data: 'User data not updated' });
-            }
-            console.log(`Reponse from database ${response}`);
-            res.json({ status: 'success', data: 'User data updated' });
-        });
+        const { user } = req.body;
+        const newPassword = await bcrypt.hash(user.password, 10);
+        User.findByIdAndUpdate(
+            { _id: mongoose.Types.ObjectId(req.params.id) },
+            { ...user, password: newPassword },
+            (err, response) => {
+                if (err) {
+                    console.log(`Error updating user data ${err}`);
+                    res.status(400).json({ status: 'Error', data: 'User data not updated' });
+                }
+                console.log(`Reponse from database ${response}`);
+                res.json({ status: 'success', data: 'User data updated' });
+            },
+        );
     } catch (error) {
         res.send(error);
     }
@@ -90,11 +91,11 @@ export const getUserByToken = async (req: Request, res: Response): Promise<void>
             refreshToken: '',
             wishList: [],
             cart: [],
-        }
+        };
         const { token } = req.cookies;
         const user = await User.findOne({ refreshToken: token.refreshToken });
-        user
-            ? res.status(200).json({ status: 'Logged user found.', data: _.isEmpty(user) ? guestUser : user })
+        !_.isEmpty(user)
+            ? res.status(200).json({ status: 'Logged user found.', data: user })
             : res.status(401).json({
                   status: 'Refresh token not found in the database. Token has expired or user has not logged in.',
                   data: guestUser,
