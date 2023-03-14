@@ -1,19 +1,11 @@
 import React from 'react';
+import { ICart } from './CartDisplay';
 
-type IProduct = {
-    _id: string;
-    title: string;
-    image: string;
-    description: string;
-    price: number;
-    availableSizes: string[];
-    count?: number;
-};
 
 interface IProps {
-    handleIncrement: (item: IProduct) => void;
-    handleDecrement: (item: IProduct) => void;
-    item: IProduct;
+    handleIncrement: (item: ICart) => void;
+    handleDecrement: (item: ICart) => void;
+    item: ICart;
 }
 
 class Counter extends React.Component<IProps> {
