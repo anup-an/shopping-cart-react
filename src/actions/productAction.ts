@@ -24,20 +24,19 @@ export const filterFunction = (size: string, products: IProduct[] | undefined) =
         if (size === 'ALL') {
             return products;
         }
-        console.log(size);
         return [...products].filter((product) => product.availableSizes.find((e) => e === size));
     }
 };
 
 export const sortFunction = (sort: string, products: IProduct[] | undefined) => {
     if (products && sort === 'Lowest') {
-        return [...products].slice().sort((a, b) => (a.price > b.price ? 1 : -1));
+        return [...products].sort((a, b) => (a.price > b.price ? 1 : -1));
     }
     if (products && sort === 'Highest') {
-        return [...products].slice().sort((a, b) => (a.price < b.price ? 1 : -1));
+        return [...products].sort((a, b) => (a.price < b.price ? 1 : -1));
     }
     if (products && sort === 'Newest') {
-        return [...products].slice().sort((a, b) => (a._id > b._id ? 1 : -1));
+        return [...products].sort((a, b) => (a._id > b._id ? 1 : -1));
     }
 };
 
