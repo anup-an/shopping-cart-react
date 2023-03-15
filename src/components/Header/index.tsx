@@ -52,6 +52,7 @@ class Header extends React.Component<IProps, IState> {
     handleLogOut = () => {
         const { user } = this.props;
         this.props.actions.logOutUser();
+        this.props.history.push('/');
     }
     render() {
         const { keywords } = this.state;
