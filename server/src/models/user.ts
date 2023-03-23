@@ -47,15 +47,6 @@ export const CartSchema = new mongoose.Schema({
     count: { type: Number },
 });
 
-export const ProductSchema = new mongoose.Schema({
-    id: { type: String },
-    title: { type: String },
-    image: { type: String },
-    description: { type: String },
-    price: { type: Number },
-    availableSizes: { type: [String] },
-});
-
 const UserSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
@@ -67,7 +58,6 @@ const UserSchema = new mongoose.Schema({
     city: { type: String },
     country: { type: String },
     refreshToken: { type: String },
-    wishList: { type: [ProductSchema] },
     cart: { type: [CartSchema] },
 });
 

@@ -47,8 +47,9 @@ export const editUserById = async (req: Request, res: Response): Promise<void> =
         const { user } = req.body;
         const newPassword = await bcrypt.hash(user.password, 10);
         User.findByIdAndUpdate(
-            { _id: mongoose.Types.ObjectId(req.params.id) },
+            { _id: new mongoose.Types.ObjectId(req.params.id) },
             { ...user, password: newPassword },
+            // @ts-ignore
             (err, response) => {
                 if (err) {
                     console.log(`Error updating user data ${err}`);
@@ -113,7 +114,7 @@ export const addToUserCart = async (req: Request, res: Response): Promise<Respon
     try {
         if (mongoose.isValidObjectId(req.body.id)) {
             const user = await User.findByIdAndUpdate(
-                { _id: mongoose.Types.ObjectId(req.body.id) },
+                { _id: new mongoose.Types.ObjectId(req.body.id) },
                 { $set: { cart: req.body.cart } },
             );
             if (user) {
