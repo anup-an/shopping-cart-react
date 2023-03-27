@@ -55,7 +55,7 @@ export const logInUser = (email: string, password: string, cartItems: ICart[]) =
     
     setTimeout(() => {
         reIssueAccessToken();
-    }, 5000);
+    }, 60000);
 };
 
 export const logOutUser = () => async (dispatch: Dispatch<AppActions>): Promise<void> => {
@@ -110,7 +110,7 @@ export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (
     loggedUser = { ...loggedUser, cart: [...cartItems] };
     const id = loggedUser._id;
     const cart = loggedUser.cart;
-    await axios.post(`https://my-eshop.onrender.com/api/users/${id}/update-cart`, { id, cart });
+    await axios.post(`https://my-eshop.onrender.com/api/users/`, { cart });
     dispatch({
         type: ADD_TO_CART_USER,
         payload: {
@@ -139,7 +139,7 @@ export const removeItemsFromUserCart = (loggedUser: IUser, product: IProduct) =>
     loggedUser = { ...loggedUser, cart: [...userCartItems] };
     const id = loggedUser._id;
     const cart = loggedUser.cart;
-    await axios.post(`https://my-eshop.onrender.com/api/users/${id}/update-cart`, { id, cart });
+    await axios.post(`https://my-eshop.onrender.com/api/users/`, { cart });
     dispatch({
         type: REMOVE_PRODUCTS_CART_USER,
         payload: {
@@ -155,7 +155,7 @@ export const removeFromUserCart = (loggedUser: IUser, selectedCart: ICart) => as
     loggedUser = { ...loggedUser, cart: [...cartItems] };
     const id = loggedUser._id;
     const cart = loggedUser.cart;
-    await axios.post(`https://my-eshop.onrender.com/api/users/${id}/update-cart`, { id, cart });
+    await axios.post(`https://my-eshop.onrender.com/api/users/`, { cart });
     dispatch({
         type: REMOVE_FROM_CART_USER,
         payload: {
@@ -178,9 +178,8 @@ export const getUserFromToken = () => async (dispatch: Dispatch<AppActions>) => 
 };
 
 export const editUserProfile = (loggedUser: IUser) => async (dispatch: Dispatch<AppActions>) => {
-    const id = loggedUser._id;
     const user = loggedUser;
-    await axios.post(`https://my-eshop.onrender.com/api/users/${id}`, { user });
+    await axios.post(`https://my-eshop.onrender.com/api/users`, { ...user });
     dispatch({
         type: EDIT_PROFILE_USER,
         payload: {
@@ -191,7 +190,7 @@ export const editUserProfile = (loggedUser: IUser) => async (dispatch: Dispatch<
 
 export const getOrdersByUserId = (loggedUser: IUser) => async (dispatch: Dispatch<AppActions>) => {
     const id = loggedUser._id;
-    const orders = await (await axios.get(`https://shopping-cart-app-react.herokuapp.com/api/orders/${id}/get-orders`))
+    const orders = await (await axios.get(`https://my-eshop.onrender.com/api/orders/${id}/get-orders`))
         .data.data;
     dispatch({
         type: GET_ORDERS_BY_USER_ID,
