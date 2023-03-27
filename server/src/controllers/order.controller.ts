@@ -3,7 +3,7 @@
 import { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { Order } from '../models/order';
-import { ICart } from '../models/user';
+import { ICart } from '../schemas/user';
 
 interface IOrder extends mongoose.Document {
     _id: mongoose.Types.ObjectId;

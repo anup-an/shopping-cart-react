@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import mongoose from 'mongoose';
-import { CartSchema, ICart } from './user';
+import { CartSchema, ICart } from '../schemas/user';
 
 export interface IOrder extends mongoose.Document {
     _id: mongoose.Types.ObjectId;

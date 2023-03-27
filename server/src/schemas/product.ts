@@ -4,6 +4,7 @@ import { createSchema } from '.';
 
 export interface IProduct extends mongoose.Document {
     _id: mongoose.Types.ObjectId;
+    id: string;
     title: string;
     image: string;
     description: string;
@@ -13,6 +14,7 @@ export interface IProduct extends mongoose.Document {
 
 const ProductSchema = createSchema<IProduct>({
     _id: { type: mongoose.Types.ObjectId, default: uuid },
+    id: { type: String },
     title: { type: String, index: true },
     description: String,
     image: String,

@@ -1,11 +1,10 @@
-import { Request, Response } from 'express';
-import mongoose from 'mongoose';
 import _ from 'lodash';
-import CreateModel, { Schema } from '../models/model';
+import { Request, Response } from 'express';
 
-export const getAll = <T>(table: string, schema: Schema<T>) => async (req: Request, res: Response) => {
+import { IModel } from '../models/model';
+
+export const getAll = <T>(model: IModel<T>) => async (req: Request, res: Response) => {
     try {
-        const model = new CreateModel<T>(table, schema).create();
         const result = await model.find(
             _.mapValues(req.query, (val) => {
                 return { $regex: val, $options: 'i' };
@@ -17,19 +16,17 @@ export const getAll = <T>(table: string, schema: Schema<T>) => async (req: Reque
     }
 };
 
-export const getById = <T>(table: string, schema: Schema<T>) => async (req: Request, res: Response) => {
+export const getById = <T>(model: IModel<T>) => async (req: Request, res: Response) => {
     try {
-        const model = new CreateModel<T>(table, schema).create();
-        const result = await model.findById(req.params.id);
+        const result = await model.findById(req.params._id);
         result ? res.status(200).json({ data: result }) : res.status(404).send('Not found error');
     } catch (error) {
         res.send(error);
     }
 };
 
-export const create = <T>(table: string, schema: Schema<T>) => async (req: Request, res: Response) => {
+export const create = <T>(model: IModel<T>) => async (req: Request, res: Response) => {
     try {
-        const model = new CreateModel<T>(table, schema).create();
         const result = await new model(req.body).save();
         result ? res.status(200).json({ data: result }) : res.status(500).send('Database error');
     } catch (error) {
@@ -37,10 +34,18 @@ export const create = <T>(table: string, schema: Schema<T>) => async (req: Reque
     }
 };
 
-export const deleteById = <T>(table: string, schema: Schema<T>) => async (req: Request, res: Response) => {
+export const deleteById = <T>(model: IModel<T>) => async (req: Request, res: Response) => {
     try {
-        const model = new CreateModel<T>(table, schema).create();
-        const result = await model.findByIdAndDelete(req.params.id);
+        const result = await model.findByIdAndDelete(req.params._id);
+        result ? res.status(200).json({ data: result }) : res.status(500).send('Database error');
+    } catch (error) {
+        res.send(error);
+    }
+};
+
+export const updateById = <T>(model: IModel<T>) => async (req: Request, res: Response) => {
+    try {
+        const result = await model.findByIdAndUpdate(req.params._id, req.body);
         result ? res.status(200).json({ data: result }) : res.status(500).send('Database error');
     } catch (error) {
         res.send(error);
