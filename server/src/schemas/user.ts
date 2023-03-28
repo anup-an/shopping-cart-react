@@ -36,7 +36,6 @@ export const CartSchema = createSchema<ICart>({
 });
 
 const UserSchema = createSchema<IUser>({
-    _id: { type: mongoose.Types.ObjectId },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     firstName: { type: String },
