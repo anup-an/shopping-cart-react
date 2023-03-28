@@ -19,7 +19,9 @@ export const getAll = <T>(model: IModel<T>) => async (req: Request, res: Respons
 export const getById = <T>(model: IModel<T>) => async (req: Request, res: Response) => {
     try {
         const result = await model.findById(req.params._id);
-        result ? res.status(200).json({ data: result }) : res.status(404).send('Not found error');
+        result
+            ? res.status(200).json({ data: _.omit(result.toObject(), ['password', 'refreshToken']) })
+            : res.status(404).send('Not found error');
     } catch (error) {
         res.send(error);
     }
@@ -45,8 +47,10 @@ export const deleteById = <T>(model: IModel<T>) => async (req: Request, res: Res
 
 export const updateById = <T>(model: IModel<T>) => async (req: Request, res: Response) => {
     try {
-        const result = await model.findByIdAndUpdate(req.params._id, req.body);
-        result ? res.status(200).json({ data: result }) : res.status(500).send('Database error');
+        const result = await model.findByIdAndUpdate(req.params._id, req.body, { new: true });
+        result
+            ? res.status(200).json({ data: _.omit(result.toObject(), ['password', 'refreshToken']) })
+            : res.status(500).send('Database error');
     } catch (error) {
         res.send(error);
     }
