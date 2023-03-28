@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import React from 'react';
-import { IUser, IOrder, AppActions } from '../../ActionTypes';
+import { IUser, IOrder } from '../../ActionTypes';
 import { AppState } from '../../store';
 import { getOrdersByUserId } from '../../actions/userAction';
 
@@ -15,7 +15,7 @@ interface Actions {
 }
 class Orders extends React.Component<IProps>{
     componentDidMount = () => {
-        this.props.user._id !== "" ? this.props.actions.getOrdersByUserId(this.props.user) : '';
+        this.props.user._id ? this.props.actions.getOrdersByUserId(this.props.user) : '';
     }
     render() {
         const { orders, user } = this.props;
@@ -57,7 +57,7 @@ interface StateProps {
     orders: IOrder[];
 }
 
-const mapStateToProps = (state: AppState) => ({
+const mapStateToProps = (state: AppState): StateProps => ({
     user: state.user.user,
     orders: state.user.orders,
 })

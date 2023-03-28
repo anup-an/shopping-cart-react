@@ -71,7 +71,7 @@ class Checkout extends React.Component<IProps, IState> {
             "country": country,
             "cart": this.props.user.cart,
         };
-        axios.post('https://shopping-cart-app-react.herokuapp.com/api/orders', { order }, { withCredentials: true } ).then((response) => {
+        axios.post('https://my-eshop.onrender.com/api/orders', { ...order }, { withCredentials: true } ).then((response) => {
             response.status == 200 ? this.setState({ ...this.state, isSubmitted: true}): ''
         }).catch((error) => {
             console.log(error);
