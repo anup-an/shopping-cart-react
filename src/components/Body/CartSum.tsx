@@ -1,6 +1,6 @@
 import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import Checkout from './Checkout';
+
 import { IUser } from '../../ActionTypes';
 
 interface IProps extends RouteComponentProps {
