@@ -11,7 +11,7 @@ const { fromExtractors } = ExtractJwt;
 
 export const opts: StrategyOptions = {
     jwtFromRequest: fromExtractors([cookieExtractor]),
-    secretOrKey: 'Some_default_random_secret_token_here',
+    secretOrKey: process.env.JWT_SECRET,
 };
 
 const strategy = new Strategy(opts, async (payload, done) => {
