@@ -9,7 +9,6 @@ const userDefaultState: IUserActionStates = {
     user : {
     "_id": '',
     "email": '',
-    "password": '',
     "firstName": '',
     "lastName": '',
     "address": '',
@@ -17,7 +16,6 @@ const userDefaultState: IUserActionStates = {
     "phone": '',
     "city": '',
     "country": '',
-    "refreshToken": '',
     "wishList": [],
     "cart": [],
     }

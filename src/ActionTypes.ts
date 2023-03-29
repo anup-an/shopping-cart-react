@@ -37,7 +37,6 @@ export type IProduct = {
 export type IUser = {
     _id: string;
     email: string;
-    password: string;
     firstName: string;
     lastName: string;
     address: string;
@@ -45,7 +44,6 @@ export type IUser = {
     phone: string;
     city: string;
     country: string;
-    refreshToken: string;
     wishList: IProduct[];
     cart: ICart[];
 }

@@ -1,18 +1,17 @@
-import { Dispatch } from 'redux';
 import axios from 'axios';
-import { removeFromCart } from './cartAction';
+import { Dispatch } from 'redux';
+
 import {
+    ADD_TO_CART_USER,
+    AppActions,
     EDIT_PROFILE_USER,
     GET_ORDERS_BY_USER_ID,
-    LOG_IN_USER,
-    ADD_TO_CART_USER,
-    REMOVE_PRODUCTS_CART_USER,
-    ADD_TO_WISHLIST_USER,
     GET_USER_FROM_TOKEN,
-    IUser,
     IProduct,
-    AppActions,
+    IUser,
+    LOG_IN_USER,
     REMOVE_FROM_CART_USER,
+    REMOVE_PRODUCTS_CART_USER
 } from '../ActionTypes';
 axios.defaults.withCredentials = true;
 
@@ -66,7 +65,6 @@ export const logOutUser =
             const loggedUser: IUser = {
                 _id: '',
                 email: '',
-                password: '',
                 firstName: '',
                 lastName: '',
                 address: '',
@@ -74,7 +72,6 @@ export const logOutUser =
                 phone: '',
                 city: '',
                 country: '',
-                refreshToken: '',
                 wishList: [],
                 cart: [],
             };
@@ -109,14 +106,12 @@ export const addToUserCart =
             searching ? cartItems.unshift({ ...product, count: 1 }) : '';
         }
 
-        loggedUser = { ...loggedUser, cart: [...cartItems] };
-        const id = loggedUser._id;
-        const cart = loggedUser.cart;
-        await axios.post(`https://my-eshop.onrender.com/api/users/`, { cart });
+        const user = (await axios.post<{ data: IUser }>(`https://my-eshop.onrender.com/api/users/`, { cart: cartItems })).data
+            .data;
         dispatch({
             type: ADD_TO_CART_USER,
             payload: {
-                user: loggedUser,
+                user,
             },
         });
     };
@@ -138,32 +133,38 @@ export const removeItemsFromUserCart =
             }
         }
 
-        loggedUser = { ...loggedUser, cart: [...userCartItems] };
-        const id = loggedUser._id;
-        const cart = loggedUser.cart;
-        await axios.post(`https://my-eshop.onrender.com/api/users/`, { cart });
+        const user = (await axios.post<{ data: IUser }>(`https://my-eshop.onrender.com/api/users/`, { cart: userCartItems }))
+            .data.data;
         dispatch({
             type: REMOVE_PRODUCTS_CART_USER,
             payload: {
-                user: loggedUser,
+                user,
             },
         });
     };
 
 export const removeFromUserCart =
     (loggedUser: IUser, selectedCart: ICart) => async (dispatch: Dispatch<AppActions>) => {
-        const cartItems = loggedUser ? [...loggedUser.cart].filter((element) => element._id !== selectedCart._id) : [];
-        loggedUser = { ...loggedUser, cart: [...cartItems] };
-        const id = loggedUser._id;
-        const cart = loggedUser.cart;
-        await axios.post(`https://my-eshop.onrender.com/api/users/`, { cart });
+        const cartItems = [...loggedUser.cart].filter((item) => item._id !== selectedCart._id);
+        const user = (await axios.post<{ data: IUser }>(`https://my-eshop.onrender.com/api/users/`, { cart: cartItems })).data
+            .data;
         dispatch({
             type: REMOVE_FROM_CART_USER,
             payload: {
-                user: loggedUser,
+                user,
             },
         });
     };
+
+export const removeAllFromUserCart = () => async (dispatch: Dispatch<AppActions>) => {
+    const user = (await axios.post<{ data: IUser }>(`https://my-eshop.onrender.com/api/users/`, { cart: [] })).data.data;
+    dispatch({
+        type: REMOVE_FROM_CART_USER,
+        payload: {
+            user: user,
+        },
+    });
+};
 
 export const getUserFromToken = () => async (dispatch: Dispatch<AppActions>) => {
     const loggedUser: IUser = await (await axios.get('https://my-eshop.onrender.com/api/users/')).data.data;
@@ -179,18 +180,16 @@ export const getUserFromToken = () => async (dispatch: Dispatch<AppActions>) => 
 };
 
 export const editUserProfile = (loggedUser: IUser) => async (dispatch: Dispatch<AppActions>) => {
-    const user = loggedUser;
-    await axios.post(`https://my-eshop.onrender.com/api/users`, { ...user });
+    const user = (await axios.post<{ data: IUser }>(`https://my-eshop.onrender.com/api/users`, { ...loggedUser })).data.data;
     dispatch({
         type: EDIT_PROFILE_USER,
         payload: {
-            user: loggedUser,
+            user,
         },
     });
 };
 
 export const getOrdersByUserId = (loggedUser: IUser) => async (dispatch: Dispatch<AppActions>) => {
-    const id = loggedUser._id;
     const orders = await (await axios.get(`https://my-eshop.onrender.com/api/orders`)).data.data;
     dispatch({
         type: GET_ORDERS_BY_USER_ID,
