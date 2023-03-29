@@ -1,5 +1,3 @@
-/* eslint-disable import/no-cycle */
-/* eslint-disable import/prefer-default-export */
 import express from 'express';
 import mongoose, { ConnectOptions } from 'mongoose';
 import passport from 'passport';
@@ -12,7 +10,25 @@ import strategy from './middlewares/passport';
 require('dotenv').config();
 
 const app = express();
-app.use(cors({ credentials: true, origin: ['https://lucid-lewin-704e07.netlify.app', 'http://localhost:3000'] }));
+
+app.use(
+    cors({
+        credentials: true,
+        origin: 'https://lucid-lewin-704e07.netlify.app',
+        methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
+        allowedHeaders: [
+            'Content-Type',
+            'Origin',
+            'X-Requested-With',
+            'Accept',
+            'x-client-key',
+            'x-client-token',
+            'x-client-secret',
+            'Authorization',
+        ],
+    }),
+);
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
@@ -44,3 +60,4 @@ app.get('/', (req, res) => res.send('This is the server homepage'));
 app.use(routes());
 
 startServer();
+
