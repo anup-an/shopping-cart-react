@@ -1,81 +1,21 @@
-/* eslint-disable func-names */
-/* eslint-disable import/prefer-default-export */
-import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+import UserSchema, { IUser } from '../schemas/user';
+import CreateModel from './model';
 
-export interface IUser extends mongoose.Document {
-    _id: mongoose.Types.ObjectId;
-    email: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-    address: string;
-    postcode: string;
-    phone: string;
-    city: string;
-    country: string;
-    refreshToken: string;
-    wishList: IProduct[];
-    cart: ICart[];
-}
+export const guestUser = {
+    _id: '',
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    address: '',
+    phone: '',
+    city: '',
+    country: '',
+    refreshToken: '',
+    wishList: [],
+    cart: [],
+};
 
-export interface IProduct {
-    _id: string;
-    title: string;
-    image: string;
-    description: string;
-    price: number;
-    availableSizes: string[];
-}
-export interface ICart {
-    _id: string;
-    title: string;
-    image: string;
-    description: string;
-    price: number;
-    availableSizes: string[];
-    count?: number;
-}
-
-export const CartSchema = new mongoose.Schema({
-    id: { type: String },
-    title: { type: String },
-    image: { type: String },
-    description: { type: String },
-    price: { type: Number },
-    availableSizes: { type: [String] },
-    count: { type: Number },
-});
-
-export const ProductSchema = new mongoose.Schema({
-    id: { type: String },
-    title: { type: String },
-    image: { type: String },
-    description: { type: String },
-    price: { type: Number },
-    availableSizes: { type: [String] },
-});
-
-const UserSchema = new mongoose.Schema({
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-    firstName: { type: String },
-    lastName: { type: String },
-    address: { type: String },
-    postcode: { type: String },
-    phone: { type: String },
-    city: { type: String },
-    country: { type: String },
-    refreshToken: { type: String },
-    wishList: { type: [ProductSchema] },
-    cart: { type: [CartSchema] },
-});
-
-UserSchema.pre<IUser>('save', async function (next) {
-    this.password = await bcrypt.hash(this.password, 10);
-    next();
-});
-
-const User = mongoose.model<IUser>('users', UserSchema);
+const User = new CreateModel<IUser>('users', UserSchema).create();
 
 export default User;

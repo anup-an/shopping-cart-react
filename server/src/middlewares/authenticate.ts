@@ -1,12 +1,5 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable consistent-return */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-
-interface JWTData {
-    email: string;
-}
 
 const verifyUser = (req: Request, res: Response, next: NextFunction) => {
     try {

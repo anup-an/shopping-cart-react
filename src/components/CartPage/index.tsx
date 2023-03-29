@@ -78,7 +78,7 @@ class CartPage extends React.Component<IProps, IState> {
         const { isOpen } = this.state;
         return (
             <div>
-                {user.cart?.length || cartItems.length !== 0 ?
+                {user.cart.length || cartItems.length ?
                     <div className="mt-20">
                     <h1 className="text-center bg-gray-200 mb-4 lg:mb-16 p-2">
                         Welcome to your shopping cart! Click checkout to place the order.

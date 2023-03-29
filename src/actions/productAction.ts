@@ -71,8 +71,7 @@ export const sortProducts = (sort: string, size: string, products: IProduct[] | 
 };
 
 export const searchProducts = (keywords: string) => async (dispatch: Dispatch<AppActions>): Promise<void> => {
-    axios.get(`https://my-eshop.onrender.com/api/products/search/:${keywords}`).then((response) => {
-        console.log(response.data);
+    axios.get(`https://my-eshop.onrender.com/api/products?title=${keywords}`).then((response) => {
         dispatch({
             type: SEARCH_PRODUCTS,
             payload: {

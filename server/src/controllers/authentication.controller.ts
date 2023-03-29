@@ -5,7 +5,8 @@ import jwt from 'jsonwebtoken';
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import mongoose from 'mongoose';
-import User from '../models/user';
+import CreateModel from '../models/model';
+import UserSchema from '../schemas/user';
 
 interface IUser {
     _id: mongoose.Types.ObjectId;
@@ -40,13 +41,15 @@ interface ICart {
     count?: number;
 }
 
+const User = new CreateModel<IUser>('users', UserSchema).create();
+
 const generateToken = (user: IUser) => {
     return {
         accessToken: jwt.sign({ email: user.email }, 'Some_default_random_secret_token_here', {
-            expiresIn: 120,
+            expiresIn: 60000,
         }),
         refreshToken: jwt.sign({ email: user.email }, 'Some_default_random_secret_token_here', {
-            expiresIn: 86400,
+            expiresIn: 864000,
         }),
     };
 };
@@ -76,7 +79,7 @@ export const loginUser = async (req: Request, res: Response) => {
                             secure: true,
                             httpOnly: true,
                             sameSite: 'none',
-                            maxAge: 86400,
+                            maxAge: 864000,
                         })
                         .status(200)
                         .json({ status: 'success', data: user });
@@ -107,13 +110,13 @@ export const reIssueTokens = async (req: Request, res: Response) => {
         if (user) {
             jwt.verify(user.refreshToken, 'Some_default_random_secret_token_here');
             const newToken: string = jwt.sign({ email: user.email }, 'Some_default_random_secret_token_here', {
-                expiresIn: 120,
+                expiresIn: 60000,
             });
             const tokens = {
                 accessToken: newToken,
                 refreshToken: user.refreshToken,
             };
-            res.cookie('token', tokens, { secure: true, httpOnly: true, sameSite: 'none' }).send();
+            res.cookie('token', tokens, { secure: true, httpOnly: true, sameSite: 'none', maxAge: 864000 }).send();
         } else {
             res.status(403).json({ status: 'error', data: 'Invalid refresh token' });
         }

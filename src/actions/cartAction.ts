@@ -63,3 +63,17 @@ export const removeFromCart = (items: ICart[], item: ICart) => async (
     });
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
 };
+
+export const removeAllFromCart = () => async (
+    dispatch: Dispatch<AppActions>,
+): Promise<void> => {
+
+    dispatch({
+        type: REMOVE_CART,
+        payload: {
+            items: [],
+        },
+    });
+    localStorage.setItem('cartItems', JSON.stringify([]));
+};
+

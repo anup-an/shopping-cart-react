@@ -1,22 +1,17 @@
-/* eslint-disable import/no-cycle */
 import { Router } from 'express';
 import passport from 'passport';
-import {
-    createProducts,
-    deleteProducts,
-    getProductById,
-    getProducts,
-    searchProducts,
-} from '../controllers/product.controller';
+
+import { create, deleteById, getAll, getById } from '../controllers/common';
+import Product from '../models/product';
+import { IProduct } from '../schemas/product';
 
 const router = Router();
 
-router.get('/', getProducts);
-router.get('/:id', getProductById);
-router.get('/search/:keywords', searchProducts);
+router.get('/', getAll<IProduct>(Product));
+router.get('/:id', getById<IProduct>(Product));
 
-router.use(passport.authenticate('jwt'));
-router.post('/', createProducts);
-router.delete('/:id', deleteProducts);
+router.use(passport.authenticate('jwt', { session: false }));
+router.post('/', create<IProduct>(Product));
+router.delete('/:id', deleteById<IProduct>(Product));
 
 export default router;

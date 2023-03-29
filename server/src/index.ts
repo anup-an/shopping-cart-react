@@ -1,7 +1,5 @@
-/* eslint-disable import/no-cycle */
-/* eslint-disable import/prefer-default-export */
 import express from 'express';
-import mongoose from 'mongoose';
+import mongoose, { ConnectOptions } from 'mongoose';
 import passport from 'passport';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -30,27 +28,36 @@ app.use(
         ],
     }),
 );
+
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 app.use(cookieParser());
 
-const mongoUri =
-    process.env.username && process.env.password
-        ? `mongodb+srv://${process.env.username}:${process.env.password}@cluster0.f4upd.mongodb.net/shopping-cart-db?retryWrites=true&w=majority`
-        : '';
-mongoose.connect(mongoUri, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true,
-});
+const connectDatabase = async () => {
+    const mongoUri =
+        process.env.username && process.env.password
+            ? `mongodb+srv://${process.env.username}:${process.env.password}@cluster0.f4upd.mongodb.net/shopping-cart-db?retryWrites=true&w=majority`
+            : '';
+    await mongoose.connect(mongoUri);
+};
+
+const startServer = async () => {
+    try {
+        const port = process.env.PORT;
+        await connectDatabase();
+        app.listen(port, () => {
+            console.log(`Listening to http://localhost:${port}`);
+        });
+    } catch (error) {
+        console.log('Failed to connect to the database or server is not running.');
+    }
+};
 
 app.use(passport.initialize());
 passport.use(strategy);
 app.get('/', (req, res) => res.send('This is the server homepage'));
 app.use(routes());
 
-const port = process.env.PORT;
-app.listen(port, () => {
-    console.log(`Listening to http://localhost:${port}`);
-});
+startServer();
+
