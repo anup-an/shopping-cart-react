@@ -4,7 +4,6 @@ import { IUser } from '../../ActionTypes';
 import Login from '../Header/login';
 import Checkout from './Checkout';
 
-
 type ICart = {
     _id: string;
     title: string;
@@ -36,6 +35,14 @@ class CartSummary extends React.Component<IProps, IState> {
     openModal = (): void => {
         this.setState({ isOpen: true });
     };
+
+    getTotalPrice = () => {
+        return this.props.cartItems.length
+            ? this.props.cartItems
+                  .map((item) => (item.count ? item.count * item.price : 0))
+                  .reduce((accumulator, currentValue) => accumulator + currentValue)
+            : 0;
+    };
     render() {
         const { cartItems, user } = this.props;
         return (
@@ -53,9 +60,7 @@ class CartSummary extends React.Component<IProps, IState> {
                         </div>
                         <div className="flex flex-row justify-between">
                             <p>Total: </p>
-                            <p>€{cartItems
-                                .map((item) => (item.count ? item.count * item.price : 0))
-                                .reduce((accumulator, currentValue) => accumulator + currentValue)}</p>
+                            <p>{this.getTotalPrice()}€</p>
                         </div>
                         <button
                             className="flex items-center justify-center boreder rounded bg-blue-400 hover:bg-blue-800 text-white p-2 focus:outline-none"
@@ -93,17 +98,20 @@ class CartSummary extends React.Component<IProps, IState> {
                                 </button>
                             </div>
                         </div>
-                        {user._id ? 
-                            <Checkout cartItems={cartItems} user={user} /> :
+                        {user._id ? (
+                            <Checkout cartItems={cartItems} user={user} />
+                        ) : (
                             <div className="flex flex-col justify-center items-center">
                                 <Login />
-                                <p className="text-center text-xl text-blue-400 text-semibold">Please login to continue...</p>
+                                <p className="text-center text-xl text-blue-400 text-semibold">
+                                    Please login to continue...
+                                </p>
                             </div>
-                        }
+                        )}
                     </Modal>
                 </div>
             </div>
-        )
+        );
     }
 }
 

@@ -13,6 +13,7 @@ import {
     REMOVE_FROM_CART_USER,
     REMOVE_PRODUCTS_CART_USER,
 } from '../ActionTypes';
+import { addProductsToCart, removeProductsFromCart } from './cartAction';
 axios.defaults.withCredentials = true;
 
 export type ICart = {
@@ -42,6 +43,18 @@ const runInLoop = () => {
     }, 60000);
 };
 
+const mergeCart = (cart1: ICart[], cart2: ICart[]) => {
+    const ids = [...cart1, ...cart2].map((item) => item._id);
+    const uniqIds = ids.filter((x, i, a) => a.indexOf(x) === i);
+    let mergedCart: ICart[] = [];
+    for (let i = 0; i < uniqIds.length; i++) {
+        const items = [...cart1, ...cart2].filter((item) => item._id === uniqIds[i]);
+        const count = items.map((item) => item.count).reduce((acc, value) => acc + value);
+        mergedCart = [...mergedCart, { ...items[0], count: count }];
+    }
+    return mergedCart;
+};
+
 export const logInUser =
     (email: string, password: string, cartItems: ICart[]) =>
     async (dispatch: Dispatch<AppActions>): Promise<void> => {
@@ -52,11 +65,12 @@ export const logInUser =
                 { withCredentials: true },
             );
             const user = response.data.data;
+            const updatedUser = cartItems.length ? { ...user, cart: mergeCart(user.cart, cartItems) } : user;
             if (response.status === 200) {
                 dispatch({
                     type: LOG_IN_USER,
                     payload: {
-                        user,
+                        user: updatedUser,
                     },
                 });
                 setTimeout(() => {
@@ -104,26 +118,9 @@ export const addToUserCart =
     async (dispatch: Dispatch<AppActions>): Promise<void> => {
         try {
             const cartItems: ICart[] = loggedUser.cart || [];
-
-            if (cartItems.length === 0) {
-                cartItems.unshift({ ...product, count: 1 });
-            } else {
-                let searching = true;
-                let i = 0;
-                while (searching && i < cartItems.length) {
-                    if (cartItems[i]._id === product._id) {
-                        cartItems[i].count ? (cartItems[i].count = cartItems[i].count + 1) : '';
-
-                        searching = false;
-                    } else {
-                        i += 1;
-                    }
-                }
-                searching ? cartItems.unshift({ ...product, count: 1 }) : '';
-            }
-
+            const updatedCart = addProductsToCart(cartItems, product);
             const user = (
-                await axios.post<{ data: IUser }>(`https://my-eshop.onrender.com/api/users/`, { cart: cartItems })
+                await axios.post<{ data: IUser }>(`https://my-eshop.onrender.com/api/users/`, { cart: updatedCart })
             ).data.data;
             dispatch({
                 type: ADD_TO_CART_USER,
@@ -141,21 +138,9 @@ export const removeItemsFromUserCart =
     async (dispatch: Dispatch<AppActions>): Promise<void> => {
         try {
             const cartItems: ICart[] = loggedUser.cart || [];
-            const userCartItems = [];
-
-            for (let i = 0; i < cartItems.length; i++) {
-                if (cartItems[i]._id === product._id) {
-                    if (cartItems[i].count && cartItems[i].count > 1) {
-                        cartItems[i].count -= 1;
-                        userCartItems.push(cartItems[i]);
-                    }
-                } else {
-                    userCartItems.push(cartItems[i]);
-                }
-            }
-
+            const updatedCart = removeProductsFromCart(cartItems, product);
             const user = (
-                await axios.post<{ data: IUser }>(`https://my-eshop.onrender.com/api/users/`, { cart: userCartItems })
+                await axios.post<{ data: IUser }>(`https://my-eshop.onrender.com/api/users/`, { cart: updatedCart })
             ).data.data;
             dispatch({
                 type: REMOVE_PRODUCTS_CART_USER,
@@ -193,7 +178,7 @@ export const removeAllFromUserCart = () => async (dispatch: Dispatch<AppActions>
         dispatch({
             type: REMOVE_FROM_CART_USER,
             payload: {
-                user: user,
+                user,
             },
         });
     } catch (error) {
