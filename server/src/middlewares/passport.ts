@@ -1,6 +1,10 @@
 import { Strategy, ExtractJwt, StrategyOptions } from 'passport-jwt';
+import dotenv from 'dotenv';
+
 import { Request } from 'express';
 import User from '../models/user';
+
+dotenv.config();
 
 const cookieExtractor = (req: Request) => {
     const token = req.cookies?.token?.accessToken || null;
