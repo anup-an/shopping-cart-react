@@ -12,7 +12,7 @@ export const getAll = <T>(model: IModel<T>) => async (req: Request, res: Respons
         );
         res.status(200).json({ data: result });
     } catch (error) {
-        res.send(error);
+        res.status(500).send(error);
     }
 };
 
@@ -23,7 +23,7 @@ export const getById = <T>(model: IModel<T>) => async (req: Request, res: Respon
             ? res.status(200).json({ data: _.omit(result.toObject(), ['password', 'refreshToken']) })
             : res.status(404).send('Not found error');
     } catch (error) {
-        res.send(error);
+        res.status(500).send(error);
     }
 };
 
@@ -32,7 +32,7 @@ export const create = <T>(model: IModel<T>) => async (req: Request, res: Respons
         const result = await new model(req.body).save();
         result ? res.status(200).json({ data: result }) : res.status(500).send('Database error');
     } catch (error) {
-        res.send(error);
+        res.status(500).send(error);
     }
 };
 
@@ -41,7 +41,7 @@ export const deleteById = <T>(model: IModel<T>) => async (req: Request, res: Res
         const result = await model.findByIdAndDelete(req.params._id);
         result ? res.status(200).json({ data: result }) : res.status(500).send('Database error');
     } catch (error) {
-        res.send(error);
+        res.status(500).send(error);
     }
 };
 
@@ -52,6 +52,6 @@ export const updateById = <T>(model: IModel<T>) => async (req: Request, res: Res
             ? res.status(200).json({ data: _.omit(result.toObject(), ['password', 'refreshToken']) })
             : res.status(500).send('Database error');
     } catch (error) {
-        res.send(error);
+        res.status(500).send(error);
     }
 };
