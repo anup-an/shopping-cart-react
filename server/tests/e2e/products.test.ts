@@ -66,6 +66,20 @@ describe('GET /api/products', () => {
             const foundProduct = await db.collections.products.findOne({ _id: product._id });
             expect(response.body.data).toEqual({ ...product, _id: product._id.toString() });
             expect(foundProduct).toBeFalsy();
+        } else {
+            throw new Error('Test data for product not found');
+        }
+    });
+
+    it('should update a product', async () => {
+        const product = await db.collections.products.findOne();
+        if (product) {
+            const response = await request(app).patch(`/api/products/${product._id.toString()}`).set('Cookie', cookie).send({title: 'Test title'});
+            expect(response.status).toBe(200);
+            const foundProduct = await db.collections.products.findOne({ _id: product._id });
+            expect(foundProduct?.title).toEqual('Test title');
+        } else {
+            throw new Error('Test data for product not found');
         }
     });
 });
