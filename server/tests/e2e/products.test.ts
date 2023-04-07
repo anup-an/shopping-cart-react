@@ -74,12 +74,69 @@ describe('GET /api/products', () => {
     it('should update a product', async () => {
         const product = await db.collections.products.findOne();
         if (product) {
-            const response = await request(app).patch(`/api/products/${product._id.toString()}`).set('Cookie', cookie).send({title: 'Test title'});
+            const response = await request(app)
+                .patch(`/api/products/${product._id.toString()}`)
+                .set('Cookie', cookie)
+                .send({ title: 'Test title' });
             expect(response.status).toBe(200);
             const foundProduct = await db.collections.products.findOne({ _id: product._id });
             expect(foundProduct?.title).toEqual('Test title');
         } else {
             throw new Error('Test data for product not found');
         }
+    });
+    describe('should return not found error in response', () => {
+        it('find a product', async () => {
+            const response = await request(app).get(`/api/products/41224d776a326fb40f000001`);
+            expect(response.status).toBe(404);
+            expect(response.text).toBe('Not found');
+        });
+
+        it('delete a product', async () => {
+            const response = await request(app).delete(`/api/products/41224d776a326fb40f000001`).set('Cookie', cookie);
+            expect(response.status).toBe(404);
+            expect(response.text).toBe('Not found');
+        });
+
+        it('update a product', async () => {
+            const response = await request(app)
+                .patch(`/api/products/41224d776a326fb40f000001`)
+                .set('Cookie', cookie)
+                .send({ title: 'Test title' });
+            expect(response.status).toBe(404);
+            expect(response.text).toBe('Not found');
+        });
+    });
+
+    describe('unauthenticated user cannot access protected routes', () => {
+        it('create a product', async () => {
+            const response = await request(app).post('/api/products').send(testProduct);
+            expect(response.status).toBe(401);
+            expect(response.text).toBe('Unauthorized');
+        });
+
+        it('delete a product', async () => {
+            const product = await db.collections.products.findOne();
+            if (product) {
+                const response = await request(app).delete(`/api/products/${product._id.toString()}`);
+                expect(response.status).toBe(401);
+                expect(response.text).toBe('Unauthorized');
+            } else {
+                throw new Error('Test data for product not found');
+            }
+        });
+
+        it('update a product', async () => {
+            const product = await db.collections.products.findOne();
+            if (product) {
+                const response = await request(app)
+                    .patch(`/api/products/${product._id.toString()}`)
+                    .send({ title: 'Test title' });
+                expect(response.status).toBe(401);
+                expect(response.text).toBe('Unauthorized');
+            } else {
+                throw new Error('Test data for product not found');
+            }
+        });
     });
 });
