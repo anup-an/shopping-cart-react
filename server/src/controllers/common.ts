@@ -3,55 +3,83 @@ import { Request, Response } from 'express';
 
 import { IModel } from '../models/model';
 
-export const getAll = <T>(model: IModel<T>) => async (req: Request, res: Response) => {
-    try {
-        const result = await model.find(
-            _.mapValues(req.query, (val) => {
-                return { $regex: val, $options: 'i' };
-            }),
-        );
-        res.status(200).json({ data: result });
-    } catch (error) {
-        res.status(500).send(error);
-    }
-};
+export const getAll =
+    <T>(model: IModel<T>) =>
+    async (req: Request, res: Response) => {
+        try {
+            const result = await model.find(
+                _.mapValues(req.query, (val) => {
+                    return { $regex: val, $options: 'i' };
+                }),
+            );
+            handleResponse(result, res, 'find');
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    };
 
-export const getById = <T>(model: IModel<T>) => async (req: Request, res: Response) => {
-    try {
-        const result = await model.findById(req.params._id);
-        result
-            ? res.status(200).json({ data: _.omit(result.toObject(), ['password', 'refreshToken']) })
-            : res.status(404).send('Not found error');
-    } catch (error) {
-        res.status(500).send(error);
-    }
-};
+export const getById =
+    <T>(model: IModel<T>) =>
+    async (req: Request, res: Response) => {
+        try {
+            const result = await model.findById(req.params.id, { password: false, refreshToken: false });
+            handleResponse(result, res, 'find');
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    };
 
-export const create = <T>(model: IModel<T>) => async (req: Request, res: Response) => {
-    try {
-        const result = await new model(req.body).save();
-        result ? res.status(200).json({ data: result }) : res.status(500).send('Database error');
-    } catch (error) {
-        res.status(500).send(error);
-    }
-};
+export const create =
+    <T>(model: IModel<T>) =>
+    async (req: Request, res: Response) => {
+        try {
+            const result = await new model(req.body).save();
+            handleResponse(result, res, 'create');
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    };
 
-export const deleteById = <T>(model: IModel<T>) => async (req: Request, res: Response) => {
-    try {
-        const result = await model.findByIdAndDelete(req.params._id);
-        result ? res.status(200).json({ data: result }) : res.status(500).send('Database error');
-    } catch (error) {
-        res.status(500).send(error);
-    }
-};
+export const deleteById =
+    <T>(model: IModel<T>) =>
+    async (req: Request, res: Response) => {
+        try {
+            const result = await model.findByIdAndDelete(req.params.id, { password: false, refreshToken: false });
+            handleResponse(result, res, 'delete');
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    };
 
-export const updateById = <T>(model: IModel<T>) => async (req: Request, res: Response) => {
-    try {
-        const result = await model.findByIdAndUpdate(req.params._id, req.body, { new: true });
-        result
-            ? res.status(200).json({ data: _.omit(result.toObject(), ['password', 'refreshToken']) })
-            : res.status(500).send('Database error');
-    } catch (error) {
-        res.status(500).send(error);
+export const updateById =
+    <T>(model: IModel<T>) =>
+    async (req: Request, res: Response) => {
+        try {
+            const result = await model.findByIdAndUpdate(req.params.id, req.body, {
+                new: true,
+                password: false,
+                refreshToken: false,
+            });
+            handleResponse(result, res, 'update');
+        } catch (error) {
+            res.status(500).send(error);
+        }
+    };
+
+const handleResponse = (queryResult: any, res: Response, method: string) => {
+    if (queryResult) {
+        if (_.isArray(queryResult)) {
+            res.status(200).json({
+                data: queryResult.map((item) => _.omit(item.toObject(), ['password', 'refreshToken'])),
+            });
+        } else {
+            _.isEmpty(queryResult)
+                ? res.status(500).send(`Failed to ${method}`)
+                : res.status(200).json({ data: _.omit(queryResult.toObject(), ['password', 'refreshToken']) });
+        }
+    } else if (_.isNull(queryResult)) {
+        res.status(404).send('Not found');
+    } else {
+        res.status(500).send(`Failed to ${method}`);
     }
 };

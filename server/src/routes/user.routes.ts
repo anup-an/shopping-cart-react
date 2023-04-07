@@ -11,7 +11,7 @@ router.get(
     (req, res, next) => {
         passport.authenticate('jwt', { session: false }, (err, user) => {
             if (user) {
-                req.params._id = (user as IUser)?._id.toString();
+                req.params.id = (user as IUser)?._id.toString();
                 next();
             } else {
                 res.status(200).json({ data: guestUser });
@@ -25,7 +25,7 @@ router.post(
     (req, res, next) => {
         passport.authenticate('jwt', { session: false }, (err, user) => {
             if (user) {
-                req.params._id = (user as IUser)?._id.toString();
+                req.params.id = (user as IUser)?._id.toString();
                 next();
             } else {
                 res.status(401).send('Unauthorized');
