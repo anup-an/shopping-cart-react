@@ -124,10 +124,24 @@ export const testProduct = {
         "XXL"
     ]
 }
+
+export const testCart = [{
+  ...testProduct, count: 2
+}]
         
 export const registerPayload = {
     email: 'anup.poudel@ambine.com',
     password: 'anup',
     firstName: 'Anup',
     lastName: 'Poudel',
+}
+
+export const testOrderPayload = {
+  name: 'Anup Poudel',
+  email: 'anup.poudel@ambine.com',
+  address: 'Test address',
+  postcode: 20610,
+  city: 'Turku',
+  country: 'Finland',
+  cart: testCart
 }

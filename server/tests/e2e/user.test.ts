@@ -5,7 +5,7 @@ import app from '../../src';
 import { registerPayload } from '../testData';
 import { guestUser } from '../../src/models/user';
 
-describe('GET /api/users', () => {
+describe('/api/users', () => {
     let db: mongoose.Connection;
     let cookie: string[];
     let loggedUser: any;

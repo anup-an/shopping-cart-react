@@ -4,7 +4,7 @@ import request from 'supertest';
 import app from '../../src';
 import { products, registerPayload, testProduct } from '../testData';
 
-describe('GET /api/products', () => {
+describe('/api/products', () => {
     let db: mongoose.Connection;
     let cookie: string[];
 
