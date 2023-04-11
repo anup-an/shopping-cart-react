@@ -16,7 +16,7 @@ export interface IOrder extends mongoose.Document {
 
 const OrderSchema = createSchema<IOrder>({
     name: String,
-    user_id: String,
+    user_id: { type: String, required: true, immutable: true },
     email: String,
     address: String,
     postcode: Number,
