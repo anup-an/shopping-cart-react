@@ -71,7 +71,7 @@ export const signupUser = async (req: Request, res: Response) => {
 export const loginUser = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }).select(['password', 'email']);
         if (user) {
             const isMatch = await bcrypt.compare(password, user.password);
             if (isMatch) {
@@ -86,7 +86,7 @@ export const loginUser = async (req: Request, res: Response) => {
                             maxAge: 864000,
                         })
                         .status(200)
-                        .json({ status: 'success', data: user });
+                        .json({ status: 'success'});
                 }
                 res.status(500).send('Unable to generate tokens');
             }

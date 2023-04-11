@@ -37,7 +37,7 @@ export const CartSchema = createSchema<ICart>({
 
 const UserSchema = createSchema<IUser>({
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String, required: true, select: false },
     firstName: { type: String },
     lastName: { type: String },
     address: { type: String },
@@ -45,7 +45,7 @@ const UserSchema = createSchema<IUser>({
     phone: { type: String },
     city: { type: String },
     country: { type: String },
-    refreshToken: { type: String },
+    refreshToken: { type: String, select: false },
     wishList: { type: [ProductSchema] },
     cart: { type: [CartSchema] },
 });

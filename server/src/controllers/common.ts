@@ -68,15 +68,11 @@ export const updateById =
 
 const handleResponse = (queryResult: any, res: Response, method: string) => {
     if (queryResult) {
-        if (_.isArray(queryResult)) {
-            res.status(200).json({
-                data: queryResult.map((item) => _.omit(item.toObject(), ['password', 'refreshToken'])),
-            });
-        } else {
-            _.isEmpty(queryResult)
-                ? res.status(500).send(`Failed to ${method}`)
-                : res.status(200).json({ data: _.omit(queryResult.toObject(), ['password', 'refreshToken']) });
-        }
+        _.isArray(queryResult) || !_.isEmpty(queryResult)
+            ? res.status(200).json({
+                  data: queryResult,
+              })
+            : res.status(500).send(`Failed to ${method}`);
     } else if (_.isNull(queryResult)) {
         res.status(404).send('Not found');
     } else {
