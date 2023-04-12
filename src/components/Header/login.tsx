@@ -4,13 +4,12 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { logInUser } from '../../actions/userAction';
-import { IUser, IProduct, ICart } from '../../ActionTypes';
+import { IUser, ICart } from '../../ActionTypes';
 import { AppState } from '../../store';
 
 interface IState {
     email: string;
     password: string;
-    error: string;
 }
 
 interface IProps {
@@ -27,7 +26,7 @@ class Login extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
-            email: '', password: '', error: ''};
+            email: '', password: ''};
     }
     handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState((state) => ({ ...state, [event.target.name]: event.target.value }));
@@ -35,16 +34,9 @@ class Login extends React.Component<IProps, IState> {
     handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
         this.props.actions.logInUser(this.state.email, this.state.password, this.props.cartItems);
-        setTimeout(() => {
-
-            if (this.props.user._id == "") {
-                this.setState({ ...this.state, error: 'Incorrect user details. Please try again' });
-            }
-        },1000)
-
     };
     render(): JSX.Element {
-        const { email, password, error } = this.state;
+        const { email, password } = this.state;
         const { user } = this.props;
 
         return (
@@ -66,7 +58,6 @@ class Login extends React.Component<IProps, IState> {
                                     </Link>
                                 </div>
                                 <div className="text-2xl text-blue-800 text-left">Login</div>
-                                <div className={`${error === '' ? 'invisible': 'visible'} text-red-500`}><p>{error}</p></div>
 
                                 <form onSubmit={this.handleLogin} className="flex flex-col space-y-4 w-full">
                                     <div>
