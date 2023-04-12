@@ -6,7 +6,7 @@
     "scripts": {
         "watch": "nodemon",
         "start": "nodemon",
-        "test": "cross-env NODE_ENV=test jest"
+        "test": "cross-env NODE_ENV=test jest --detectOpenHandles"
     },
     "keywords": [],
     "author": "",

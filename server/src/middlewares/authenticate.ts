@@ -1,21 +1,41 @@
-import { Request, Response, NextFunction } from 'express';
+import bcrypt from 'bcrypt';
+import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 
-const verifyUser = (req: Request, res: Response, next: NextFunction) => {
+import User from '../models/user';
+import UserSchema from '../schemas/user';
+
+export const verifyRefreshToken = (req: Request, res: Response, next: NextFunction) => {
     try {
         const { token } = req.cookies;
-        if (token) {
-            jwt.verify(token.accessToken, 'Some_default_random_secret_token_here');
+        const secretKey = process.env.JWT_SECRET || '';
+        if (token && token.refreshToken) {
+            jwt.verify(token.refreshToken, secretKey);
             next();
         } else {
-            return res.status(403).send('No token');
+            return res.status(401).send('Unauthorized');
         }
-
-        /* const user = User.findOne({ payload });
-        req.user = user; */
     } catch (error) {
-        return res.status(401).send();
+        return res.status(500).send(error);
     }
 };
 
-export default verifyUser;
+export const verifyLoginCredentials = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email }).select(Object.keys(UserSchema.obj));
+        if (user) {
+            const isMatch = await bcrypt.compare(password, user.password);
+            if (isMatch) {
+                req.user = user.toObject();
+                next();
+                return;
+            } else {
+                return res.status(401).json({ status: 'error', data: 'Incorrect password' });
+            }
+        }
+        return res.status(401).json({ status: 'error', data: 'User not found. Please enter correct email.' });
+    } catch (error) {
+        return res.status(500).send(error);
+    }
+};

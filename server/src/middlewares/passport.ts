@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 
 import { Request } from 'express';
 import User from '../models/user';
+import UserSchema from '../schemas/user';
 
 dotenv.config();
 
@@ -20,7 +21,7 @@ export const opts: StrategyOptions = {
 
 const strategy = new Strategy(opts, async (payload, done) => {
     try {
-        const user = await User.findOne({ email: payload.email });
+        const user = await User.findOne({ email: payload.email }).select(Object.keys(UserSchema.obj));
         if (user) {
             return done(null, user);
         }
