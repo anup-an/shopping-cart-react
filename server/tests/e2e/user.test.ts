@@ -3,7 +3,7 @@ import request from 'supertest';
 
 import app from '../../src';
 import { registerPayload } from '../testData';
-import { guestUser } from '../../src/models/user';
+import User, { guestUser } from '../../src/models/user';
 
 describe('/api/users', () => {
     let db: mongoose.Connection;
@@ -19,6 +19,10 @@ describe('/api/users', () => {
         cookie = loginResponse.get('Set-Cookie');
     });
 
+    afterAll(async () => {
+        await db.dropCollection('users');
+    });
+
     it('should return logged in user details', async () => {
         const res = await request(app).get('/api/users').set('Cookie', cookie);
         expect(res.status).toBe(200);
@@ -30,7 +34,7 @@ describe('/api/users', () => {
             .post(`/api/users`)
             .set('Cookie', cookie)
             .send({ lastName: 'Test last name' });
-        const user = await db.collections.users.findOne({ _id: new mongoose.Types.ObjectId(loggedUser._id) });
+        const user = await User.findOne({ _id: new mongoose.Types.ObjectId(loggedUser._id) });
         expect(response.status).toBe(200);
         expect(user?.lastName).toBe('Test last name');
     });

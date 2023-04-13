@@ -20,6 +20,7 @@ describe('/api/products', () => {
 
     afterAll(async () => {
         await db.dropCollection('products');
+        await db.dropCollection('users');
     });
 
     it('should return all products', async () => {

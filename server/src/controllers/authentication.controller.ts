@@ -26,7 +26,7 @@ export const signupUser = async (req: Request, res: Response) => {
         const { email, password, firstName, lastName } = req.body;
         const foundUser = await User.findOne({ email });
         if (foundUser) {
-            return res.status(500).json({ status: 'error', data: 'Email already in use' });
+            return res.status(400).json({ status: 'error', data: 'Email already in use' });
         }
         await new User({ email, password, firstName, lastName }).save();
         return res.status(200).json({ status: 'success', data: 'Signup successful!' });
