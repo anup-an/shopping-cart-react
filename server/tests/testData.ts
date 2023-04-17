@@ -136,6 +136,13 @@ export const registerPayload = {
     lastName: 'Poudel',
 }
 
+export const invalidRegisterPayload = {
+  email: 'anup.poudel.com',
+    password: 'Testing',
+    firstName: 'Anup',
+    lastName: 'Poudel',
+}
+
 export const testOrderPayload = {
   name: 'Anup Poudel',
   email: 'anup.poudel@ambine.com',

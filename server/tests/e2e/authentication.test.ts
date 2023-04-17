@@ -4,7 +4,8 @@ import _ from 'lodash';
 
 import app from '../../src';
 import User from '../../src/models/user';
-import { registerPayload } from '../testData';
+import { invalidRegisterPayload, registerPayload } from '../testData';
+import { ErrorCode } from '../../src/utils';
 
 export const parseCookie = (cookie: string): { [x: string]: string } => {
     const formattedString = cookie
@@ -50,6 +51,12 @@ describe('authentication', () => {
         expect(foundUser).toHaveLength(1);
     });
 
+    it('cannot register user with invalid details', async () => {
+        const response = await request(app).post('/api/signup').send(invalidRegisterPayload);
+        expect(response.status).toBe(422)
+        expect(response.body.title).toBe(ErrorCode.ValidationError);
+    })
+
     it('can login user: /api/login', async () => {
         const response = await request(app)
             .post('/api/login')
@@ -86,7 +93,8 @@ describe('authentication', () => {
             .send({ email: registerPayload.email, password: registerPayload.password });
         cookie = response.get('Set-Cookie');
 
-        // Wait for two seconds before reissuing token
+        // Wait for two seconds before reissuing token. This ensures the reissued cookie is not
+        // the same as old one
         await new Promise((resolve) => setTimeout(resolve, 2000));
 
         const reissueResponse = await request(app).get('/api/reissue-token').set('Cookie', cookie);

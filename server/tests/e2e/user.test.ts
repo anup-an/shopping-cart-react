@@ -4,6 +4,7 @@ import request from 'supertest';
 import app from '../../src';
 import { registerPayload } from '../testData';
 import User, { guestUser } from '../../src/models/user';
+import { ErrorCode } from '../../src/utils';
 
 describe('/api/users', () => {
     let db: mongoose.Connection;
@@ -37,6 +38,15 @@ describe('/api/users', () => {
         const user = await User.findOne({ _id: new mongoose.Types.ObjectId(loggedUser._id) });
         expect(response.status).toBe(200);
         expect(user?.lastName).toBe('Test last name');
+    });
+
+    it('should not update a weak password', async () => {
+        const response = await request(app)
+            .post(`/api/users`)
+            .set('Cookie', cookie)
+            .send({ password: 'test' });
+        expect(response.status).toBe(422);
+        expect(response.body.title).toBe(ErrorCode.ValidationError);
     });
 
     it('returns guest user when not logged in', async () => {

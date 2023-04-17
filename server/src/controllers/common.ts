@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { NextFunction, Request, Response } from 'express';
 
 import { IModel } from '../models/model';
-import {ErrorCode, ErrorException} from '../utils'
+import { ErrorCode, ErrorException } from '../utils';
 
 export const getAll =
     <T>(model: IModel<T>) =>
@@ -60,6 +60,7 @@ export const updateById =
                 new: true,
                 password: false,
                 refreshToken: false,
+                runValidators: true,
             });
             handleResponse(result, res, 'update');
         } catch (error) {
