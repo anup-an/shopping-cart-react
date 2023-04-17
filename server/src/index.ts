@@ -1,10 +1,11 @@
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import express from 'express';
+import express, { NextFunction } from 'express';
 import passport from 'passport';
 import dotenv from 'dotenv';
 
 import strategy from './middlewares/passport';
+import errorHandler from './middlewares/errorHandler';
 import { connectServer } from './connect';
 import routes from './routes/index';
 
@@ -37,6 +38,7 @@ app.use(passport.initialize());
 passport.use(strategy);
 app.get('/', (req, res) => res.send('This is the server homepage'));
 app.use(routes());
+app.use(errorHandler);
 
 export const server = connectServer(app);
 

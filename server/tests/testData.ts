@@ -131,7 +131,7 @@ export const testCart = [{
         
 export const registerPayload = {
     email: 'anup.poudel@ambine.com',
-    password: 'anup',
+    password: 'Testing1#',
     firstName: 'Anup',
     lastName: 'Poudel',
 }

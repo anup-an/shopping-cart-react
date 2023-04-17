@@ -14,7 +14,7 @@ describe('/api/products', () => {
         await request(app).post('/api/signup').send(registerPayload);
         const loginResponse = await request(app)
             .post('/api/login')
-            .send({ email: 'anup.poudel@ambine.com', password: 'anup' });
+            .send({ email: 'anup.poudel@ambine.com', password: registerPayload.password });
         cookie = loginResponse.get('Set-Cookie');
     });
 
@@ -90,13 +90,13 @@ describe('/api/products', () => {
         it('find a product', async () => {
             const response = await request(app).get(`/api/products/41224d776a326fb40f000001`);
             expect(response.status).toBe(404);
-            expect(response.text).toBe('Not found');
+            expect(response.body.title).toBe('NotFoundError');
         });
 
         it('delete a product', async () => {
             const response = await request(app).delete(`/api/products/41224d776a326fb40f000001`).set('Cookie', cookie);
             expect(response.status).toBe(404);
-            expect(response.text).toBe('Not found');
+            expect(response.body.title).toBe('NotFoundError');
         });
 
         it('update a product', async () => {
@@ -105,7 +105,7 @@ describe('/api/products', () => {
                 .set('Cookie', cookie)
                 .send({ title: 'Test title' });
             expect(response.status).toBe(404);
-            expect(response.text).toBe('Not found');
+            expect(response.body.title).toBe('NotFoundError');
         });
     });
 

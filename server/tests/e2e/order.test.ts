@@ -15,10 +15,15 @@ describe('/api/orders', () => {
         await request(app).post('/api/signup').send(registerPayload);
         const loginResponse = await request(app)
             .post('/api/login')
-            .send({ email: 'anup.poudel@ambine.com', password: 'anup' });
+            .send({ email: 'anup.poudel@ambine.com', password: registerPayload.password });
         cookie = loginResponse.get('Set-Cookie');
         loggedUser = (await request(app).get('/api/users').set('Cookie', cookie)).body.data
     });
+
+    afterAll(async () => {
+        await db.dropCollection('users');
+    })
+
     it('should create an order for authenticated user', async () => {
         const response = await request(app).post('/api/orders').set('Cookie', cookie).send(testOrderPayload);
         expect(response.status).toBe(200);

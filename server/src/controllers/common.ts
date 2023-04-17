@@ -1,11 +1,12 @@
 import _ from 'lodash';
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 
 import { IModel } from '../models/model';
+import {ErrorCode, ErrorException} from '../utils'
 
 export const getAll =
     <T>(model: IModel<T>) =>
-    async (req: Request, res: Response) => {
+    async (req: Request, res: Response, next: NextFunction) => {
         try {
             const result = await model.find(
                 _.mapValues(req.query, (val) => {
@@ -14,46 +15,46 @@ export const getAll =
             );
             handleResponse(result, res, 'find');
         } catch (error) {
-            res.status(500).send(error);
+            next(error);
         }
     };
 
 export const getById =
     <T>(model: IModel<T>) =>
-    async (req: Request, res: Response) => {
+    async (req: Request, res: Response, next: NextFunction) => {
         try {
             const result = await model.findById(req.params.id, { password: false, refreshToken: false });
             handleResponse(result, res, 'find');
         } catch (error) {
-            res.status(500).send(error);
+            next(error);
         }
     };
 
 export const create =
     <T>(model: IModel<T>) =>
-    async (req: Request, res: Response) => {
+    async (req: Request, res: Response, next: NextFunction) => {
         try {
             const result = await new model(req.body).save();
             handleResponse(result, res, 'create');
         } catch (error) {
-            res.status(500).send(error);
+            next(error);
         }
     };
 
 export const deleteById =
     <T>(model: IModel<T>) =>
-    async (req: Request, res: Response) => {
+    async (req: Request, res: Response, next: NextFunction) => {
         try {
             const result = await model.findByIdAndDelete(req.params.id, { password: false, refreshToken: false });
             handleResponse(result, res, 'delete');
         } catch (error) {
-            res.status(500).send(error);
+            next(error);
         }
     };
 
 export const updateById =
     <T>(model: IModel<T>) =>
-    async (req: Request, res: Response) => {
+    async (req: Request, res: Response, next: NextFunction) => {
         try {
             const result = await model.findByIdAndUpdate(req.params.id, req.body, {
                 new: true,
@@ -62,7 +63,7 @@ export const updateById =
             });
             handleResponse(result, res, 'update');
         } catch (error) {
-            res.status(500).send(error);
+            next(error);
         }
     };
 
@@ -74,8 +75,8 @@ const handleResponse = (queryResult: any, res: Response, method: string) => {
               })
             : res.status(500).send(`Failed to ${method}`);
     } else if (_.isNull(queryResult)) {
-        res.status(404).send('Not found');
+        throw new ErrorException(ErrorCode.NotFoundError, 'Not found');
     } else {
-        res.status(500).send(`Failed to ${method}`);
+        throw new ErrorException(ErrorCode.ServerError, `Failed to ${method}`);
     }
 };

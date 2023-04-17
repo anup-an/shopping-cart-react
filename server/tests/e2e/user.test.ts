@@ -15,7 +15,7 @@ describe('/api/users', () => {
         await request(app).post('/api/signup').send(registerPayload);
         const loginResponse = await request(app)
             .post('/api/login')
-            .send({ email: 'anup.poudel@ambine.com', password: 'anup' });
+            .send({ email: 'anup.poudel@ambine.com', password: registerPayload.password });
         cookie = loginResponse.get('Set-Cookie');
     });
 

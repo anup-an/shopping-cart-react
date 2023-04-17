@@ -1,8 +1,9 @@
-import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
+import mongoose from 'mongoose';
+import validator from 'validator';
 
-import ProductSchema, { IProduct } from './product';
 import { createSchema } from '.';
+import ProductSchema, { IProduct } from './product';
 
 export interface IUser extends mongoose.Document {
     _id: mongoose.Types.ObjectId;
@@ -34,10 +35,31 @@ export const CartSchema = createSchema<ICart>({
     availableSizes: { type: [String] },
     count: { type: Number },
 });
-
 const UserSchema = createSchema<IUser>({
-    email: { type: String, required: true, unique: true },
-    password: { type: String, required: true, select: false },
+    email: {
+        type: String,
+        required: [true, 'E-mail is required'],
+        unique: true,
+        validate: [validator.isEmail, 'E-mail must be in format e.g., example@example.com'],
+    },
+    password: {
+        type: String,
+        required: true,
+        select: false,
+        validate: {
+            validator: (str: string) => {
+                return validator.isStrongPassword(str, {
+                    minLength: 8,
+                    minLowercase: 1,
+                    minUppercase: 1,
+                    minNumbers: 1,
+                    minSymbols: 1,
+                });
+            },
+            message:
+                'Password must be greater than 8 and contain at least one uppercase letter, one lowercase letter, one number and one symbol',
+        },
+    },
     firstName: { type: String },
     lastName: { type: String },
     address: { type: String },

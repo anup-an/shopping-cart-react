@@ -42,7 +42,7 @@ describe('authentication', () => {
 
     it('cannot register existing user again: /api/signup', async () => {
         const response = await request(app).post('/api/signup').send(registerPayload);
-        expect(response.status).toBe(400);
+        expect(response.status).toBe(200);
         expect(response.body.data).toBe('Email already in use');
 
         const foundUser = await User.find({ email: registerPayload.email });

@@ -1,9 +1,11 @@
-import { Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import _ from 'lodash';
+import mongoose from 'mongoose';
 
 import User from '../models/user';
 import { IUser } from '../schemas/user';
+import { ErrorCode, ErrorException } from '../utils';
 
 type VerifiedUser = IUser & Express.User;
 
@@ -21,21 +23,21 @@ const generateToken = (user: VerifiedUser) => {
     }
 };
 
-export const signupUser = async (req: Request, res: Response) => {
+export const signupUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { email, password, firstName, lastName } = req.body;
         const foundUser = await User.findOne({ email });
         if (foundUser) {
-            return res.status(400).json({ status: 'error', data: 'Email already in use' });
+            return res.status(200).json({ status: 'error', data: 'Email already in use' });
         }
         await new User({ email, password, firstName, lastName }).save();
         return res.status(200).json({ status: 'success', data: 'Signup successful!' });
     } catch (error) {
-        return res.status(500).send(error);
+        next(error);
     }
 };
 
-export const loginUser = async (req: Request, res: Response) => {
+export const loginUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = req.user as VerifiedUser | undefined;
         if (user) {
@@ -50,26 +52,26 @@ export const loginUser = async (req: Request, res: Response) => {
                 });
                 return res.status(200).json({ status: 'success', data: _.omit(user, ['password', 'refreshToken']) });
             }
-            return res.status(500).send('Unable to generate tokens');
+            throw new ErrorException(ErrorCode.AuthenticationError, 'Unauthorized');
         }
-        return res.status(401).json({ status: 'error', data: 'User not found.' });
+        throw new ErrorException(ErrorCode.NotFoundError, 'User not found');
     } catch (error) {
-        return res.status(500).send('Internal server error');
+        next(error);
     }
 };
 
-export const logoutUser = async (req: Request, res: Response) => {
+export const logoutUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const { token } = req.cookies;
         await User.updateOne({ refreshToken: token.refreshToken }, { $set: { refreshToken: '' } });
         res.clearCookie('token');
         return res.status(200).json({ status: 'success', data: 'Successfully logged out!' });
     } catch (error) {
-        return res.status(500).send(error);
+        next(error);
     }
 };
 
-export const reIssueTokens = async (req: Request, res: Response) => {
+export const reIssueTokens = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const user = req.user as VerifiedUser | undefined;
         if (user) {
@@ -83,12 +85,12 @@ export const reIssueTokens = async (req: Request, res: Response) => {
                     .cookie('token', tokens, { secure: true, httpOnly: true, sameSite: 'none', maxAge: 864000 })
                     .send();
             } else {
-                return res.status(500).json({ status: 'error', data: 'Unable to generate tokens.' });
+                throw new ErrorException(ErrorCode.ServerError, 'Unable to generate tokens');
             }
         } else {
-            return res.status(401).send('Unauthorized');
+            throw new ErrorException(ErrorCode.AuthenticationError, 'Unauthorized');
         }
     } catch (error) {
-        return res.status(500).send(error);
+        next(error);
     }
 };
