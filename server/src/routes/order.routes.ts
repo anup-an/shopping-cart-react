@@ -1,12 +1,13 @@
 import { Router } from 'express';
 import passport from 'passport';
 
-import { create, getAll } from '../controllers/common';
-import { IOrder } from '../schemas/order';
+import { GenericController } from '../controllers/common';
 import Order from '../models/order';
+import { IOrder } from '../schemas/order';
 import { IUser } from '../schemas/user';
 
 const router = Router();
+const orderController = new GenericController<IOrder>(Order);
 
 router.post(
     '/',
@@ -20,7 +21,7 @@ router.post(
             }
         })(req, res, next);
     },
-    create<IOrder>(Order),
+    orderController.create.bind(orderController),
 );
 router.get(
     '/',
@@ -34,7 +35,7 @@ router.get(
             }
         })(req, res, next);
     },
-    getAll<IOrder>(Order),
+    orderController.getAll.bind(orderController),
 );
 
 export default router;

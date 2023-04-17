@@ -1,11 +1,13 @@
 import { Router } from 'express';
 import passport from 'passport';
 
-import { IUser } from '../schemas/user';
-import { getById, updateById } from '../controllers/common';
+import { GenericController } from '../controllers/common';
 import User, { guestUser } from '../models/user';
+import { IUser } from '../schemas/user';
 
 const router = Router();
+const userController = new GenericController<IUser>(User);
+
 router.get(
     '/',
     (req, res, next) => {
@@ -18,7 +20,7 @@ router.get(
             }
         })(req, res, next);
     },
-    getById<IUser>(User),
+    userController.getById.bind(userController),
 );
 router.post(
     '/',
@@ -32,7 +34,7 @@ router.post(
             }
         })(req, res, next);
     },
-    updateById<IUser>(User),
+    userController.update.bind(userController),
 );
 
 export default router;
