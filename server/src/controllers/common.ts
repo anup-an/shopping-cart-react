@@ -1,22 +1,15 @@
 import _ from 'lodash';
 import { NextFunction, Request, Response } from 'express';
 
-import { IModel } from '../models/model';
 import { ErrorCode, ErrorException } from '../utils';
+import { GenericService } from '../services/common';
 
 export class GenericController<T> {
-    model: IModel<T>;
-    constructor(model: IModel<T>) {
-        this.model = model;
-    }
+    constructor(private readonly service: GenericService<T>) {}
 
     async getAll(req: Request, res: Response, next: NextFunction) {
         try {
-            const result = await this.model.find(
-                _.mapValues(req.query, (val) => {
-                    return { $regex: val, $options: 'i' };
-                }),
-            );
+            const result = await this.service.getAll(req, res);
             this.handleResponse(result, res, 'find');
         } catch (error) {
             next(error);
@@ -25,7 +18,7 @@ export class GenericController<T> {
 
     async getById(req: Request, res: Response, next: NextFunction) {
         try {
-            const result = await this.model.findById(req.params.id, { password: false, refreshToken: false });
+            const result = await this.service.getById(req, res);
             this.handleResponse(result, res, 'find');
         } catch (error) {
             next(error);
@@ -34,7 +27,7 @@ export class GenericController<T> {
 
     async create(req: Request, res: Response, next: NextFunction) {
         try {
-            const result = await new this.model(req.body).save();
+            const result = await this.service.create(req, res);
             this.handleResponse(result, res, 'create');
         } catch (error) {
             next(error);
@@ -43,7 +36,7 @@ export class GenericController<T> {
 
     async delete(req: Request, res: Response, next: NextFunction) {
         try {
-            const result = await this.model.findByIdAndDelete(req.params.id, { password: false, refreshToken: false });
+            const result = await this.service.delete(req, res);
             this.handleResponse(result, res, 'delete');
         } catch (error) {
             next(error);
@@ -52,12 +45,7 @@ export class GenericController<T> {
 
     async update(req: Request, res: Response, next: NextFunction) {
         try {
-            const result = await this.model.findByIdAndUpdate(req.params.id, req.body, {
-                new: true,
-                password: false,
-                refreshToken: false,
-                runValidators: true,
-            });
+            const result = await this.service.update(req, res);
             this.handleResponse(result, res, 'update');
         } catch (error) {
             next(error);

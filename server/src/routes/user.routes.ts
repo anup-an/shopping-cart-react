@@ -4,9 +4,11 @@ import passport from 'passport';
 import { GenericController } from '../controllers/common';
 import User, { guestUser } from '../models/user';
 import { IUser } from '../schemas/user';
+import { GenericService } from '../services/common';
 
 const router = Router();
-const userController = new GenericController<IUser>(User);
+const userService = new GenericService<IUser>(User)
+const userController = new GenericController<IUser>(userService);
 
 router.get(
     '/',

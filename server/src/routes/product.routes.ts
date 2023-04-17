@@ -4,9 +4,11 @@ import passport from 'passport';
 import { GenericController } from '../controllers/common';
 import Product from '../models/product';
 import { IProduct } from '../schemas/product';
+import { GenericService } from '../services/common';
 
 const router = Router();
-const productController = new GenericController<IProduct>(Product);
+const productService = new GenericService<IProduct>(Product)
+const productController = new GenericController<IProduct>(productService);
 
 router.get('/', productController.getAll.bind(productController));
 router.get('/:id', productController.getById.bind(productController));

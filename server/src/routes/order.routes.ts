@@ -5,9 +5,11 @@ import { GenericController } from '../controllers/common';
 import Order from '../models/order';
 import { IOrder } from '../schemas/order';
 import { IUser } from '../schemas/user';
+import { GenericService } from '../services/common';
 
 const router = Router();
-const orderController = new GenericController<IOrder>(Order);
+const orderService = new GenericService<IOrder>(Order)
+const orderController = new GenericController<IOrder>(orderService);
 
 router.post(
     '/',
