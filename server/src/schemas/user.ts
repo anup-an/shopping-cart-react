@@ -17,6 +17,7 @@ export interface IUser extends mongoose.Document {
     city: string;
     country: string;
     refreshToken: string;
+    role: 'admin' | 'user';
     wishList: IProduct[];
     cart: ICart[];
 }
@@ -67,6 +68,7 @@ const UserSchema = createSchema<IUser>({
     phone: { type: String },
     city: { type: String },
     country: { type: String },
+    role: { type: String, enum: ['admin', 'user'], default: 'user' },
     refreshToken: { type: String, select: false },
     wishList: { type: [ProductSchema] },
     cart: { type: [CartSchema] },
