@@ -7,6 +7,7 @@ import { products, registerPayload, testProduct } from '../testData';
 describe('/api/products', () => {
     let db: mongoose.Connection;
     let cookie: string[];
+    let loggedUser: any;
 
     beforeAll(async () => {
         db = mongoose.connection;
@@ -16,6 +17,11 @@ describe('/api/products', () => {
             .post('/api/login')
             .send({ email: 'anup.poudel@ambine.com', password: registerPayload.password });
         cookie = loginResponse.get('Set-Cookie');
+        loggedUser = loginResponse.body.data;
+        await db.collections.users.updateOne(
+            { _id: new mongoose.Types.ObjectId(loggedUser._id) },
+            { $set: { role: 'admin' } },
+        );
     });
 
     afterAll(async () => {

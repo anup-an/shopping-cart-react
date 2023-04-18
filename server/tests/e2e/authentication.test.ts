@@ -75,9 +75,10 @@ describe('authentication', () => {
     });
 
     it('does not log in with false credentials: /api/login', async () => {
-        const response = await request(app).post('/api/login').send({ email: 'test', password: 'pass' });
+        const response = await request(app).post('/api/login').send({ email: 'test@test.com', password: 'pass' });
         expect(response.status).toBe(401);
-        expect(response.body.data).toBe('User not found. Please enter correct email.');
+        expect(response.body.title).toBe(ErrorCode.AuthenticationError)
+        expect(response.body.description).toBe('User not found. Please enter correct email.');
     });
 
     it('can log out user: /api/logout', async () => {
