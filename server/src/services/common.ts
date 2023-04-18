@@ -1,5 +1,5 @@
+import { Request, Response } from 'express';
 import _ from 'lodash';
-import { NextFunction, Request, Response } from 'express';
 
 import { IModel } from '../models/model';
 

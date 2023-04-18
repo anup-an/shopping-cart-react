@@ -7,7 +7,7 @@ import User from '../models/user';
 import { IUser } from '../schemas/user';
 import { ErrorCode, ErrorException } from '../utils';
 
-type VerifiedUser = IUser & Express.User;
+export type VerifiedUser = IUser & Express.User;
 
 const generateToken = (user: VerifiedUser) => {
     const secretKey = process.env.JWT_SECRET;
