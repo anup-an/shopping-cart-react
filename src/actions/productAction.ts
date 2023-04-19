@@ -9,15 +9,18 @@ import {
     IProduct,
     SORT_PRODUCTS_PRICE,
 } from '../ActionTypes';
+import { baseUrl } from '../constants';
 
-export const fetchProducts = () => async (dispatch: Dispatch<AppActions>): Promise<void> => {
-    await axios.get('https://my-eshop.onrender.com/api/products').then((response) => {
-        dispatch({
-            type: FETCH_PRODUCTS,
-            payload: { items: response.data.data, isLoading: false },
+export const fetchProducts =
+    () =>
+    async (dispatch: Dispatch<AppActions>): Promise<void> => {
+        await axios.get(`${baseUrl}/api/products`).then((response) => {
+            dispatch({
+                type: FETCH_PRODUCTS,
+                payload: { items: response.data.data, isLoading: false },
+            });
         });
-    });
-};
+    };
 
 export const filterFunction = (size: string, products: IProduct[] | undefined) => {
     if (products) {
@@ -35,48 +38,47 @@ export const sortFunction = (sort: string, products: IProduct[] | undefined) => 
     if (products && sort === 'Highest') {
         return [...products].sort((a, b) => (a.price < b.price ? 1 : -1));
     }
-    if (products && sort === 'Newest') {
-        return [...products].sort((a, b) => (a._id > b._id ? 1 : -1));
-    }
 };
 
-export const filterProducts = (size: string, sort: string, products: IProduct[] | undefined) => async (
-    dispatch: Dispatch<AppActions>,
-): Promise<void> => {
-    const filteredProducts = filterFunction(size, sortFunction(sort, products));
-    filteredProducts
-        ? dispatch({
-              type: FILTER_PRODUCTS_SIZE,
-              payload: {
-                  size,
-                  items: filteredProducts,
-              },
-          })
-        : '';
-};
+export const filterProducts =
+    (size: string, sort: string, products: IProduct[] | undefined) =>
+    async (dispatch: Dispatch<AppActions>): Promise<void> => {
+        const filteredProducts = filterFunction(size, sortFunction(sort, products));
+        filteredProducts
+            ? dispatch({
+                  type: FILTER_PRODUCTS_SIZE,
+                  payload: {
+                      size,
+                      items: filteredProducts,
+                  },
+              })
+            : '';
+    };
 
-export const sortProducts = (sort: string, size: string, products: IProduct[] | undefined) => async (
-    dispatch: Dispatch<AppActions>,
-): Promise<void> => {
-    const sortedProducts = sortFunction(sort, filterFunction(size, products));
-    sortedProducts
-        ? dispatch({
-              type: SORT_PRODUCTS_PRICE,
-              payload: {
-                  sort,
-                  items: sortedProducts,
-              },
-          })
-        : '';
-};
+export const sortProducts =
+    (sort: string, size: string, products: IProduct[] | undefined) =>
+    async (dispatch: Dispatch<AppActions>): Promise<void> => {
+        const sortedProducts = sortFunction(sort, filterFunction(size, products));
+        sortedProducts
+            ? dispatch({
+                  type: SORT_PRODUCTS_PRICE,
+                  payload: {
+                      sort,
+                      items: sortedProducts,
+                  },
+              })
+            : '';
+    };
 
-export const searchProducts = (keywords: string) => async (dispatch: Dispatch<AppActions>): Promise<void> => {
-    axios.get(`https://my-eshop.onrender.com/api/products?title=${keywords}`).then((response) => {
-        dispatch({
-            type: SEARCH_PRODUCTS,
-            payload: {
-                items: response.data.data,
-            },
+export const searchProducts =
+    (keywords: string) =>
+    async (dispatch: Dispatch<AppActions>): Promise<void> => {
+        axios.get(`${baseUrl}/api/products?title=${keywords}`).then((response) => {
+            dispatch({
+                type: SEARCH_PRODUCTS,
+                payload: {
+                    items: response.data.data,
+                },
+            });
         });
-    });
-};
+    };

@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { logInUser } from '../../actions/userAction';
 import { IUser, IProduct, ICart } from '../../ActionTypes';
 import { AppState } from '../../store';
+import { baseUrl } from '../../constants';
 
 interface IState {
     email: string;
@@ -36,7 +37,7 @@ class Register extends React.Component<IProps, IState> {
         event?.preventDefault();
         const { email, password, firstName, lastName } = this.state;
         axios
-            .post('https://my-eshop.onrender.com/api/signup', { email, password, firstName, lastName })
+            .post(`${baseUrl}/api/signup`, { email, password, firstName, lastName })
             .then((response) => {
                 response.data.status == 'success'
                     ? this.props.actions.logInUser(this.state.email, this.state.password, this.props.cartItems)

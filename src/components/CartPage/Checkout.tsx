@@ -8,6 +8,7 @@ import { IUser } from '../../ActionTypes';
 import { removeAllFromCart } from '../../actions/cartAction';
 import { removeAllFromUserCart } from '../../actions/userAction';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { baseUrl } from '../../constants';
 
 axios.defaults.withCredentials = true;
 
@@ -83,7 +84,7 @@ class Checkout extends React.Component<IProps, IState> {
                 cart: user.cart,
             };
             const result = await axios.post<{ data: IOrder }>(
-                'https://my-eshop.onrender.com/api/orders',
+                `${baseUrl}/api/orders`,
                 { ...order },
                 { withCredentials: true },
             );
