@@ -8,15 +8,15 @@ import { IUser } from '../schemas/user';
 import { GenericService } from '../services/common';
 
 const router = Router();
-const orderService = new GenericService<IOrder>(Order)
+const orderService = new GenericService<IOrder>(Order);
 const orderController = new GenericController<IOrder>(orderService);
 
 router.post(
     '/',
     (req, res, next) => {
-        passport.authenticate('jwt', { session: false }, (err, user) => {
+        passport.authenticate('jwt', { session: false }, (err: any, user: IUser | undefined) => {
             if (user) {
-                req.body.user_id = (user as IUser)?._id.toString();
+                req.body.user_id = user._id.toString();
                 next();
             } else {
                 res.status(401).send('Unauthorized');
@@ -28,9 +28,9 @@ router.post(
 router.get(
     '/',
     (req, res, next) => {
-        passport.authenticate('jwt', { session: false }, (err, user) => {
+        passport.authenticate('jwt', { session: false }, (err: any, user: IUser | undefined) => {
             if (user) {
-                req.query.user_id = (user as IUser)?._id.toString();
+                req.query.user_id = user._id.toString();
                 next();
             } else {
                 res.status(401).send('Unauthorized');
