@@ -45,10 +45,6 @@ class Filter extends React.Component<IProps, IProduct> {
                         className="border rounded p-1 border-gray-300 text-sm"
                         onChange={(e) => this.handlesort(e.target.value, size)}
                     >
-                        <option key="Newest" value="Newest">
-                            {' '}
-                            Newest{' '}
-                        </option>
                         <option key="Lowest" value="Lowest">
                             Lowest
                         </option>
