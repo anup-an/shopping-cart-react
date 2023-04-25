@@ -1,11 +1,12 @@
-import axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router';
+import { Redirect, RouteComponentProps } from 'react-router';
 import { Link } from 'react-router-dom';
+
+import { ICart, IUser } from '../../ActionTypes';
 import { logInUser } from '../../actions/userAction';
-import { IUser, ICart } from '../../ActionTypes';
 import { AppState } from '../../store';
+import { guestUser } from '../../reducers/userReducers';
 
 interface IState {
     email: string;
@@ -26,8 +27,14 @@ class Login extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
         this.state = {
-            email: '', password: ''};
+            email: '',
+            password: '',
+        };
     }
+    static defaultProps = {
+        user: guestUser,
+        cartItems: [],
+    };
     handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState((state) => ({ ...state, [event.target.name]: event.target.value }));
     };
@@ -36,12 +43,11 @@ class Login extends React.Component<IProps, IState> {
         this.props.actions.logInUser(this.state.email, this.state.password, this.props.cartItems);
     };
     render(): JSX.Element {
-        const { email, password } = this.state;
         const { user } = this.props;
 
         return (
             <div className="w-full h-full">
-                {!user?._id ?
+                {!user?._id ? (
                     <div className="flex flex-row flex items-center justify-center w-full">
                         <div className="bg-white border rounded-lg shadow-xl w-full lg:w-2/3 flex flex-row items-center lg:bg-blue-800 ">
                             <div className="hidden lg:block w-1/2 text-white p-4 flex items-center justify-center text-center flex-col">
@@ -51,7 +57,8 @@ class Login extends React.Component<IProps, IState> {
                             <div className="w-full lg:w-1/2 bg-white flex flex-col items-center justify-center space-y-12 p-4">
                                 <div className="flex flex-row items-center space-x-2">
                                     <div>If you are a new user, signup here</div>
-                                    <Link to="/register"
+                                    <Link
+                                        to="/register"
                                         className="bg-blue-400 hover:bg-blue-800 p-1 text-white border rounded shadow text-sm focus:outline-none"
                                     >
                                         Sign Up
@@ -131,20 +138,17 @@ class Login extends React.Component<IProps, IState> {
                                         type="submit"
                                     >
                                         <div>Login</div>
-
-                                        {/*                     <div className="animate-ping ease-in-out uration-100 bg-blue-800 w-full h-full">
-                        </div>
-
- */}
                                     </button>
                                 </form>
                             </div>
                         </div>
-                    </div> : <div>
-                        <Redirect to="/user" />
-                        </div>
-    }
-                </div>
+                    </div>
+                ) : (
+                    <div>
+                        <Redirect to="/" />
+                    </div>
+                )}
+            </div>
         );
     }
 }
@@ -161,9 +165,9 @@ const mapStateToProps = (state: AppState): StateProps => ({
 
 const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
     actions: {
-        logInUser: (email: string, password: string, cartItems: ICart[]) => dispatch(logInUser(email, password, cartItems))
+        logInUser: (email: string, password: string, cartItems: ICart[]) =>
+            dispatch(logInUser(email, password, cartItems)),
     },
 });
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
