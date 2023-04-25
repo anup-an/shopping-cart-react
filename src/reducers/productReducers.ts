@@ -1,54 +1,41 @@
 /* eslint-disable no-console */
-import {
-    FETCH_PRODUCTS,
-    FILTER_PRODUCTS_SIZE,
-    IProduct,
-    ProductsActionTypes,
-    SORT_PRODUCTS_PRICE,
-    SEARCH_PRODUCTS,
-} from '../ActionTypes';
+import { IProduct, SortState, FilterState, SEARCH_PRODUCTS } from '../ActionTypes';
+import { SearchState } from '../types/common';
+import { FILTER_PRODUCTS, ProductsActionTypes, SORT_PRODUCTS } from '../types/products/ActionTypes';
 
 export type ActionStates = {
-    items: IProduct[];
-    sort: string;
-    sortedItems: IProduct[];
-    filteredItems: IProduct[];
-    size: string;
+    sort: SortState<IProduct> | null;
+    search: SearchState<IProduct> | null;
+    filter: FilterState<IProduct> | null;
     isLoading: boolean;
 };
 const productsDefaultState: ActionStates = {
-    items: [],
-    sort: 'Newest',
-    size: 'ALL',
-    sortedItems: [],
-    filteredItems: [],
+    sort: null,
+    filter: null,
+    search: null,
     isLoading: true,
 };
 
 const productsReducer = (state = productsDefaultState, action: ProductsActionTypes): ActionStates => {
     switch (action.type) {
-        case FETCH_PRODUCTS:
-            return {
-                ...state, items: action.payload.items, filteredItems: action.payload.items,
-                isLoading: action.payload.isLoading,
-            };
-        case SORT_PRODUCTS_PRICE:
+        case SORT_PRODUCTS:
             return {
                 ...state,
-
                 sort: action.payload.sort,
-                filteredItems: action.payload.items,
             };
-        case FILTER_PRODUCTS_SIZE:
+        case FILTER_PRODUCTS:
             return {
                 ...state,
-                size: action.payload.size,
-                filteredItems: action.payload.items,
+                filter: state.filter
+                    ? action.payload.filter
+                    : { ...(state.filter as unknown as object), ...action.payload.filter },
             };
         case SEARCH_PRODUCTS:
             return {
                 ...state,
-                filteredItems: action.payload.items,
+                search: state.search
+                    ? action.payload.search
+                    : { ...(state.filter as unknown as object), ...action.payload.search },
             };
         default:
             return state;

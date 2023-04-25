@@ -1,3 +1,5 @@
+import { ProductsActionTypes } from "./types/products/ActionTypes";
+
 export const FETCH_PRODUCTS = 'FETCH_PRODUCTS';
 export const FILTER_PRODUCTS_SIZE = 'FILTER_PRODUCTS_SIZE';
 export const SORT_PRODUCTS_PRICE = 'SORT_PRODUCTS_PRICE';
@@ -60,6 +62,10 @@ export type IOrder = {
     cart: ICart[];
 }
 
+export type SortState<T> = { [key in keyof T]?: 'asc' | 'desc' }
+export type FilterState<T> = { [key in keyof T]?: any }
+
+
 export type AddToCartAction = {
     type: typeof ADD_PRODUCTS_CART;
     payload: {
@@ -81,29 +87,6 @@ export type RemoveCartAction = {
     };
 };
 
-export type FetchProductsAction = {
-    type: typeof FETCH_PRODUCTS;
-    payload: {
-        items: IProduct[];
-        isLoading: boolean;
-    };
-};
-
-export type FilterProductsAction = {
-    type: typeof FILTER_PRODUCTS_SIZE;
-    payload: {
-        items: IProduct[];
-        size: string;
-    };
-};
-
-export type SortProductsAction = {
-    type: typeof SORT_PRODUCTS_PRICE;
-    payload: {
-        items: IProduct[];
-        sort: string;
-    };
-};
 
 export type SearchProductsAction = {
     type: typeof SEARCH_PRODUCTS;
@@ -168,12 +151,6 @@ export type getOrdersByUserIdAction = {
 }
 
 export type CartActionTypes = AddToCartAction | RemoveFromCartAction | RemoveCartAction;
-
-export type ProductsActionTypes =
-    | FetchProductsAction
-    | FilterProductsAction
-    | SortProductsAction
-    | SearchProductsAction;
 
 export type UserActionTypes = EditProfileUserAction | AddToCartUserAction | AddToWishlistUserAction | RemoveFromCartUserAction | LogInUserAction | getUserFromTokenAction | RemoveProductsCartUserAction | getOrdersByUserIdAction;
 
