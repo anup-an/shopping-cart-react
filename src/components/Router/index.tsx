@@ -3,7 +3,6 @@ import { Route, Switch } from 'react-router-dom';
 import Body from '../Body';
 import Login from '../Header/login';
 import Register from '../Header/register';
-import CartPage from '../CartPage';
 import Error from './Error';
 import Profile from '../Profile';
 import Address from '../Profile/Address';
@@ -13,6 +12,7 @@ import Header from '../Header';
 import Footer from '../Footer';
 import ProductsPage from '../../views/ProductsPage';
 import LoginPage from '../../views/LoginPage';
+import CartPage from '../../views/CartPage';
 
 const Routers = () => {
     return (
@@ -121,13 +121,7 @@ const Routers = () => {
                 </div>
             </Route>
             <Route path="/cart">
-                <div className="fixed w-full z-10">
-                    <Header focus="cart" />
-                </div>
                 <CartPage />
-                <div className="fixed bottom-0 lg:hidden w-full">
-                    <Footer focus="" />
-                </div>
             </Route>
             <Route>
                 <div className="fixed top-1/3 w-full">

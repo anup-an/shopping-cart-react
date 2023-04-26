@@ -55,10 +55,6 @@ class CartSummary extends React.Component<IProps, IState> {
                             <p>{cartItems.length}</p>
                         </div>
                         <div className="flex flex-row justify-between">
-                            <p>Discount: </p>
-                            <p>N/A</p>
-                        </div>
-                        <div className="flex flex-row justify-between">
                             <p>Total: </p>
                             <p>{this.getTotalPrice()}€</p>
                         </div>
