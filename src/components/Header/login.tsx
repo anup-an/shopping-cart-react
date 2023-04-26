@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Redirect, RouteComponentProps } from 'react-router';
+import { Redirect, RouteComponentProps, withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import { ICart, IUser } from '../../ActionTypes';
@@ -13,7 +13,7 @@ interface IState {
     password: string;
 }
 
-interface IProps {
+interface IProps extends RouteComponentProps {
     actions: Actions;
     user: IUser;
     cartItems: ICart[];
@@ -35,12 +35,19 @@ class Login extends React.Component<IProps, IState> {
         user: guestUser,
         cartItems: [],
     };
+
     handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState((state) => ({ ...state, [event.target.name]: event.target.value }));
     };
+
     handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
+        //@ts-ignore
+        const { redirectPath } = this.props.location.state;
         this.props.actions.logInUser(this.state.email, this.state.password, this.props.cartItems);
+        if (redirectPath) {
+            this.props.history.push(redirectPath);
+        }
     };
     render(): JSX.Element {
         const { user } = this.props;
@@ -170,4 +177,4 @@ const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

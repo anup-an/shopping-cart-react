@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import { IUser } from '../../ActionTypes';
 import Login from '../Header/login';
 import Checkout from './Checkout';
+import { Link } from 'react-router-dom';
 
 type ICart = {
     _id: string;
@@ -71,8 +72,8 @@ class CartSummary extends React.Component<IProps, IState> {
                     <Modal
                         isOpen={this.state.isOpen}
                         onRequestClose={this.closeModal}
-                        overlayClassName="fixed inset-0 flex justify-center items-center bg-blue-800 bg-opacity-75"
-                        className="relative bg-white overflow-y-auto rounded-lg focus:outline-none w-full h-3/4"
+                        overlayClassName="fixed inset-0 flex justify-center items-center z-20 bg-blue-800 bg-opacity-75"
+                        className="relative bg-white overflow-y-auto rounded-lg focus:outline-none"
                     >
                         <div className="p-1">
                             <div className="flex justify-end">
@@ -97,11 +98,14 @@ class CartSummary extends React.Component<IProps, IState> {
                         {user._id ? (
                             <Checkout cartItems={cartItems} user={user} />
                         ) : (
-                            <div className="flex flex-col justify-center items-center">
-                                <Login />
-                                <p className="text-center text-xl text-blue-400 text-semibold">
-                                    Please login to continue...
-                                </p>
+                            <div className="flex flex-col justify-center items-center pl-14 pr-14 pb-2">
+                                <Link
+                                    to={{ pathname: '/login', state: { redirectPath: '/cart' } }}
+                                    className="px-2 bg-blue-400 hover:bg-blue-800 text text-white flex items-center justify-center border rounded"
+                                >
+                                    Go to login
+                                </Link>
+                                <p className="text-center text-semibold mt-2">Please login to continue...</p>
                             </div>
                         )}
                     </Modal>
