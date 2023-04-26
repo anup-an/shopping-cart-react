@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Redirect } from 'react-router';
+import { Redirect, RouteComponentProps, withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import { logInUser } from '../../actions/userAction';
 import { IUser, IProduct, ICart } from '../../ActionTypes';
@@ -15,7 +15,7 @@ interface IState {
     lastName: string;
 }
 
-interface IProps {
+interface IProps extends RouteComponentProps {
     actions: Actions;
     user: IUser;
     cartItems: ICart[];
@@ -37,9 +37,7 @@ class Register extends React.Component<IProps, IState> {
         event?.preventDefault();
         const { email, password, firstName, lastName } = this.state;
         axios.post(`${baseUrl}/api/signup`, { email, password, firstName, lastName }).then((response) => {
-            response.data.status == 'success'
-                ? this.props.actions.logInUser(this.state.email, this.state.password, this.props.cartItems)
-                : '';
+            response.data.status == 'success' ? this.props.history.push('/login') : '';
         });
     };
     render() {
@@ -215,4 +213,4 @@ const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
     },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Register));
