@@ -99,25 +99,25 @@ const Routers = () => {
                 </div>
             </Route>
             <Route path="/login">
-                <div className="fixed w-full z-10">
-                    <Header focus="login" />
-                </div>
-                <div className="fixed bottom-1/4 w-full">
+                <div className="h-screen">
+                    <div className="fixed w-full z-10">
+                        <Header focus="login" />
+                    </div>
                     <LoginPage />
-                </div>
-                <div className="fixed bottom-0 lg:hidden w-full">
-                    <Footer focus="login" />
+                    <div className="fixed bottom-0 lg:hidden w-full">
+                        <Footer focus="login" />
+                    </div>
                 </div>
             </Route>
             <Route path="/register">
-                <div className="fixed w-full z-10">
-                    <Header focus="register" />
-                </div>
-                <div className="fixed bottom-1/4 w-full">
+                <div className="h-screen">
+                    <div className="fixed w-full z-10">
+                        <Header focus="register" />
+                    </div>
                     <Register />
-                </div>
-                <div className="fixed bottom-0 lg:hidden w-full">
-                    <Footer focus="register" />
+                    <div className="fixed bottom-0 lg:hidden w-full">
+                        <Footer focus="register" />
+                    </div>
                 </div>
             </Route>
             <Route path="/cart">

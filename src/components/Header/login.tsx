@@ -46,7 +46,7 @@ class Login extends React.Component<IProps, IState> {
         const { user } = this.props;
 
         return (
-            <div className="w-full h-full">
+            <div className="w-full h-full flex items-center pt-14">
                 {!user?._id ? (
                     <div className="flex flex-row flex items-center justify-center w-full">
                         <div className="bg-white border rounded-lg shadow-xl w-full lg:w-2/3 flex flex-row items-center lg:bg-blue-800 ">

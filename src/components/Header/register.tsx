@@ -36,20 +36,17 @@ class Register extends React.Component<IProps, IState> {
     handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
         const { email, password, firstName, lastName } = this.state;
-        axios
-            .post(`${baseUrl}/api/signup`, { email, password, firstName, lastName })
-            .then((response) => {
-                response.data.status == 'success'
-                    ? this.props.actions.logInUser(this.state.email, this.state.password, this.props.cartItems)
-                    : '';
-            });
+        axios.post(`${baseUrl}/api/signup`, { email, password, firstName, lastName }).then((response) => {
+            response.data.status == 'success'
+                ? this.props.actions.logInUser(this.state.email, this.state.password, this.props.cartItems)
+                : '';
+        });
     };
     render() {
-        const { email, password, firstName, lastName } = this.state;
         const { user } = this.props;
 
         return (
-            <div className="flex flex-row flex items-center justify-center w-full">
+            <div className="flex flex-row flex items-center justify-center w-full h-full pt-14">
                 {!user?._id ? (
                     <div className="bg-white border rounded-lg shadow-xl w-full lg:w-2/3 flex flex-row items-center lg:bg-blue-800">
                         <div className="hidden lg:block w-1/2 text-white p-4 flex items-center justify-center text-center flex-col">
