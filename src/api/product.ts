@@ -4,6 +4,7 @@ import { IProduct } from '../ActionTypes';
 import { baseUrl } from '../constants';
 import { FilterState, SearchState, SortState } from '../types/common';
 import { buildQueryString } from '../utils';
+import { ProductsListDecoder } from '../decoders/products';
 
 export const fetchProducts = async (
     sort?: SortState<IProduct> | null,
@@ -15,6 +16,9 @@ export const fetchProducts = async (
         sort: sort || null,
         filter: filter || null,
     });
-    const result = await axios.get<{ data: IProduct[] }, ApiError>(`${baseUrl}/api/products?${queryString}`);
+    const result = await axios.get<{ data: IProduct[] }, ApiError>(
+        `${baseUrl}/api/products?${queryString}`,
+        ProductsListDecoder,
+    );
     return result;
 };

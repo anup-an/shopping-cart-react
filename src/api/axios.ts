@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { assert } from 'superstruct';
 
 import { Failure, MapData, Success } from '../types/mapDataTypes';
 
@@ -16,9 +17,10 @@ export class ApiError {
     }
 }
 
-const makeRequest = async <T, E>(fetchFunc: () => Promise<AxiosResponse<T>>) => {
+const makeRequest = async <T, E>(fetchFunc: () => Promise<AxiosResponse<T>>, decoder: any) => {
     try {
         const { data } = await fetchFunc();
+        assert(data, decoder);
         return Success<T>(data);
     } catch (error: unknown) {
         return parseError<T>(error as AxiosError);
@@ -33,7 +35,7 @@ export const parseError = <T>(error: AxiosError): MapData<T, ApiError> => {
 };
 
 export default {
-    get: async <T, E>(url: string, config?: AxiosRequestConfig) => {
-        return makeRequest<T, E>(() => axios.get(url, config));
+    get: async <T, E>(url: string, decoder: any, config?: AxiosRequestConfig) => {
+        return makeRequest<T, E>(() => axios.get(url, config), decoder);
     },
 };
