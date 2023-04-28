@@ -18,13 +18,7 @@ const Routers = () => {
     return (
         <Switch>
             <Route exact path="/">
-                <div className="fixed w-full z-10">
-                    <Header focus="home" />
-                </div>
                 <ProductsPage />
-                <div className="fixed bottom-0 lg:hidden w-full">
-                    <Footer focus="" />
-                </div>
             </Route>
             <Route path="/search">
                 <div className="fixed w-full z-10">

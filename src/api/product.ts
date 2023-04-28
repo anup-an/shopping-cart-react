@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { ApiError } from './axios';
 
 import { IProduct } from '../ActionTypes';
 import { baseUrl } from '../constants';
@@ -15,6 +15,6 @@ export const fetchProducts = async (
         sort: sort || null,
         filter: filter || null,
     });
-    const result: AxiosResponse<{ data: IProduct[] }> = await axios.get(`${baseUrl}/api/products?${queryString}`);
+    const result = await axios.get<{ data: IProduct[] }, ApiError>(`${baseUrl}/api/products?${queryString}`);
     return result;
 };

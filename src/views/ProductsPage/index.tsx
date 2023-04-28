@@ -3,25 +3,36 @@ import React from 'react';
 import Cart from '../../components/Body/Cart';
 import Filter from '../../components/Body/Filter';
 import Products from '../../components/Body/Products';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
 
 class ProductsPage extends React.Component {
     render() {
         return (
-            <div className="mt-20">
-                <div className="flex flex-row justify-between w-full">
-                    <div className="w-full xl:w-3/4">
-                        <div className="mx-10 mt-4">
+            <>
+                <div className="fixed w-full z-10">
+                    <Header focus="home" />
+                </div>
+                <div className="mt-20">
+                    <div>
+                        <div className="p-4 mt-4 border-b-2">
                             <Filter />
                         </div>
-                        <div className="mt-4 border-t-2 mx-4 mb-16">
-                            <Products />
+                        <div className="flex items-stretch">
+                            <div className="flex-1 self-stretch">
+                                <Products />
+                            </div>
+                            <div className="w-1/4">
+                                <Cart />
+                            </div>
                         </div>
                     </div>
-                    <div className="hidden lg:block fixed right-0 lg:w-1/4">
-                        <Cart />
-                    </div>
                 </div>
-            </div>
+                <div className="fixed bottom-0 lg:hidden w-full">
+                    <Footer focus="" />
+                </div>
+                ;
+            </>
         );
     }
 }
