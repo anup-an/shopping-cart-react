@@ -1,14 +1,20 @@
+import _ from 'lodash';
 import React from 'react';
 import Modal from 'react-modal';
 import { connect } from 'react-redux';
 
 import { ICart, IUser } from '../../ActionTypes';
+import { addToCart } from '../../actions/cartAction';
+import { addToUserCart } from '../../actions/userAction';
+import { ApiError } from '../../api/axios';
 import { fetchProducts } from '../../api/product';
 import { guestUser } from '../../reducers/userReducers';
 import { AppState } from '../../store';
 import { FilterState, SearchState, SortState } from '../../types/common';
-import ProductDetails from './ProductDetails';
+import { Loading, MapData, extractData, isFailure, isSuccess } from '../../types/mapDataTypes';
+import Error from '../ui/Error';
 import Loader from '../ui/Loader';
+import ProductDetails from './ProductDetails';
 
 Modal.setAppElement('#root');
 
@@ -37,13 +43,12 @@ type Actions = {
 type IState = {
     isOpen: boolean;
     modalProduct: IProduct | null;
-    isLoading: boolean;
-    products: IProduct[];
+    productsFetch: MapData<{ data: IProduct[] }, ApiError>;
 };
 class Products extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
-        this.state = { isLoading: true, isOpen: false, modalProduct: null, products: [] };
+        this.state = { isOpen: false, modalProduct: null, productsFetch: Loading };
     }
 
     static defaultProps = {
@@ -73,11 +78,9 @@ class Products extends React.Component<IProps, IState> {
     }
 
     async fetch() {
-        const { sort, search, filter } = this.props;
-        console.log(sort, search, filter);
-        const fetchedProducts = await fetchProducts(sort, search, filter);
-        this.setState({ products: fetchedProducts.data.data });
-        this.setState({ isLoading: false });
+        const fetchedProducts = await fetchProducts();
+        console.log(fetchedProducts);
+        this.setState({ productsFetch: fetchedProducts });
     }
 
     closeModal = (): void => {
@@ -94,14 +97,23 @@ class Products extends React.Component<IProps, IState> {
             : this.props.actions.addToCart(this.props.cartItems, product);
     };
 
+    isListEmpty = (productsFetch: MapData<{ data: IProduct[] }, ApiError>) => {
+        const products = extractData(productsFetch, 'data', []);
+        return _.isEmpty(products);
+    };
+
+    getProductsList = (productsFetch: MapData<{ data: IProduct[] }, ApiError>) => {
+        return extractData(productsFetch, 'data', []);
+    };
+
     render(): JSX.Element {
-        const { isLoading, isOpen, modalProduct, products } = this.state;
+        const { isOpen, modalProduct, productsFetch } = this.state;
         return (
-            <div className="mt-2 mx-2">
-                {!isLoading ? (
+            <div className="mt-2 mx-2 h-full flex items-center justify-center">
+                {isSuccess(productsFetch) ? (
                     <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 w-full p-2 text-sm">
-                        {products.length ? (
-                            products.map((product) => (
+                        {!this.isListEmpty(productsFetch) ? (
+                            this.getProductsList(productsFetch).map((product: IProduct) => (
                                 <li key={product._id} className="border shadow p-2">
                                     <div>
                                         <button
@@ -173,10 +185,14 @@ class Products extends React.Component<IProps, IState> {
                         )}
                     </ul>
                 ) : (
-                    <div className="absolute w-full top-1/2">
-                        <div className="flex justify-center">
-                            <Loader />
-                        </div>
+                    <div>
+                        {isFailure(productsFetch) ? (
+                            <Error fetch={this.fetch} message="Unable to load products" />
+                        ) : (
+                            <div className="flex justify-center">
+                                <Loader />
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
@@ -200,4 +216,11 @@ const mapStateToProps = (state: AppState): StateProps => ({
     search: state.products.search,
 });
 
-export default connect(mapStateToProps, null)(Products);
+const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
+    actions: {
+        addToCart: (cartItems: ICart[], product: IProduct) => dispatch(addToCart(cartItems, product)),
+        addToUserCart: (user: IUser, product: IProduct) => dispatch(addToUserCart(user, product)),
+    },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Products);
