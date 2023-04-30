@@ -1,7 +1,7 @@
 import { object, array, number, string } from 'superstruct';
 import { CartDecoder } from '../user';
 
-export const OrderDecoder = object({
+export const Order = object({
     _id: string(),
     name: string(),
     user_id: string(),
@@ -13,4 +13,8 @@ export const OrderDecoder = object({
     cart: array(CartDecoder),
 });
 
-export const OrdersListDecoder = object({ data: array(OrderDecoder) });
+export const OrderDecoder = object({
+    data: Order,
+});
+
+export const OrdersListDecoder = object({ data: array(Order) });

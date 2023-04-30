@@ -28,7 +28,7 @@ export class GenericController<T> {
     async create(req: Request, res: Response, next: NextFunction) {
         try {
             const result = await this.service.create(req, res);
-            this.handleResponse(result, res, 'create');
+            this.handleResponse(_.omit(result.toObject(), ['__v']), res, 'create');
         } catch (error) {
             next(error);
         }
