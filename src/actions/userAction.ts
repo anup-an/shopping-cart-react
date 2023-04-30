@@ -12,8 +12,7 @@ import {
     UPDATE_LOGGED_USER_CART,
 } from '../ActionTypes';
 import { fetchOrder } from '../api/order';
-import { fetchUser, updateUser } from '../api/user';
-import { baseUrl } from '../constants';
+import { fetchUser, loginUser, logoutUser, reissueToken, updateUser } from '../api/user';
 import { guestUser } from '../reducers/userReducers';
 import { extractData, isSuccess } from '../types/mapDataTypes';
 import { addProductsToCart, removeProductsFromCart } from './cartAction';
@@ -31,8 +30,8 @@ export type ICart = {
 
 const reIssueAccessToken = async () => {
     try {
-        const response = await axios.get(`${baseUrl}/api/reissue-token`);
-        if (response.status === 200) {
+        const response = await reissueToken();
+        if (isSuccess(response)) {
             runInLoop();
         }
     } catch (error) {
@@ -44,18 +43,6 @@ const runInLoop = () => {
     setTimeout(() => {
         reIssueAccessToken();
     }, 60000);
-};
-
-const dispatchUserAction = (payload: any, actionType: any) => async (dispatch: Dispatch<AppActions>) => {
-    const result = await updateUser(payload);
-    if (isSuccess(result)) {
-        dispatch({
-            type: actionType,
-            payload: {
-                user: extractData(result, 'data', guestUser),
-            },
-        });
-    }
 };
 
 const mergeCart = (cart1: ICart[], cart2: ICart[]) => {
@@ -74,11 +61,10 @@ export const logInUser =
     (email: string, password: string, cartItems: ICart[]) =>
     async (dispatch: Dispatch<AppActions>): Promise<void> => {
         try {
-            console.log('login');
-            const response = await axios.post(`${baseUrl}/api/login`, { email, password }, { withCredentials: true });
-            const user = response.data.data;
-            const updatedUser = cartItems.length ? { ...user, cart: mergeCart(user.cart, cartItems) } : user;
-            if (response.status === 200) {
+            const result = await loginUser({ email, password });
+            if (isSuccess(result)) {
+                const user = extractData(result, 'data', guestUser);
+                const updatedUser = cartItems.length ? { ...user, cart: mergeCart(user.cart, cartItems) } : user;
                 dispatch({
                     type: LOG_IN_USER,
                     payload: {
@@ -98,25 +84,12 @@ export const logOutUser =
     () =>
     async (dispatch: Dispatch<AppActions>): Promise<void> => {
         try {
-            const response = await axios.post(`${baseUrl}/api/logout`);
-            if (response.status == 200) {
-                const user: IUser = {
-                    _id: '',
-                    email: '',
-                    firstName: '',
-                    lastName: '',
-                    address: '',
-                    postcode: '',
-                    phone: '',
-                    city: '',
-                    country: '',
-                    wishList: [],
-                    cart: [],
-                };
+            const result = await logoutUser();
+            if (isSuccess(result)) {
                 dispatch({
                     type: LOG_IN_USER,
                     payload: {
-                        user,
+                        user: guestUser,
                     },
                 });
             }

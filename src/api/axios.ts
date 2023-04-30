@@ -47,7 +47,7 @@ export default {
     get: async <T, E>(url: string, decoder: any, config?: AxiosRequestConfig) => {
         return makeRequest<T, E>(() => axios.get(url, config), decoder);
     },
-    post: async <T, E>(url: string, payload: any, decoder: any, config?: AxiosRequestConfig) => {
+    post: async <T, E>(url: string, decoder: any, payload?: any, config?: AxiosRequestConfig) => {
         return makeRequest<T, E>(() => axios.post(url, payload, config), decoder);
     },
 };

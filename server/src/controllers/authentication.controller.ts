@@ -50,7 +50,7 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
                     sameSite: 'none',
                     maxAge: 864000,
                 });
-                return res.status(200).json({ status: 'success', data: _.omit(user, ['password', 'refreshToken']) });
+                return res.status(200).json({ data: _.omit(user, ['password', 'refreshToken', '__v']) });
             }
             throw new ErrorException(ErrorCode.AuthenticationError, 'Unauthorized');
         }
