@@ -12,6 +12,10 @@ export const fetchUser = async () => {
     return await axios.get<{ data: IUser }, ApiError>(`${baseUrl}/api/users/`, UserDecoder);
 };
 
+export const signupUser = async (payload: { email: string; password: string; firstName: string; lastName: string }) => {
+    return await axios.post<any, ApiError>(`${baseUrl}/api/signup`, IgnoreResponseDecoder, payload);
+};
+
 export const loginUser = async (payload: { email: string; password: string }) => {
     return await axios.post<{ data: IUser }, ApiError>(`${baseUrl}/api/login`, UserDecoder, payload, {
         withCredentials: true,
@@ -19,7 +23,7 @@ export const loginUser = async (payload: { email: string; password: string }) =>
 };
 
 export const logoutUser = async () => {
-    return await axios.post<{ data: IUser }, ApiError>(`${baseUrl}/api/logout`, IgnoreResponseDecoder);
+    return await axios.post<any, ApiError>(`${baseUrl}/api/logout`, IgnoreResponseDecoder);
 };
 
 export const reissueToken = async () => {

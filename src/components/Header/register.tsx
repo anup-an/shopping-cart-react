@@ -1,12 +1,13 @@
-import axios from 'axios';
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Redirect, RouteComponentProps, withRouter } from 'react-router';
 import { connect } from 'react-redux';
+import { Redirect, RouteComponentProps, withRouter } from 'react-router';
+import { Link } from 'react-router-dom';
+
+import { ICart, IUser } from '../../ActionTypes';
 import { logInUser } from '../../actions/userAction';
-import { IUser, IProduct, ICart } from '../../ActionTypes';
+import { signupUser } from '../../api/user';
 import { AppState } from '../../store';
-import { baseUrl } from '../../constants';
+import { isSuccess } from '../../types/mapDataTypes';
 
 interface IState {
     email: string;
@@ -36,9 +37,15 @@ class Register extends React.Component<IProps, IState> {
     handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
         const { email, password, firstName, lastName } = this.state;
-        axios.post(`${baseUrl}/api/signup`, { email, password, firstName, lastName }).then((response) => {
-            response.data.status == 'success' ? this.props.history.push('/login') : '';
+        const result = await signupUser({
+            email,
+            password,
+            firstName,
+            lastName,
         });
+        if (isSuccess(result)) {
+            this.props.history.push('/login');
+        }
     };
     render() {
         const { user } = this.props;

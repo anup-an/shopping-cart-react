@@ -45,9 +45,7 @@ class Login extends React.Component<IProps, IState> {
         //@ts-ignore
         const redirectPath = this.props.location.state?.['redirectPath'];
         this.props.actions.logInUser(this.state.email, this.state.password, this.props.cartItems);
-        if (redirectPath) {
-            this.props.history.push(redirectPath);
-        }
+        this.props.history.push(redirectPath || '/');
     };
     render(): JSX.Element {
         const { user } = this.props;
