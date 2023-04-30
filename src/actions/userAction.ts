@@ -4,18 +4,19 @@ import { Dispatch } from 'redux';
 import {
     AppActions,
     EDIT_PROFILE_USER,
-    GET_ORDERS_BY_USER_ID,
+    GET_ORDERS,
     GET_USER_FROM_TOKEN,
     IProduct,
     IUser,
     LOG_IN_USER,
     UPDATE_LOGGED_USER_CART,
 } from '../ActionTypes';
-import { addProductsToCart, removeProductsFromCart } from './cartAction';
+import { fetchOrder } from '../api/order';
+import { fetchUser, updateUser } from '../api/user';
 import { baseUrl } from '../constants';
-import { updateUser } from '../api/user';
-import { extractData, isSuccess } from '../types/mapDataTypes';
 import { guestUser } from '../reducers/userReducers';
+import { extractData, isSuccess } from '../types/mapDataTypes';
+import { addProductsToCart, removeProductsFromCart } from './cartAction';
 axios.defaults.withCredentials = true;
 
 export type ICart = {
@@ -194,18 +195,20 @@ export const removeAllFromUserCart = () => async (dispatch: Dispatch<AppActions>
 
 export const getUserFromToken = () => async (dispatch: Dispatch<AppActions>) => {
     try {
-        const response = await axios.get(`${baseUrl}/api/users/`);
-        const user: IUser = response.data.data;
-        dispatch({
-            type: GET_USER_FROM_TOKEN,
-            payload: {
-                user,
-            },
-        });
-        if (user._id) {
-            setTimeout(() => {
-                reIssueAccessToken();
-            }, 60000);
+        const result = await fetchUser();
+        if (isSuccess(result)) {
+            const user = extractData(result, 'data', guestUser);
+            dispatch({
+                type: GET_USER_FROM_TOKEN,
+                payload: {
+                    user,
+                },
+            });
+            if (user._id) {
+                setTimeout(() => {
+                    reIssueAccessToken();
+                }, 60000);
+            }
         }
     } catch (error) {
         console.log(error);
@@ -214,27 +217,31 @@ export const getUserFromToken = () => async (dispatch: Dispatch<AppActions>) => 
 
 export const editUserProfile = (loggedUser: IUser) => async (dispatch: Dispatch<AppActions>) => {
     try {
-        const user = (await axios.post<{ data: IUser }>(`${baseUrl}/api/users`, { ...loggedUser })).data.data;
-        dispatch({
-            type: EDIT_PROFILE_USER,
-            payload: {
-                user,
-            },
-        });
+        const result = await updateUser(loggedUser);
+        if (isSuccess(result)) {
+            dispatch({
+                type: EDIT_PROFILE_USER,
+                payload: {
+                    user: extractData(result, 'data', guestUser),
+                },
+            });
+        }
     } catch (error) {
         console.log(error);
     }
 };
 
-export const getOrdersByUserId = (loggedUser: IUser) => async (dispatch: Dispatch<AppActions>) => {
+export const getOrdersByUserId = () => async (dispatch: Dispatch<AppActions>) => {
     try {
-        const orders = await (await axios.get(`${baseUrl}/api/orders`)).data.data;
-        dispatch({
-            type: GET_ORDERS_BY_USER_ID,
-            payload: {
-                orders: orders,
-            },
-        });
+        const result = await fetchOrder();
+        if (isSuccess(result)) {
+            dispatch({
+                type: GET_ORDERS,
+                payload: {
+                    orders: extractData(result, 'data', []),
+                },
+            });
+        }
     } catch (error) {
         console.log(error);
     }

@@ -1,6 +1,6 @@
 import {
     EDIT_PROFILE_USER,
-    GET_ORDERS_BY_USER_ID,
+    GET_ORDERS,
     GET_USER_FROM_TOKEN,
     ADD_TO_WISHLIST_USER,
     IUser,
@@ -45,7 +45,7 @@ const userReducer = (state = userDefaultState, action: UserActionTypes): IUserAc
             return { ...state, user: { ...action.payload.user } };
         case EDIT_PROFILE_USER:
             return { ...state, user: { ...action.payload.user } };
-        case GET_ORDERS_BY_USER_ID:
+        case GET_ORDERS:
             return { ...state, orders: [...action.payload.orders] };
         default:
             return { ...state };

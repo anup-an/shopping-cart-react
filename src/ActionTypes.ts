@@ -11,7 +11,7 @@ export const EDIT_PROFILE_USER = 'EDIT_PROFILE_USER';
 export const ADD_TO_WISHLIST_USER = 'ADD_TO_WISHLIST_USER';
 export const LOG_IN_USER = 'LOG_IN_USER';
 export const GET_USER_FROM_TOKEN = 'GET_USER_FROM_TOKEN';
-export const GET_ORDERS_BY_USER_ID = 'GET_ORDERS_BY_USER_ID';
+export const GET_ORDERS = 'GET_ORDERS';
 export const UPDATE_LOGGED_USER_CART = 'UPDATE_LOGGED_USER_CART';
 
 export type ICart = {
@@ -125,7 +125,7 @@ export type getUserFromTokenAction = {
     };
 };
 export type getOrdersByUserIdAction = {
-    type: typeof GET_ORDERS_BY_USER_ID;
+    type: typeof GET_ORDERS;
     payload: {
         orders: IOrder[];
     };

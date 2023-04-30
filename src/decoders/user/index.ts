@@ -1,7 +1,7 @@
 import { object, assign, array, number, string } from 'superstruct';
 import { ProductDecoder } from '../products';
 
-const CartDecoder = assign(ProductDecoder, object({ count: number() }));
+export const CartDecoder = assign(ProductDecoder, object({ count: number() }));
 
 export const UserDecoder = object({
     data: object({

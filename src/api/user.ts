@@ -6,3 +6,7 @@ import axios, { ApiError } from './axios';
 export const updateUser = async (payload: any) => {
     return await axios.post<{ data: IUser }, ApiError>(`${baseUrl}/api/users/`, payload, UserDecoder);
 };
+
+export const fetchUser = async () => {
+    return await axios.get<{ data: IUser }, ApiError>(`${baseUrl}/api/users/`, UserDecoder);
+};
