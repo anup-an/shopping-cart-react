@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { assert } from 'superstruct';
+import { assert, StructError } from 'superstruct';
 
 import { Failure, MapData, Success } from '../types/mapDataTypes';
 
@@ -23,19 +23,31 @@ const makeRequest = async <T, E>(fetchFunc: () => Promise<AxiosResponse<T>>, dec
         assert(data, decoder);
         return Success<T>(data);
     } catch (error: unknown) {
-        return parseError<T>(error as AxiosError);
+        return parseError<T>(error);
     }
 };
 
-export const parseError = <T>(error: AxiosError): MapData<T, ApiError> => {
-    const title = error.response?.data.title || 'UnknownError';
-    const description = error.response?.data.description || 'Something went wrong';
-    const status = error.response?.status;
+export const parseError = <T>(error: any): MapData<T, ApiError> => {
+    let title;
+    let description;
+    let status;
+    if (error instanceof StructError) {
+        console.log(error.failures());
+        title = 'DecoderError';
+        description = `${error.failures()[0].message} for ${error.failures()[0].key} field`;
+    } else {
+        title = error.response?.data.title || 'UnknownError';
+        description = error.response?.data.description || 'Something went wrong';
+        status = error.response?.status;
+    }
     return Failure(new ApiError(title, description, status));
 };
 
 export default {
     get: async <T, E>(url: string, decoder: any, config?: AxiosRequestConfig) => {
         return makeRequest<T, E>(() => axios.get(url, config), decoder);
+    },
+    post: async <T, E>(url: string, payload: any, decoder: any, config?: AxiosRequestConfig) => {
+        return makeRequest<T, E>(() => axios.post(url, payload, config), decoder);
     },
 };

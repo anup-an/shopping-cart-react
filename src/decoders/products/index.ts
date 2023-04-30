@@ -1,6 +1,6 @@
 import { object, array, number, string } from 'superstruct';
 
-const ProductDecoder = object({
+export const ProductDecoder = object({
     _id: string(),
     id: string(),
     title: string(),

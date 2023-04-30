@@ -43,7 +43,7 @@ class Login extends React.Component<IProps, IState> {
     handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
         //@ts-ignore
-        const { redirectPath } = this.props.location.state;
+        const redirectPath = this.props.location.state?.['redirectPath'];
         this.props.actions.logInUser(this.state.email, this.state.password, this.props.cartItems);
         if (redirectPath) {
             this.props.history.push(redirectPath);

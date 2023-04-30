@@ -1,15 +1,13 @@
 import {
     EDIT_PROFILE_USER,
     GET_ORDERS_BY_USER_ID,
-    REMOVE_PRODUCTS_CART_USER,
-    ADD_TO_CART_USER,
-    REMOVE_FROM_CART_USER,
     GET_USER_FROM_TOKEN,
     ADD_TO_WISHLIST_USER,
     IUser,
     IOrder,
     UserActionTypes,
     LOG_IN_USER,
+    UPDATE_LOGGED_USER_CART,
 } from '../ActionTypes';
 type IUserActionStates = {
     user: IUser;
@@ -41,11 +39,7 @@ const userReducer = (state = userDefaultState, action: UserActionTypes): IUserAc
             return { ...state, user: { ...action.payload.user } };
         case GET_USER_FROM_TOKEN:
             return { ...state, user: { ...action.payload.user } };
-        case ADD_TO_CART_USER:
-            return { ...state, user: { ...action.payload.user } };
-        case REMOVE_FROM_CART_USER:
-            return { ...state, user: { ...action.payload.user } };
-        case REMOVE_PRODUCTS_CART_USER:
+        case UPDATE_LOGGED_USER_CART:
             return { ...state, user: { ...action.payload.user } };
         case ADD_TO_WISHLIST_USER:
             return { ...state, user: { ...action.payload.user } };

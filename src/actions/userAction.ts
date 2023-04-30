@@ -2,7 +2,6 @@ import axios from 'axios';
 import { Dispatch } from 'redux';
 
 import {
-    ADD_TO_CART_USER,
     AppActions,
     EDIT_PROFILE_USER,
     GET_ORDERS_BY_USER_ID,
@@ -10,11 +9,13 @@ import {
     IProduct,
     IUser,
     LOG_IN_USER,
-    REMOVE_FROM_CART_USER,
-    REMOVE_PRODUCTS_CART_USER,
+    UPDATE_LOGGED_USER_CART,
 } from '../ActionTypes';
 import { addProductsToCart, removeProductsFromCart } from './cartAction';
 import { baseUrl } from '../constants';
+import { updateUser } from '../api/user';
+import { extractData, isSuccess } from '../types/mapDataTypes';
+import { guestUser } from '../reducers/userReducers';
 axios.defaults.withCredentials = true;
 
 export type ICart = {
@@ -44,6 +45,18 @@ const runInLoop = () => {
     }, 60000);
 };
 
+const dispatchUserAction = (payload: any, actionType: any) => async (dispatch: Dispatch<AppActions>) => {
+    const result = await updateUser(payload);
+    if (isSuccess(result)) {
+        dispatch({
+            type: actionType,
+            payload: {
+                user: extractData(result, 'data', guestUser),
+            },
+        });
+    }
+};
+
 const mergeCart = (cart1: ICart[], cart2: ICart[]) => {
     const ids = [...cart1, ...cart2].map((item) => item._id);
     const uniqIds = ids.filter((x, i, a) => a.indexOf(x) === i);
@@ -60,11 +73,8 @@ export const logInUser =
     (email: string, password: string, cartItems: ICart[]) =>
     async (dispatch: Dispatch<AppActions>): Promise<void> => {
         try {
-            const response = await axios.post(
-                `${baseUrl}/api/login`,
-                { email, password },
-                { withCredentials: true },
-            );
+            console.log('login');
+            const response = await axios.post(`${baseUrl}/api/login`, { email, password }, { withCredentials: true });
             const user = response.data.data;
             const updatedUser = cartItems.length ? { ...user, cart: mergeCart(user.cart, cartItems) } : user;
             if (response.status === 200) {
@@ -114,25 +124,19 @@ export const logOutUser =
         }
     };
 
-export const addToUserCart =
-    (loggedUser: IUser, product: IProduct) =>
-    async (dispatch: Dispatch<AppActions>): Promise<void> => {
-        try {
-            const cartItems: ICart[] = loggedUser.cart || [];
-            const updatedCart = addProductsToCart(cartItems, product);
-            const user = (
-                await axios.post<{ data: IUser }>(`${baseUrl}/api/users/`, { cart: updatedCart })
-            ).data.data;
-            dispatch({
-                type: ADD_TO_CART_USER,
-                payload: {
-                    user,
-                },
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    };
+export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (dispatch: Dispatch<AppActions>) => {
+    const cartItems: ICart[] = loggedUser.cart || [];
+    const updatedCart = addProductsToCart(cartItems, product);
+    const result = await updateUser({ cart: updatedCart });
+    if (isSuccess(result)) {
+        dispatch({
+            type: UPDATE_LOGGED_USER_CART,
+            payload: {
+                user: extractData(result, 'data', guestUser),
+            },
+        });
+    }
+};
 
 export const removeItemsFromUserCart =
     (loggedUser: IUser, product: IProduct) =>
@@ -140,15 +144,15 @@ export const removeItemsFromUserCart =
         try {
             const cartItems: ICart[] = loggedUser.cart || [];
             const updatedCart = removeProductsFromCart(cartItems, product);
-            const user = (
-                await axios.post<{ data: IUser }>(`${baseUrl}/api/users/`, { cart: updatedCart })
-            ).data.data;
-            dispatch({
-                type: REMOVE_PRODUCTS_CART_USER,
-                payload: {
-                    user,
-                },
-            });
+            const result = await updateUser({ cart: updatedCart });
+            if (isSuccess(result)) {
+                dispatch({
+                    type: UPDATE_LOGGED_USER_CART,
+                    payload: {
+                        user: extractData(result, 'data', guestUser),
+                    },
+                });
+            }
         } catch (error) {
             console.log(error);
         }
@@ -157,16 +161,16 @@ export const removeItemsFromUserCart =
 export const removeFromUserCart =
     (loggedUser: IUser, selectedCart: ICart) => async (dispatch: Dispatch<AppActions>) => {
         try {
-            const cartItems = [...loggedUser.cart].filter((item) => item._id !== selectedCart._id);
-            const user = (
-                await axios.post<{ data: IUser }>(`${baseUrl}/api/users/`, { cart: cartItems })
-            ).data.data;
-            dispatch({
-                type: REMOVE_FROM_CART_USER,
-                payload: {
-                    user,
-                },
-            });
+            const updatedCart = [...loggedUser.cart].filter((item) => item._id !== selectedCart._id);
+            const result = await updateUser({ cart: updatedCart });
+            if (isSuccess(result)) {
+                dispatch({
+                    type: UPDATE_LOGGED_USER_CART,
+                    payload: {
+                        user: extractData(result, 'data', guestUser),
+                    },
+                });
+            }
         } catch (error) {
             console.log(error);
         }
@@ -174,14 +178,15 @@ export const removeFromUserCart =
 
 export const removeAllFromUserCart = () => async (dispatch: Dispatch<AppActions>) => {
     try {
-        const user = (await axios.post<{ data: IUser }>(`${baseUrl}/api/users/`, { cart: [] })).data
-            .data;
-        dispatch({
-            type: REMOVE_FROM_CART_USER,
-            payload: {
-                user,
-            },
-        });
+        const result = await updateUser({ cart: [] });
+        if (isSuccess(result)) {
+            dispatch({
+                type: UPDATE_LOGGED_USER_CART,
+                payload: {
+                    user: extractData(result, 'data', guestUser),
+                },
+            });
+        }
     } catch (error) {
         console.log(error);
     }
@@ -209,8 +214,7 @@ export const getUserFromToken = () => async (dispatch: Dispatch<AppActions>) => 
 
 export const editUserProfile = (loggedUser: IUser) => async (dispatch: Dispatch<AppActions>) => {
     try {
-        const user = (await axios.post<{ data: IUser }>(`${baseUrl}/api/users`, { ...loggedUser }))
-            .data.data;
+        const user = (await axios.post<{ data: IUser }>(`${baseUrl}/api/users`, { ...loggedUser })).data.data;
         dispatch({
             type: EDIT_PROFILE_USER,
             payload: {
