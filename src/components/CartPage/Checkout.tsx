@@ -1,14 +1,14 @@
-/* eslint-disable react/no-unused-state */
 import axios from 'axios';
 import React from 'react';
 import { Fade } from 'react-awesome-reveal';
 import { connect } from 'react-redux';
 
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { IUser } from '../../ActionTypes';
 import { removeAllFromCart } from '../../actions/cartAction';
 import { removeAllFromUserCart } from '../../actions/userAction';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { baseUrl } from '../../constants';
+import { makeOrder } from '../../api/order';
+import { isSuccess } from '../../types/mapDataTypes';
 
 axios.defaults.withCredentials = true;
 
@@ -71,7 +71,7 @@ class Checkout extends React.Component<IProps, IState> {
     generateOrder = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
         try {
             event.preventDefault();
-            const { name, email, address, postcode, city, country, isSubmitted } = this.state;
+            const { name, email, address, postcode, city, country } = this.state;
             const { user, history } = this.props;
             const order = {
                 name: name,
@@ -83,15 +83,11 @@ class Checkout extends React.Component<IProps, IState> {
                 country: country,
                 cart: user.cart,
             };
-            const result = await axios.post<{ data: IOrder }>(
-                `${baseUrl}/api/orders`,
-                { ...order },
-                { withCredentials: true },
-            );
-            if (result) {
+            const result = await makeOrder(order);
+            if (isSuccess(result)) {
                 this.setState({ ...this.state, isSubmitted: true });
                 await Promise.all([this.props.action.removeAllFromUserCart(), this.props.action.removeAllFromCart()]);
-                history.push('/')
+                history.push('/');
             }
         } catch (error) {
             console.log(error);
@@ -224,7 +220,6 @@ class Checkout extends React.Component<IProps, IState> {
         );
     }
 }
-
 
 const mapDispatchToProps = (dispatch: any): { action: Action } => ({
     action: {
