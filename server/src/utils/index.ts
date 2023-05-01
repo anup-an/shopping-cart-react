@@ -22,7 +22,7 @@ export class ErrorCode {
     public static readonly AuthenticationError = 'AuthenticationError';
     public static readonly NotFoundError = 'NotFoundError';
     public static readonly ValidationError = 'ValidationError';
-    public static readonly ForbiddenError = 'ForbiddenError'
+    public static readonly ForbiddenError = 'ForbiddenError';
     public static readonly ServerError = 'ServerError';
+    public static readonly ResetPasswordError = 'ResetPasswordError';
 }
-
