@@ -190,7 +190,7 @@ class Products extends React.Component<IProps, IState> {
                             <Error fetch={this.fetch} message="Unable to load products" />
                         ) : (
                             <div className="flex justify-center">
-                                <Loader />
+                                <Loader message="Loading e-shop. Please wait ....." />
                             </div>
                         )}
                     </div>
