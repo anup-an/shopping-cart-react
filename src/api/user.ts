@@ -13,7 +13,7 @@ export const fetchUser = async () => {
 };
 
 export const signupUser = async (payload: { email: string; password: string; firstName: string; lastName: string }) => {
-    return await axios.post<any, ApiError>(`${baseUrl}/api/signup`, IgnoreResponseDecoder, payload);
+    return await axios.post<unknown, ApiError>(`${baseUrl}/api/signup`, IgnoreResponseDecoder, payload);
 };
 
 export const loginUser = async (payload: { email: string; password: string }) => {
@@ -23,7 +23,7 @@ export const loginUser = async (payload: { email: string; password: string }) =>
 };
 
 export const logoutUser = async () => {
-    return await axios.post<any, ApiError>(`${baseUrl}/api/logout`, IgnoreResponseDecoder);
+    return await axios.post<unknown, ApiError>(`${baseUrl}/api/logout`, IgnoreResponseDecoder);
 };
 
 export const reissueToken = async () => {
@@ -31,5 +31,9 @@ export const reissueToken = async () => {
 };
 
 export const sendPasswordResetLink = async (payload: { email: string }) => {
-    return await axios.post(`${baseUrl}/api/reset-link`, IgnoreResponseDecoder, payload);
+    return await axios.post<unknown, ApiError>(`${baseUrl}/api/reset-link`, IgnoreResponseDecoder, payload);
+};
+
+export const resetPassword = async (payload: { password: string; resetToken: string }) => {
+    return await axios.post<unknown, ApiError>(`${baseUrl}/api/reset-password`, IgnoreResponseDecoder, payload);
 };
