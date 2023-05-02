@@ -1,3 +1,3 @@
-import { any } from 'superstruct';
+import { unknown } from 'superstruct';
 
-export const IgnoreResponseDecoder = any();
+export const IgnoreResponseDecoder = unknown();

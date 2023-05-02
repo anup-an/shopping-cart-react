@@ -12,6 +12,7 @@ import Address from '../Profile/Address';
 import Details from '../Profile/Details';
 import Orders from '../Profile/Orders';
 import Error from './Error';
+import ResetPasswordPage from '../../views/ResetPasswordPage';
 
 const Routers = () => {
     return (
@@ -19,9 +20,10 @@ const Routers = () => {
             <Route exact path="/">
                 <ProductsPage />
             </Route>
-            <Route exact path="/forgot-password">
-                <ResetPasswordLinkPage />
-            </Route>
+            <Route exact path="/forgot-password" component={ResetPasswordLinkPage} />
+
+            <Route exact path="/reset-password" component={ResetPasswordPage} />
+
             <Route path="/search">
                 <div className="fixed w-full z-10">
                     <Header focus="home" />
