@@ -1,24 +1,26 @@
-import React from 'react';
 import { Route, Switch } from 'react-router-dom';
+import CartPage from '../../views/CartPage';
+import LoginPage from '../../views/LoginPage';
+import ProductsPage from '../../views/ProductsPage';
+import ResetPasswordLinkPage from '../../views/ResetPasswordLinkPage';
 import Body from '../Body';
-import Login from '../Header/login';
+import Footer from '../Footer';
+import Header from '../Header';
 import Register from '../Header/register';
-import Error from './Error';
 import Profile from '../Profile';
 import Address from '../Profile/Address';
 import Details from '../Profile/Details';
 import Orders from '../Profile/Orders';
-import Header from '../Header';
-import Footer from '../Footer';
-import ProductsPage from '../../views/ProductsPage';
-import LoginPage from '../../views/LoginPage';
-import CartPage from '../../views/CartPage';
+import Error from './Error';
 
 const Routers = () => {
     return (
         <Switch>
             <Route exact path="/">
                 <ProductsPage />
+            </Route>
+            <Route exact path="/forgot-password">
+                <ResetPasswordLinkPage />
             </Route>
             <Route path="/search">
                 <div className="fixed w-full z-10">

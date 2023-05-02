@@ -29,3 +29,7 @@ export const logoutUser = async () => {
 export const reissueToken = async () => {
     return await axios.post(`${baseUrl}/api/reissue-token`, IgnoreResponseDecoder);
 };
+
+export const sendPasswordResetLink = async (payload: { email: string }) => {
+    return await axios.post(`${baseUrl}/api/reset-link`, IgnoreResponseDecoder, payload);
+};

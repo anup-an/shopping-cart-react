@@ -48,7 +48,7 @@ class Login extends React.Component<IProps, IState> {
         this.props.history.push(redirectPath || '/');
     };
     render(): JSX.Element {
-        const { user } = this.props;
+        const { user, history } = this.props;
 
         return (
             <div className="w-full h-full flex items-center pt-14">
@@ -135,6 +135,7 @@ class Login extends React.Component<IProps, IState> {
                                     <button
                                         type="button"
                                         className="text-sm text-right text-blue-400 focus:outline-none hover:text-blue-800"
+                                        onClick={() => history.push('/forgot-password')}
                                     >
                                         Forgot password ?
                                     </button>
