@@ -1,21 +1,21 @@
-import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk, { ThunkMiddleware } from 'redux-thunk';
+import thunk from 'redux-thunk';
+
 import cartReducer from './reducers/cartReducers';
+import notificationReducer from './reducers/notificationReducer';
 import productsReducer from './reducers/productReducers';
 import userReducer from './reducers/userReducers';
 
 export const rootReducer = combineReducers({
     products: productsReducer,
     cartProducts: cartReducer,
-    user: userReducer
+    user: userReducer,
+    notifications: notificationReducer,
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
 
 const composeEnhancer = composeWithDevTools || compose;
-const store = createStore(
-    rootReducer,
-    composeEnhancer(applyMiddleware(thunk)),
-);
+const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
 export default store;
