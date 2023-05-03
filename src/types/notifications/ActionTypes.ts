@@ -1,5 +1,5 @@
 export const DISPLAY_NOTIFICATION = 'DISPLAY_NOTIFICATION';
-export const DELETE_NOTIFICATION = 'DISPLAY_NOTIFICATION';
+export const DELETE_NOTIFICATION = 'DELETE_NOTIFICATION';
 
 export interface AppNotification {
     id: string;
