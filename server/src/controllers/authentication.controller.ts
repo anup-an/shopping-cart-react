@@ -31,10 +31,10 @@ export const signupUser = async (req: Request, res: Response, next: NextFunction
         const { email, password, firstName, lastName } = req.body;
         const foundUser = await User.findOne({ email });
         if (foundUser) {
-            return res.status(200).json({ status: 'error', data: 'Email already in use' });
+            throw new ErrorException(ErrorCode.ForbiddenError, 'Email already in use')
         }
         await new User({ email, password, firstName, lastName }).save();
-        return res.status(200).json({ status: 'success', data: 'Signup successful!' });
+        return res.status(200).send('Signup successful');
     } catch (error) {
         next(error);
     }

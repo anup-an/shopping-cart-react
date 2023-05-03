@@ -2,12 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, RouteComponentProps, withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
+import { uuid } from 'uuidv4';
 
 import { ICart, IUser } from '../../ActionTypes';
+import { displayNotification } from '../../actions/notificationAction';
 import { logInUser } from '../../actions/userAction';
 import { signupUser } from '../../api/user';
 import { AppState } from '../../store';
-import { isSuccess } from '../../types/mapDataTypes';
+import { useMapData } from '../../types/mapDataTypes';
+import { AppNotification } from '../../types/notifications/ActionTypes';
+import { getErrorMessage } from '../../utils';
 
 interface IState {
     email: string;
@@ -24,6 +28,7 @@ interface IProps extends RouteComponentProps {
 
 interface Actions {
     logInUser: (email: string, password: string, cartItems: ICart[]) => Promise<void>;
+    displayNotification: (notification: AppNotification) => void;
 }
 
 class Register extends React.Component<IProps, IState> {
@@ -43,9 +48,21 @@ class Register extends React.Component<IProps, IState> {
             firstName,
             lastName,
         });
-        if (isSuccess(result)) {
-            this.props.history.push('/login');
-        }
+        useMapData(
+            result,
+            (data) => {
+                this.props.history.push('/login');
+            },
+            (error) => {
+                this.props.actions.displayNotification({
+                    id: uuid(),
+                    title: 'Registration failed',
+                    description:
+                        getErrorMessage(error) || 'Something went wrong during registration. Please try again.',
+                    type: 'failure',
+                });
+            },
+        );
     };
     render() {
         const { user } = this.props;
@@ -217,6 +234,7 @@ const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
     actions: {
         logInUser: (email: string, password: string, cartItems: ICart[]) =>
             dispatch(logInUser(email, password, cartItems)),
+        displayNotification: (notification: AppNotification) => dispatch(displayNotification(notification)),
     },
 });
 
