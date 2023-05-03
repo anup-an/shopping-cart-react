@@ -11,7 +11,7 @@ import { fetchProducts } from '../../api/product';
 import { guestUser } from '../../reducers/userReducers';
 import { AppState } from '../../store';
 import { FilterState, SearchState, SortState } from '../../types/common';
-import { Loading, MapData, extractData, isFailure, isSuccess } from '../../types/mapDataTypes';
+import { Loading, MapData, pickFieldOrDefault, isFailure, isSuccess } from '../../types/mapDataTypes';
 import Error from '../ui/Error';
 import Loader from '../ui/Loader';
 import ProductDetails from './ProductDetails';
@@ -98,12 +98,12 @@ class Products extends React.Component<IProps, IState> {
     };
 
     isListEmpty = (productsFetch: MapData<{ data: IProduct[] }, ApiError>) => {
-        const products = extractData(productsFetch, 'data', []);
+        const products = pickFieldOrDefault(productsFetch, 'data', []);
         return _.isEmpty(products);
     };
 
     getProductsList = (productsFetch: MapData<{ data: IProduct[] }, ApiError>) => {
-        return extractData(productsFetch, 'data', []);
+        return pickFieldOrDefault(productsFetch, 'data', []);
     };
 
     render(): JSX.Element {

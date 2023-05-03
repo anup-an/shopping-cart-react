@@ -14,7 +14,7 @@ import {
 import { fetchOrder } from '../api/order';
 import { fetchUser, loginUser, logoutUser, reissueToken, updateUser } from '../api/user';
 import { guestUser } from '../reducers/userReducers';
-import { extractData, isSuccess } from '../types/mapDataTypes';
+import { pickFieldOrDefault, isSuccess } from '../types/mapDataTypes';
 import { addProductsToCart, removeProductsFromCart } from './cartAction';
 axios.defaults.withCredentials = true;
 
@@ -63,7 +63,7 @@ export const logInUser =
         try {
             const result = await loginUser({ email, password });
             if (isSuccess(result)) {
-                const user = extractData(result, 'data', guestUser);
+                const user = pickFieldOrDefault(result, 'data', guestUser);
                 const updatedUser = cartItems.length ? { ...user, cart: mergeCart(user.cart, cartItems) } : user;
                 dispatch({
                     type: LOG_IN_USER,
@@ -106,7 +106,7 @@ export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (di
         dispatch({
             type: UPDATE_LOGGED_USER_CART,
             payload: {
-                user: extractData(result, 'data', guestUser),
+                user: pickFieldOrDefault(result, 'data', guestUser),
             },
         });
     }
@@ -123,7 +123,7 @@ export const removeItemsFromUserCart =
                 dispatch({
                     type: UPDATE_LOGGED_USER_CART,
                     payload: {
-                        user: extractData(result, 'data', guestUser),
+                        user: pickFieldOrDefault(result, 'data', guestUser),
                     },
                 });
             }
@@ -141,7 +141,7 @@ export const removeFromUserCart =
                 dispatch({
                     type: UPDATE_LOGGED_USER_CART,
                     payload: {
-                        user: extractData(result, 'data', guestUser),
+                        user: pickFieldOrDefault(result, 'data', guestUser),
                     },
                 });
             }
@@ -157,7 +157,7 @@ export const removeAllFromUserCart = () => async (dispatch: Dispatch<AppActions>
             dispatch({
                 type: UPDATE_LOGGED_USER_CART,
                 payload: {
-                    user: extractData(result, 'data', guestUser),
+                    user: pickFieldOrDefault(result, 'data', guestUser),
                 },
             });
         }
@@ -170,7 +170,7 @@ export const getUserFromToken = () => async (dispatch: Dispatch<AppActions>) => 
     try {
         const result = await fetchUser();
         if (isSuccess(result)) {
-            const user = extractData(result, 'data', guestUser);
+            const user = pickFieldOrDefault(result, 'data', guestUser);
             dispatch({
                 type: GET_USER_FROM_TOKEN,
                 payload: {
@@ -195,7 +195,7 @@ export const editUserProfile = (loggedUser: IUser) => async (dispatch: Dispatch<
             dispatch({
                 type: EDIT_PROFILE_USER,
                 payload: {
-                    user: extractData(result, 'data', guestUser),
+                    user: pickFieldOrDefault(result, 'data', guestUser),
                 },
             });
         }
@@ -211,7 +211,7 @@ export const getOrdersByUserId = () => async (dispatch: Dispatch<AppActions>) =>
             dispatch({
                 type: GET_ORDERS,
                 payload: {
-                    orders: extractData(result, 'data', []),
+                    orders: pickFieldOrDefault(result, 'data', []),
                 },
             });
         }
