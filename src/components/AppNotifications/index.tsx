@@ -31,6 +31,7 @@ class AppNotifications extends React.Component<IProps> {
                         className={`${notification.type === 'success' ? 'bg-green-600' : ''} ${
                             notification.type === 'failure' ? 'bg-red-500' : ''
                         } text-white p-1 mb-2`}
+                        key={notification.id}
                     >
                         <div className="w-full flex justify-end">
                             <button onClick={() => this.deleteNotification(notification)}>
