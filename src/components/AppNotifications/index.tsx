@@ -28,7 +28,7 @@ class AppNotifications extends React.Component<IProps> {
             <div className="fixed z-20 right-2 top-2 md:w-2/3 lg:w-1/2 xl:w-1/3 w-full">
                 {notifications.map((notification) => (
                     <div
-                        className={`${notification.type === 'success' ? 'bg-green-500' : ''} ${
+                        className={`${notification.type === 'success' ? 'bg-green-600' : ''} ${
                             notification.type === 'failure' ? 'bg-red-500' : ''
                         } text-white p-1 mb-2`}
                     >

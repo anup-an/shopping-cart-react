@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { Dispatch } from 'redux';
+import { uuid } from 'uuidv4';
 
 import {
-    AppActions,
     EDIT_PROFILE_USER,
     GET_ORDERS,
     GET_USER_FROM_TOKEN,
@@ -14,8 +14,13 @@ import {
 import { fetchOrder } from '../api/order';
 import { fetchUser, loginUser, logoutUser, reissueToken, updateUser } from '../api/user';
 import { guestUser } from '../reducers/userReducers';
-import { pickFieldOrDefault, isSuccess } from '../types/mapDataTypes';
+import { pickFieldOrDefault, isSuccess, useMapData } from '../types/mapDataTypes';
 import { addProductsToCart, removeProductsFromCart } from './cartAction';
+import { ApiError } from '../api/axios';
+import { DISPLAY_NOTIFICATION } from '../types/notifications/ActionTypes';
+import { AppActions } from '../types/common';
+import { getErrorMessage } from '../utils';
+import { LogInActionPayload } from '../types/user/ActionTypes';
 axios.defaults.withCredentials = true;
 
 export type ICart = {
@@ -58,23 +63,42 @@ const mergeCart = (cart1: ICart[], cart2: ICart[]) => {
 };
 
 export const logInUser =
-    (email: string, password: string, cartItems: ICart[]) =>
+    (payload: LogInActionPayload) =>
     async (dispatch: Dispatch<AppActions>): Promise<void> => {
         try {
-            const result = await loginUser({ email, password });
-            if (isSuccess(result)) {
-                const user = pickFieldOrDefault(result, 'data', guestUser);
-                const updatedUser = cartItems.length ? { ...user, cart: mergeCart(user.cart, cartItems) } : user;
-                dispatch({
-                    type: LOG_IN_USER,
-                    payload: {
-                        user: updatedUser,
-                    },
-                });
-                setTimeout(() => {
-                    reIssueAccessToken();
-                }, 60000);
-            }
+            const result = await loginUser({ email: payload.email, password: payload.password });
+            useMapData(
+                result,
+                (data) => {
+                    const user = data.data;
+
+                    const updatedUser = payload.cartItems.length
+                        ? { ...user, cart: mergeCart(user.cart, payload.cartItems) }
+                        : user;
+                    dispatch({
+                        type: LOG_IN_USER,
+                        payload: {
+                            user: updatedUser,
+                        },
+                    });
+                    setTimeout(() => {
+                        reIssueAccessToken();
+                    }, 60000);
+                },
+                (error: ApiError) => {
+                    dispatch({
+                        type: DISPLAY_NOTIFICATION,
+                        payload: {
+                            notification: {
+                                id: uuid(),
+                                title: 'Login failed',
+                                description: getErrorMessage(error),
+                                type: 'failure',
+                            },
+                        },
+                    });
+                },
+            );
         } catch (error) {
             console.log(error);
         }

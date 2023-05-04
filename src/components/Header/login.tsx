@@ -2,11 +2,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, RouteComponentProps, withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
+import { uuid } from 'uuidv4';
 
 import { ICart, IUser } from '../../ActionTypes';
 import { logInUser } from '../../actions/userAction';
 import { AppState } from '../../store';
 import { guestUser } from '../../reducers/userReducers';
+import { LogInActionPayload } from '../../types/user/ActionTypes';
+import { AppNotification } from '../../types/notifications/ActionTypes';
+import { displayNotification } from '../../actions/notificationAction';
 
 interface IState {
     email: string;
@@ -20,7 +24,8 @@ interface IProps extends RouteComponentProps {
 }
 
 interface Actions {
-    logInUser: (email: string, password: string, cartItems: ICart[]) => Promise<string>;
+    logInUser: (payload: LogInActionPayload) => Promise<string>;
+    displayNotification: (notification: AppNotification) => Promise<void>;
 }
 
 class Login extends React.Component<IProps, IState> {
@@ -40,12 +45,24 @@ class Login extends React.Component<IProps, IState> {
         this.setState((state) => ({ ...state, [event.target.name]: event.target.value }));
     };
 
-    handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
+    handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event?.preventDefault();
-        //@ts-ignore
-        const redirectPath = this.props.location.state?.['redirectPath'];
-        this.props.actions.logInUser(this.state.email, this.state.password, this.props.cartItems);
-        this.props.history.push(redirectPath || '/');
+        const payload: LogInActionPayload = {
+            email: this.state.email,
+            password: this.state.password,
+            cartItems: this.props.cartItems,
+        };
+        await this.props.actions.logInUser(payload);
+        if (this.props.user._id) {
+            const redirectPath = (this.props.location.state as any)?.redirectPath;
+            this.props.history.push(redirectPath || '/');
+            this.props.actions.displayNotification({
+                id: uuid(),
+                title: 'Login successful',
+                description: 'You have successfully logged into your account.',
+                type: 'success',
+            });
+        }
     };
     render(): JSX.Element {
         const { user, history } = this.props;
@@ -171,8 +188,8 @@ const mapStateToProps = (state: AppState): StateProps => ({
 
 const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
     actions: {
-        logInUser: (email: string, password: string, cartItems: ICart[]) =>
-            dispatch(logInUser(email, password, cartItems)),
+        logInUser: (payload: LogInActionPayload) => dispatch(logInUser(payload)),
+        displayNotification: (notification: AppNotification) => dispatch(displayNotification(notification)),
     },
 });
 
