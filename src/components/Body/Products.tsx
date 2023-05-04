@@ -79,7 +79,6 @@ class Products extends React.Component<IProps, IState> {
 
     async fetch() {
         const fetchedProducts = await fetchProducts();
-        console.log(fetchedProducts);
         this.setState({ productsFetch: fetchedProducts });
     }
 
