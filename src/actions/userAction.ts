@@ -109,14 +109,41 @@ export const logOutUser =
     async (dispatch: Dispatch<AppActions>): Promise<void> => {
         try {
             const result = await logoutUser();
-            if (isSuccess(result)) {
-                dispatch({
-                    type: LOG_IN_USER,
-                    payload: {
-                        user: guestUser,
-                    },
-                });
-            }
+            useMapData(
+                result,
+                (data) => {
+                    dispatch({
+                        type: LOG_IN_USER,
+                        payload: {
+                            user: guestUser,
+                        },
+                    });
+                    dispatch({
+                        type: DISPLAY_NOTIFICATION,
+                        payload: {
+                            notification: {
+                                id: uuid(),
+                                title: 'Logout successful',
+                                description: 'You have successfully logged out from your account.',
+                                type: 'success',
+                            },
+                        },
+                    });
+                },
+                (error: ApiError) => {
+                    dispatch({
+                        type: DISPLAY_NOTIFICATION,
+                        payload: {
+                            notification: {
+                                id: uuid(),
+                                title: 'Logout failed',
+                                description: getErrorMessage(error),
+                                type: 'failure',
+                            },
+                        },
+                    });
+                },
+            );
         } catch (error) {
             console.log(error);
         }
