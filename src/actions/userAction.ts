@@ -153,14 +153,30 @@ export const addToUserCart = (loggedUser: IUser, product: IProduct) => async (di
     const cartItems: ICart[] = loggedUser.cart || [];
     const updatedCart = addProductsToCart(cartItems, product);
     const result = await updateUser({ cart: updatedCart });
-    if (isSuccess(result)) {
-        dispatch({
-            type: UPDATE_LOGGED_USER_CART,
-            payload: {
-                user: pickFieldOrDefault(result, 'data', guestUser),
-            },
-        });
-    }
+    useMapData(
+        result,
+        (data) => {
+            dispatch({
+                type: UPDATE_LOGGED_USER_CART,
+                payload: {
+                    user: data.data,
+                },
+            });
+        },
+        (error: ApiError) => {
+            dispatch({
+                type: DISPLAY_NOTIFICATION,
+                payload: {
+                    notification: {
+                        id: uuid(),
+                        title: 'Cart update failed',
+                        description: 'Could not add product to cart. Please try again',
+                        type: 'failure',
+                    },
+                },
+            });
+        },
+    );
 };
 
 export const removeItemsFromUserCart =
@@ -170,14 +186,30 @@ export const removeItemsFromUserCart =
             const cartItems: ICart[] = loggedUser.cart || [];
             const updatedCart = removeProductsFromCart(cartItems, product);
             const result = await updateUser({ cart: updatedCart });
-            if (isSuccess(result)) {
-                dispatch({
-                    type: UPDATE_LOGGED_USER_CART,
-                    payload: {
-                        user: pickFieldOrDefault(result, 'data', guestUser),
-                    },
-                });
-            }
+            useMapData(
+                result,
+                (data) => {
+                    dispatch({
+                        type: UPDATE_LOGGED_USER_CART,
+                        payload: {
+                            user: data.data,
+                        },
+                    });
+                },
+                (error) => {
+                    dispatch({
+                        type: DISPLAY_NOTIFICATION,
+                        payload: {
+                            notification: {
+                                id: uuid(),
+                                title: 'Cart update failed',
+                                description: 'Could not remove product from cart. Please try again',
+                                type: 'failure',
+                            },
+                        },
+                    });
+                },
+            );
         } catch (error) {
             console.log(error);
         }
@@ -188,14 +220,30 @@ export const removeFromUserCart =
         try {
             const updatedCart = [...loggedUser.cart].filter((item) => item._id !== selectedCart._id);
             const result = await updateUser({ cart: updatedCart });
-            if (isSuccess(result)) {
-                dispatch({
-                    type: UPDATE_LOGGED_USER_CART,
-                    payload: {
-                        user: pickFieldOrDefault(result, 'data', guestUser),
-                    },
-                });
-            }
+            useMapData(
+                result,
+                (data) => {
+                    dispatch({
+                        type: UPDATE_LOGGED_USER_CART,
+                        payload: {
+                            user: data.data,
+                        },
+                    });
+                },
+                (error) => {
+                    dispatch({
+                        type: DISPLAY_NOTIFICATION,
+                        payload: {
+                            notification: {
+                                id: uuid(),
+                                title: 'Cart update failed',
+                                description: 'Could not remove product from cart. Please try again',
+                                type: 'failure',
+                            },
+                        },
+                    });
+                },
+            );
         } catch (error) {
             console.log(error);
         }
