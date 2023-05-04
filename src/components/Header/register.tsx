@@ -27,7 +27,6 @@ interface IProps extends RouteComponentProps {
 }
 
 interface Actions {
-    logInUser: (email: string, password: string, cartItems: ICart[]) => Promise<void>;
     displayNotification: (notification: AppNotification) => void;
 }
 
@@ -52,6 +51,13 @@ class Register extends React.Component<IProps, IState> {
             result,
             (data) => {
                 this.props.history.push('/login');
+                this.props.actions.displayNotification({
+                    id: uuid(),
+                    title: 'Registration successful',
+                    description:
+                        'You have successfully created an account. Please log into your account to buy our products',
+                    type: 'success',
+                });
             },
             (error) => {
                 this.props.actions.displayNotification({
@@ -232,8 +238,6 @@ const mapStateToProps = (state: AppState): StateProps => ({
 
 const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
     actions: {
-        logInUser: (email: string, password: string, cartItems: ICart[]) =>
-            dispatch(logInUser(email, password, cartItems)),
         displayNotification: (notification: AppNotification) => dispatch(displayNotification(notification)),
     },
 });
