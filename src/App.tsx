@@ -20,6 +20,9 @@ class App extends React.Component<IProps> {
     componentDidMount = () => {
         this.props.actions.getUserFromToken();
     };
+    static defaultProps = {
+        notifications: [],
+    };
     render() {
         return (
             <BrowserRouter>
