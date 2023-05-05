@@ -287,16 +287,45 @@ export const getUserFromToken = () => async (dispatch: Dispatch<AppActions>) => 
     }
 };
 
-export const editUserProfile = (loggedUser: IUser) => async (dispatch: Dispatch<AppActions>) => {
+export const editUserProfile = (userData: Partial<IUser>) => async (dispatch: Dispatch<AppActions>) => {
     try {
-        const result = await updateUser(loggedUser);
+        const result = await updateUser(userData);
+        useMapData(
+            result,
+            (data) => {
+                dispatch({
+                    type: EDIT_PROFILE_USER,
+                    payload: {
+                        user: data.data,
+                    },
+                });
+                dispatch({
+                    type: DISPLAY_NOTIFICATION,
+                    payload: {
+                        notification: {
+                            id: uuid(),
+                            title: 'Profile saved',
+                            description: 'Your changes have been successfully saved',
+                            type: 'success',
+                        },
+                    },
+                });
+            },
+            (error) => {
+                dispatch({
+                    type: DISPLAY_NOTIFICATION,
+                    payload: {
+                        notification: {
+                            id: uuid(),
+                            title: 'Failed to update profile',
+                            description: getErrorMessage(error),
+                            type: 'failure',
+                        },
+                    },
+                });
+            },
+        );
         if (isSuccess(result)) {
-            dispatch({
-                type: EDIT_PROFILE_USER,
-                payload: {
-                    user: pickFieldOrDefault(result, 'data', guestUser),
-                },
-            });
         }
     } catch (error) {
         console.log(error);

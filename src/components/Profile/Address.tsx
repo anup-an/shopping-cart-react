@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { editUserProfile } from '../../actions/userAction';
 import { IUser } from '../../ActionTypes';
 import { AppState } from '../../store';
-
+import _ from 'lodash';
 
 interface IProps {
     user: IUser;
@@ -11,26 +11,40 @@ interface IProps {
 }
 
 interface Actions {
-    editUserProfile: (loggedUser: IUser) => void;
+    editUserProfile: (userData: Partial<IUser>) => void;
 }
-class Address extends React.Component<IProps>{
+class Address extends React.Component<IProps> {
     constructor(props: IProps) {
         super(props);
-        this.state = { "address": "", "postcode": "", "city": "", "country": "" }
+        this.state = {
+            address: this.props.user.address,
+            postcode: this.props.user.postcode,
+            city: this.props.user.city,
+            country: this.props.user.country,
+        };
     }
     handleSave = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const { user } = this.props;
-        const loggedUser = { ...user, ...this.state };
-        this.props.actions.editUserProfile(loggedUser);
-    }
+        this.props.actions.editUserProfile({ ...this.state });
+    };
 
-    handleInput = (event: React.ChangeEvent<HTMLInputElement>)  => {
-        this.setState({ ...this.state, [event.target.name]: event.target.value })
-    }
-    componentDidMount = () => {
-        const { user } = this.props;
-        this.setState({ "address": user.address, "postcode": user.postcode, "city": user.city, "country": user.country})
+    handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({ ...this.state, [event.target.name]: event.target.value });
+    };
+
+    componentDidUpdate(prevProps: IProps): void {
+        if (
+            !_.isEqual(prevProps, this.props) &&
+            !_.isEqual(_.pick(this.props.user, ['address', 'postcode', 'city', 'country']), this.state)
+        ) {
+            this.setState({
+                ...this.state,
+                address: this.props.user.address,
+                postcode: this.props.user.postcode,
+                city: this.props.user.city,
+                country: this.props.user.country,
+            });
+        }
     }
     render() {
         const { user } = this.props;
@@ -42,7 +56,6 @@ class Address extends React.Component<IProps>{
                     <div className="flex flex-col space-y-4 lg:flex-row items-start lg:space-x-10">
                         <div>Edit the fields and click save to update your details.</div>
                         <div className="flex flex-col space-y-6">
-                            
                             <div>
                                 <p>Address</p>
                                 <label htmlFor="address">
@@ -103,7 +116,7 @@ class Address extends React.Component<IProps>{
                     </div>
                 </form>
             </div>
-        )
+        );
     }
 }
 
@@ -112,13 +125,13 @@ interface StateProps {
 }
 
 const mapStateToProps = (state: AppState): StateProps => ({
-    user:state.user.user,
-})
+    user: state.user.user,
+});
 
-const mapDispatchToProps = (dispatch: any): { actions: Actions} => ({
+const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
     actions: {
-        editUserProfile: (loggedUser: IUser) => dispatch(editUserProfile(loggedUser)),
-    }
-})
+        editUserProfile: (userData: Partial<IUser>) => dispatch(editUserProfile(userData)),
+    },
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Address);
