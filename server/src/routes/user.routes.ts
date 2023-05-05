@@ -5,6 +5,7 @@ import { GenericController } from '../controllers/common';
 import User, { guestUser } from '../models/user';
 import { IUser } from '../schemas/user';
 import { GenericService } from '../services/common';
+import { ErrorCode, ErrorException } from '../utils';
 
 const router = Router();
 const userService = new GenericService<IUser>(User);
@@ -32,7 +33,7 @@ router.post(
                 (req.params as {[key: string]: any}).id = user._id.toString();
                 next();
             } else {
-                res.status(401).send('Unauthorized');
+                throw new ErrorException(ErrorCode.AuthenticationError, 'Not authorized to perform the update.')
             }
         })(req, res, next);
     },
