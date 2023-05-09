@@ -6,6 +6,7 @@
     "scripts": {
         "watch": "nodemon",
         "start": "nodemon",
+        "seed:db": "ts-node src/seeder.ts",
         "test": "cross-env NODE_ENV=test jest --detectOpenHandles"
     },
     "keywords": [],
