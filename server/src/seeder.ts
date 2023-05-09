@@ -11,13 +11,15 @@ dotenv.config();
 
 const seedDatabase = async <T, K>(model: IModel<T>, data: K[]): Promise<void> => {
     try {
-        const db = await mongoose.connect(process.env.MONGO_URI|| '')
-        await model.deleteMany({})
+        const db = await mongoose.connect(process.env.MONGO_URI || '');
+        await model.deleteMany({});
         const seed = await model.insertMany(data);
-        console.log(`Seeding complete. ${seed.length} out of ${data.length} ${model.collection.collectionName} added to the database`);
-        db.disconnect()
+        console.log(
+            `Seeding complete. ${seed.length} out of ${data.length} ${model.collection.collectionName} added to the database`,
+        );
+        db.disconnect();
     } catch (error) {
-        console.log('Failed to seed the database')
+        console.log('Failed to seed the database');
     }
 };
 
