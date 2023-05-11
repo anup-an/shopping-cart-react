@@ -10,7 +10,17 @@ services:
       - .env.dev
     ports:
       - "27017:27017"
-    
+  
+  # Seed database
+  mongo-seed:
+    env_file:
+      - .env.dev
+    build: 
+      context: ./
+      dockerfile: seeder.Dockerfile
+    depends_on:
+      - mongodb
+  
   # ExpressJS Backend
   backend:
     build: 
