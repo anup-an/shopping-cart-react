@@ -24,8 +24,8 @@ jobs:
               uses: aws-actions/configure-aws-credentials@v1
               with:
                   role-to-assume: ${{ secrets.ROLE_ARN }}
-                  role-session-name: ${{ env.ROLE_SESSION }}
-                  aws-region: ${{ env.AWS_REGION }}
+                  role-session-name: ${{ vars.ROLE_SESSION }}
+                  aws-region: ${{ vars.AWS_REGION }}
 
             - name: Login to Amazon ECR
               id: login-ecr
@@ -39,4 +39,4 @@ jobs:
               run: |
                   docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -f server/dev.Dockerfile.
                   docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-                  echo "::set-output name=image::$ECR_REGISTRY/{{ env.ECR_REPOSITORY }}:$IMAGE_TAG"
+                  echo "::set-output name=image::$ECR_REGISTRY/{{ vars.ECR_REPOSITORY }}:$IMAGE_TAG"
