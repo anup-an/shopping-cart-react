@@ -27,16 +27,19 @@ jobs:
                   role-session-name: ${{ vars.ROLE_SESSION }}
                   aws-region: ${{ vars.AWS_REGION }}
 
-            - name: Login to Amazon ECR
-              id: login-ecr
+            - name: Login to Amazon ECR Public
+              id: login-ecr-public
               uses: aws-actions/amazon-ecr-login@v1
+              with:
+                  registry-type: public
 
             - name: Build, tag, and push image to Amazon ECR
               id: build-image
               env:
-                  ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-                  IMAGE_TAG: ${{ github.sha }}
+                 REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
+                 REGISTRY_ALIAS: ${{ vars.REGISTRY_ALIAS }}
+                 REPOSITORY: ${{ vars.ECR_REPOSITORY }}
+                 IMAGE_TAG: ${{ github.sha }}
               run: |
-                  docker build -t $ECR_REGISTRY/${{ vars.ECR_REPOSITORY }}:$IMAGE_TAG -f server/dev.Dockerfile server
-                  docker push $ECR_REGISTRY/${{ vars.ECR_REPOSITORY }}:$IMAGE_TAG
-                  echo "::set-output name=image::$ECR_REGISTRY/${{ vars.ECR_REPOSITORY }}:$IMAGE_TAG"
+                 docker build -t $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:latest -f dev.Dockerfile server 
+                 docker push $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:latest
