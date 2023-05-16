@@ -1,6 +1,6 @@
 # This workflow will build and push a new container image to Amazon ECR
 
-name: Deploy to Amazon ECS
+name: Build and save image to Amazon ECS
 
 on:
     push:
@@ -12,8 +12,8 @@ permissions:
     contents: read # This is required for actions/checkout@v2
 
 jobs:
-    deploy:
-        name: Deploy
+    build:
+        name: Build image
         runs-on: ubuntu-latest
         environment: production
 
