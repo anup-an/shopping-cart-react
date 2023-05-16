@@ -41,5 +41,5 @@ jobs:
                  REPOSITORY: ${{ vars.ECR_REPOSITORY }}
                  IMAGE_TAG: ${{ github.sha }}
               run: |
-                 docker build -t $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:latest -f dev.Dockerfile server 
+                 docker build -t $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:latest -f server/dev.Dockerfile server 
                  docker push $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:latest
