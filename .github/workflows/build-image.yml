@@ -51,7 +51,7 @@ jobs:
         id: call-deploy
         env:
           IMAGE_URI: ${{ steps.login-ecr-public.outputs.registry }}/${{ vars.REGISTRY_ALIAS }}:$IMAGE_TAG
-        uses: anup-an/repository-dispatch@v1
+        uses: anup-an/shopping-cart-react@v1
         with:
           event-type: call-deploy
           client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "newImage": "$IMAGE_URI"}'
