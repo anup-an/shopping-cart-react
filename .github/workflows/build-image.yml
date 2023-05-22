@@ -43,9 +43,14 @@ jobs:
           REGISTRY_ALIAS: ${{ vars.REGISTRY_ALIAS }}
           REPOSITORY: ${{ vars.ECR_REPOSITORY }}
           IMAGE_TAG: ${{ github.sha }}
-        with:
-          event-type: image-build
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "newImage": "$REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG"}'
         run: |
           docker build -t $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG -f server/Dockerfile server 
           docker push $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG
+      
+      - name: Call deploy workflow
+        id: call-deploy
+        env:
+          IMAGE_URI: ${{ steps.login-ecr-public.outputs.registry }}/${{ vars.REGISTRY_ALIAS }}:$IMAGE_TAG
+        with:
+          event-type: call-deploy
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "newImage": "$REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG"}'
