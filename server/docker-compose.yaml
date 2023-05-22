@@ -25,7 +25,7 @@ services:
   backend:
     build: 
       context: ./
-      dockerfile: dev.Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "5000:5000"
     volumes:
