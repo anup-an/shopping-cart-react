@@ -2,7 +2,7 @@ name: Deploy image to Amazon ECS
 
 on:
   repository_dispatch:
-    types: [image-build]
+    types: [call-deploy]
 
 jobs:
   build:
