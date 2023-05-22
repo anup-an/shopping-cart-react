@@ -50,7 +50,7 @@ jobs:
       - name: Call deploy workflow
         id: call-deploy
         env:
-          IMAGE_URI: ${{ steps.login-ecr-public.outputs.registry }}/${{ vars.REGISTRY_ALIAS }}:$IMAGE_TAG
+          IMAGE_URI: ${{ steps.login-ecr-public.outputs.registry }}/${{ vars.REGISTRY_ALIAS }}:${{ vars.IMAGE_TAG }}
         uses: peter-evans/repository-dispatch@v2
         with:
           event-type: call-deploy
