@@ -1,0 +1,24 @@
+name: Deploy image to Amazon ECS
+
+on:
+  repository_dispatch:
+    types: [image-build]
+
+jobs:
+  build:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Download task definition
+        id: download-task-def
+        run: aws ecs shopping-cart-app --task-definition shopping-cart-app --query taskDefinition > task-definition.json
+      
+      - name: Fill in the image ID in the Amazon ECS task definition
+        id: task-def
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+         task-definition: ${{ steps.download-task-def.outputs.task-definition }}
+         image: ${{ github.event.client_payload.newImage }}
+         container-name: shopping-cart-react
