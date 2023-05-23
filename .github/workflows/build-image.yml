@@ -16,7 +16,7 @@ on:
 
 permissions:
   id-token: write
-  contents: write # This is required for actions/checkout@v2
+  contents: read
 
 jobs:
   build:
