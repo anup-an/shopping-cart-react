@@ -5,7 +5,7 @@ on:
         
 jobs:
   job1:
-    uses: anup-an/shopping-cart-react/.github/workflows/build-image.yml
+    uses: anup-an/shopping-cart-react/.github/workflows/build-image.yml@master
 
   build:
     name: Deploy
