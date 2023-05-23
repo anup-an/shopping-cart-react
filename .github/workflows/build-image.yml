@@ -3,11 +3,6 @@
 name: Build and save image to Amazon ECS
 
 on:
-  push:
-    branches:
-      - "master"
-    paths:
-      - server/**
   workflow_call:
     outputs:
       newImage:
