@@ -2,7 +2,11 @@ name: Deploy image to Amazon ECS
 
 on:
   workflow_dispatch:
-        
+
+permissions:
+  id-token: write
+  contents: read
+  
 jobs:
   job1:
     uses: anup-an/shopping-cart-react/.github/workflows/build-image.yml@master
