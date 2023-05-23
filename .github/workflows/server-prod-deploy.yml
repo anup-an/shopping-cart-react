@@ -43,3 +43,10 @@ jobs:
          task-definition: task-definition.json
          image: ${{ needs.job1.outputs.newImage }}
          container-name: shopping-cart-react
+       
+      - name: Deploy to Amazon ECS service
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.task-def.outputs.task-definition }}
+          service: ${{ vars.ECS_SERVICE }}
+          cluster: ${{ vars.ECS_CLUSTER }}
