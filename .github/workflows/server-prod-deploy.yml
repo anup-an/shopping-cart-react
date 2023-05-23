@@ -23,7 +23,7 @@ jobs:
         with:
           role-to-assume: ${{ secrets.ROLE_ARN }}
           role-session-name: ${{ vars.ROLE_SESSION }}
-          aws-region: ${{ vars.AWS_REGION }}
+          aws-region: eu-north-1
 
       - name: Download task definition
         id: download-task-def
