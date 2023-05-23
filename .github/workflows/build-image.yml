@@ -8,7 +8,11 @@ on:
       - "master"
     paths:
       - server/**
-  workflow_dispatch:
+  workflow_call:
+    outputs:
+      newImage:
+        description: "New image"
+        value: ${{jobs.build.outputs.outputImage}}
 
 permissions:
   id-token: write
@@ -19,7 +23,8 @@ jobs:
     name: Build image
     runs-on: ubuntu-latest
     environment: production
-
+    outputs:
+      outputImage: ${{steps.build-image.outputs.newImage}}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -46,12 +51,4 @@ jobs:
         run: |
           docker build -t $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG -f server/Dockerfile server 
           docker push $REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG
-      
-      - name: Call deploy workflow
-        id: call-deploy
-        env:
-          IMAGE_URI: ${{ steps.login-ecr-public.outputs.registry }}/${{ vars.REGISTRY_ALIAS }}:${{ github.sha }}
-        uses: peter-evans/repository-dispatch@v2
-        with:
-          event-type: call-deploy
-          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}", "newImage": "$IMAGE_URI"}'
+          echo "::set-output name=newImage::$REGISTRY/$REGISTRY_ALIAS/$REPOSITORY:$IMAGE_TAG"
