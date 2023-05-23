@@ -9,6 +9,7 @@ jobs:
       id-token: write
       contents: read
     uses: anup-an/shopping-cart-react/.github/workflows/build-image.yml@master
+    secrets: inherit
 
   build:
     name: Deploy
