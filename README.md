@@ -5,7 +5,8 @@ This is a full-stack e-commerce web application. The user interface of the appli
 # Table of contents
   1. [About the project](#about-the-project)
       - [Built with](#built-with)
-        - [Dependencies](#dependencies)
+      - [Application features](#application-features)
+  2. [Getting started](#getting-started)
 
 ## About The Project
 ![Frontpage](public/images/frontpage.png)
@@ -22,12 +23,24 @@ The main technologies used for building and deploying the application are listed
 - [Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)  - A software used to build, test, and deploy applications.
 - [AWS](https://aws.amazon.com/) - A platform that offers cloud computing services including deploying web applications
 
-#### Dependencies
+Some of the dependencies used in the application  are listed below:
  - [Mongoose.js](https://mongoosejs.com/) -  An Object Data Modeling (ODM) library for MongoDB and Node.js. 
  - [Passport.js](https://www.passportjs.org/) - An authentication middleware for Node.js used to authenticate requests through an extensible set of plugins known as strategies. 
  - [Superstruct](https://docs.superstructjs.org/) - A typescript library designed for validating data at runtime, so it throws (or returns) detailed runtime errors to the end users. 
  - [Jest](https://jestjs.io/) - A javascript testing framework that works with projects including React and Node.js
  - [Supertest](https://github.com/ladjs/supertest) - A Node.js library used to test APIs.
+ 
+### Application features
+#### General
+  - The users can search, filter and sort products based on different criteria.
+  - The users can add and delete products from their cart and submit orders.
+  - The users can view and edit their profiles. They can also view their orders history.
+ 
+#### Authentication system
+The application has its own login system which is managed in the server using [passport-jwt](https://www.passportjs.org/packages/passport-jwt/) strategy of Passport.js. It uses access and refresh tokens stored in cookies for authenticating. The tokens are continuously reissued to provide additional security.
+
+#### Password reset
+The application also allows users to reset their passwords. When requested, the users will get a link in their email and they can follow the instructions.
 
 ## Getting started
 To get the full-stack application running locally follow these steps:
