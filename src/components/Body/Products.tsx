@@ -78,7 +78,8 @@ class Products extends React.Component<IProps, IState> {
     }
 
     async fetch() {
-        const fetchedProducts = await fetchProducts();
+        const { sort, filter, search } = this.props;
+        const fetchedProducts = await fetchProducts(sort, search, filter);
         this.setState({ productsFetch: fetchedProducts });
     }
 
