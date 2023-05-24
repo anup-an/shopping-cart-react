@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { assert, StructError } from 'superstruct';
 
 import { Failure, MapData, Success } from '../types/mapDataTypes';
@@ -32,7 +32,6 @@ export const parseError = <T>(error: any): MapData<T, ApiError> => {
     let description;
     let status;
     if (error instanceof StructError) {
-        console.log(error.failures());
         title = 'DecoderError';
         description = `${error.failures()[0].message} for ${error.failures()[0].key} field`;
     } else {
