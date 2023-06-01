@@ -9,6 +9,7 @@ import { SearchState } from '../../types/common';
 interface IProps {
     sort: SortState<IProduct> | null;
     filter: FilterState<IProduct> | null;
+    search: SearchState<IProduct> | null;
     actions: Actions;
 }
 
@@ -55,6 +56,10 @@ class Filter extends React.Component<IProps, IState> {
         }));
     };
 
+    componentDidMount(): void {
+        this.setState({ searchState: this.props.search });
+    }
+
     render(): JSX.Element {
         const { sort, filter } = this.props;
         return (
@@ -86,6 +91,7 @@ class Filter extends React.Component<IProps, IState> {
                             name="title"
                             type="text"
                             onChange={this.handleInput}
+                            value={this.state.searchState?.title || ''}
                             placeholder="Search for products"
                             className="p-2 text-sm text-gray-700 focus:outline-none flex flex-grow"
                         />
@@ -134,11 +140,13 @@ class Filter extends React.Component<IProps, IState> {
 interface StateProps {
     sort: SortState<IProduct> | null;
     filter: FilterState<IProduct> | null;
+    search: SearchState<IProduct> | null;
 }
 
 const mapStateToProps = (state: AppState): StateProps => ({
     sort: state.products.sort,
     filter: state.products.filter,
+    search: state.products.search,
 });
 
 const mapDispatchToProps = (dispatch: any): { actions: Actions } => ({
