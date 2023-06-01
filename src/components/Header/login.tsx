@@ -68,7 +68,7 @@ class Login extends React.Component<IProps, IState> {
         const { user, history } = this.props;
 
         return (
-            <div className="w-full h-full flex items-center pt-14">
+            <div className="w-full h-full flex items-center lg:pt-14">
                 {!user?._id ? (
                     <div className="flex flex-row flex items-center justify-center w-full">
                         <div className="bg-white border rounded-lg shadow-xl w-full lg:w-2/3 flex flex-row items-center lg:bg-blue-800 ">
@@ -95,7 +95,7 @@ class Login extends React.Component<IProps, IState> {
                                             htmlFor="email"
                                         >
                                             <input
-                                                className="focus:outline-none text-sm"
+                                                className="focus:outline-none text-sm w-full"
                                                 id="email"
                                                 name="email"
                                                 placeholder="Type your e-mail"

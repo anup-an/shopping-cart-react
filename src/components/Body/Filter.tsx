@@ -60,7 +60,7 @@ class Filter extends React.Component<IProps, IState> {
     render(): JSX.Element {
         const { sort, filter } = this.props;
         return (
-            <div className="flex flex-row justify-between items-center text-sm">
+            <div className="md:flex flex-row justify-between items-center text-sm">
                 <form
                     className="flex flex-row items-center border rounded border-gray-600 pr-2"
                     onSubmit={this.handleSearch}
@@ -93,36 +93,40 @@ class Filter extends React.Component<IProps, IState> {
                         />
                     </label>
                 </form>
-                <div>
-                    Price
-                    <button
-                        className={`mx-2 focus:outline-none hover:bg-blue-700 hover:text-white border border-gray-600 p-1 rounded ${
-                            ['desc', 'asc'].includes(sort?.price || '') ? 'bg-blue-400 text-white' : ''
-                        }}`}
-                        onClick={(event) => this.handleProductSort(event, 'price')}
-                        type="button"
-                    >
-                        {sort?.price === 'desc' ? (
-                            <i className="fa-solid fa-chevron-up text-white" />
-                        ) : (
-                            <i className={`fa-solid fa-chevron-down ${sort?.price === 'asc' ? 'text-white' : ''} `} />
-                        )}
-                    </button>
-                </div>
-                <div>
-                    Size{' '}
-                    <select
-                        value={filter?.availableSizes}
-                        className="border rounded p-1 border-gray-600"
-                        onChange={(e) => this.handleProductFilter({ availableSizes: e.target.value })}
-                    >
-                        <option value="">ALL</option>
-                        <option value="S">S</option>
-                        <option value="M">M</option>
-                        <option value="L">L</option>
-                        <option value="XL">XL</option>
-                        <option value="XXL">XXL</option>
-                    </select>
+                <div className="flex bg-white bg-opacity-100 flex-row mt-3 md:mt-0 md:w-1/4 justify-between">
+                    <div className="mr-6">
+                        Price
+                        <button
+                            className={`mx-2 focus:outline-none hover:bg-blue-700 hover:text-white border border-gray-600 p-1 rounded ${
+                                ['desc', 'asc'].includes(sort?.price || '') ? 'bg-blue-400 text-white' : ''
+                            }}`}
+                            onClick={(event) => this.handleProductSort(event, 'price')}
+                            type="button"
+                        >
+                            {sort?.price === 'desc' ? (
+                                <i className="fa-solid fa-chevron-up text-white" />
+                            ) : (
+                                <i
+                                    className={`fa-solid fa-chevron-down ${sort?.price === 'asc' ? 'text-white' : ''} `}
+                                />
+                            )}
+                        </button>
+                    </div>
+                    <div>
+                        Size{' '}
+                        <select
+                            value={filter?.availableSizes}
+                            className="border rounded p-1 border-gray-600"
+                            onChange={(e) => this.handleProductFilter({ availableSizes: e.target.value })}
+                        >
+                            <option value="">ALL</option>
+                            <option value="S">S</option>
+                            <option value="M">M</option>
+                            <option value="L">L</option>
+                            <option value="XL">XL</option>
+                            <option value="XXL">XXL</option>
+                        </select>
+                    </div>
                 </div>
             </div>
         );
