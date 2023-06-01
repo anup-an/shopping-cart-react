@@ -22,7 +22,7 @@ class ProductsPage extends React.Component {
                             <div className="flex-1 self-stretch">
                                 <Products />
                             </div>
-                            <div className="w-1/4">
+                            <div className="xl:w-1/4">
                                 <Cart />
                             </div>
                         </div>
@@ -31,7 +31,6 @@ class ProductsPage extends React.Component {
                 <div className="fixed bottom-0 lg:hidden w-full">
                     <Footer focus="" />
                 </div>
-                ;
             </>
         );
     }

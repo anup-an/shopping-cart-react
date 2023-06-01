@@ -109,7 +109,7 @@ class Products extends React.Component<IProps, IState> {
     render(): JSX.Element {
         const { isOpen, modalProduct, productsFetch } = this.state;
         return (
-            <div className="md:mt-14 mt-20 mx-2 h-full flex items-center justify-center">
+            <div className="md:mt-14 mt-20 mx-2 w-full h-full flex items-center justify-center">
                 {isSuccess(productsFetch) ? (
                     <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10 w-full p-2 text-sm">
                         {!this.isListEmpty(productsFetch) ? (
