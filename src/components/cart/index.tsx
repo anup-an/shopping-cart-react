@@ -83,7 +83,7 @@ class Cart extends React.Component<IProps, IState> {
             <div>
                 {user.cart.length || cartItems.length ? (
                     <div className="mt-20">
-                        <h1 className="text-center bg-gray-200 mb-4 lg:mb-16 p-2">
+                        <h1 className="text-center bg-gray-200 mb-6 p-2">
                             Welcome to your shopping cart! Click checkout to place the order.
                         </h1>
                         {user._id ? (
@@ -96,7 +96,7 @@ class Cart extends React.Component<IProps, IState> {
                                         handleDecrement={this.handleDecrement}
                                     />
                                 </div>
-                                <div className="w-full lg:w-1/3">
+                                <div className="w-full lg:w-1/3 mt-12 lg:mt-0">
                                     <CartSummary cartItems={user.cart} user={user} />
                                 </div>
                             </div>
@@ -110,7 +110,7 @@ class Cart extends React.Component<IProps, IState> {
                                         handleDecrement={this.handleDecrement}
                                     />
                                 </div>
-                                <div className="w-full lg:w-1/3">
+                                <div className="w-full lg:w-1/3 mt-12 lg:mt-0">
                                     <CartSummary cartItems={cartItems} user={user} />
                                 </div>
                             </div>
