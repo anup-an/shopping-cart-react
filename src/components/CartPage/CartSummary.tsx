@@ -48,16 +48,18 @@ class CartSummary extends React.Component<IProps, IState> {
         const { cartItems, user } = this.props;
         return (
             <div>
-                <div className="border rounded shadow flex flex-col p-4">
+                <div className="border rounded shadow flex flex-col p-5">
                     <h2 className="text-gray-800 text-lg border text-center font-semibold">Cart Summary</h2>
-                    <div className="flex flex-col space-y-2 m-2">
-                        <div className="flex flex-row justify-between">
-                            <p>Number of items: </p>
-                            <p>{cartItems.length}</p>
-                        </div>
-                        <div className="flex flex-row justify-between">
-                            <p>Total: </p>
-                            <p>{this.getTotalPrice()}€</p>
+                    <div className="flex flex-col space-y-8 m-2 mt-4">
+                        <div>
+                            <div className="flex flex-row justify-between">
+                                <p>Number of items: </p>
+                                <p>{cartItems.length}</p>
+                            </div>
+                            <div className="flex flex-row justify-between mt-3">
+                                <p>Total: </p>
+                                <p>{this.getTotalPrice()}€</p>
+                            </div>
                         </div>
                         <button
                             className="flex items-center justify-center boreder rounded bg-blue-400 hover:bg-blue-800 text-white p-2 focus:outline-none"
@@ -98,10 +100,10 @@ class CartSummary extends React.Component<IProps, IState> {
                         {user._id ? (
                             <Checkout cartItems={cartItems} user={user} />
                         ) : (
-                            <div className="flex flex-col justify-center items-center pl-14 pr-14 pb-2">
+                            <div className="absolute w-full bottom-1/2 flex flex-col items-center">
                                 <Link
                                     to={{ pathname: '/login', state: { redirectPath: '/cart' } }}
-                                    className="px-2 bg-blue-400 hover:bg-blue-800 text text-white flex items-center justify-center border rounded"
+                                    className="w-40 px-2 bg-blue-400 hover:bg-blue-800 text text-white flex items-center justify-center border rounded"
                                 >
                                     Go to login
                                 </Link>

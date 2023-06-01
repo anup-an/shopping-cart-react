@@ -71,7 +71,7 @@ class Login extends React.Component<IProps, IState> {
             <div className="w-full h-full flex items-center lg:pt-14">
                 {!user?._id ? (
                     <div className="flex flex-row flex items-center justify-center w-full">
-                        <div className="bg-white border rounded-lg shadow-xl w-full lg:w-2/3 flex flex-row items-center lg:bg-blue-800 ">
+                        <div className="bg-white border rounded-lg shadow-xl w-full h-full lg:w-2/3 flex flex-row items-center lg:bg-blue-800 ">
                             <div className="hidden lg:block w-1/2 text-white p-4 flex items-center justify-center text-center flex-col">
                                 <div className="text-xl">Welcome to the E-Shop!</div>
                                 <div>Please log into your account to continue.</div>
