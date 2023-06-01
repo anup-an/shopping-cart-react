@@ -35,7 +35,7 @@ const productsReducer = (state = productsDefaultState, action: ProductsActionTyp
                 ...state,
                 search: state.search
                     ? action.payload.search
-                    : { ...(state.filter as unknown as object), ...action.payload.search },
+                    : { ...(state.search as unknown as object), ...action.payload.search },
             };
         default:
             return state;

@@ -42,9 +42,7 @@ class Filter extends React.Component<IProps, IState> {
 
     handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        this.props.actions.searchProducts(
-            this.state.searchState || ({ search: { title: '' } } as SearchState<IProduct>),
-        );
+        this.props.actions.searchProducts(this.state.searchState || ({ title: '' } as SearchState<IProduct>));
     };
 
     handleInput = (event: React.ChangeEvent<HTMLInputElement>) => {
