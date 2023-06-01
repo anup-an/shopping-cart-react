@@ -95,7 +95,7 @@ class Login extends React.Component<IProps, IState> {
                                             htmlFor="email"
                                         >
                                             <input
-                                                className="focus:outline-none text-sm"
+                                                className="focus:outline-none text-sm w-full"
                                                 id="email"
                                                 name="email"
                                                 placeholder="Type your e-mail"

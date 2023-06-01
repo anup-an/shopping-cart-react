@@ -100,7 +100,7 @@ class Register extends React.Component<IProps, IState> {
                                         htmlFor="firstName"
                                     >
                                         <input
-                                            className="focus:outline-none text-sm"
+                                            className="focus:outline-none text-sm w-full"
                                             id="firstName"
                                             name="firstName"
                                             placeholder="First Name"
@@ -128,7 +128,7 @@ class Register extends React.Component<IProps, IState> {
                                         htmlFor="lastName"
                                     >
                                         <input
-                                            className="focus:outline-none text-sm"
+                                            className="focus:outline-none text-sm w-full"
                                             id="lastName"
                                             name="lastName"
                                             placeholder="Last Name"
@@ -156,7 +156,7 @@ class Register extends React.Component<IProps, IState> {
                                         htmlFor="email"
                                     >
                                         <input
-                                            className="focus:outline-none text-sm"
+                                            className="focus:outline-none text-sm w-full"
                                             id="email"
                                             name="email"
                                             placeholder="E-mail"
