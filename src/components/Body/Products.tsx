@@ -181,7 +181,12 @@ class Products extends React.Component<IProps, IState> {
                                 </li>
                             ))
                         ) : (
-                            <div>No products found</div>
+                            <div className="absolute ml-6 top-1/3 md:left-1/4 flex flex-row items-center justify-center">
+                                <div className="w-full">
+                                    <img src="/images/undraw_empty_re_opql.svg" className="h-64" />
+                                    <h4 className="mt-4">No products found</h4>
+                                </div>
+                            </div>
                         )}
                     </ul>
                 ) : (
