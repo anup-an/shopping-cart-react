@@ -10,18 +10,17 @@ class Loader extends React.Component<IProps> {
     render() {
         const { message } = this.props;
         return (
-            <div className="flex justify-center items-center border rounded shadow-xl p-4">
+            <div className="flex justify-center items-center p-4">
                 <div className="flex flex-col justify-center">
-                    <div className="animate-spin w-8 h-8">
-                        <svg
-                            className="fill-current text-red-500 "
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                        >
-                            <path d="M14.66 15.66A8 8 0 1117 10h-2a6 6 0 10-1.76 4.24l1.42 1.42zM12 10h8l-4 4-4-4z" />
-                        </svg>
+                    <img src="/images/undraw_loading_re_5axr.svg" className="h-64" />
+                    <div className="flex items-center">
+                        <div className="text-lg mr-2">{message}</div>
+                        <div className="flex animate-pulse">
+                            <div className="mr-2 bg-blue-600 p-2  w-4 h-4 rounded-full blue-circle"></div>
+                            <div className="bg-green-600 p-2 w-4 h-4 rounded-full green-circle"></div>
+                            <div className="ml-2 bg-red-600 p-2  w-4 h-4 rounded-full red-circle"></div>
+                        </div>
                     </div>
-                    <div className="text-lg">{message}</div>
                 </div>
             </div>
         );

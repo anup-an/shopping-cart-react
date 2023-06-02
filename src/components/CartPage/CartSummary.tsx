@@ -100,7 +100,8 @@ class CartSummary extends React.Component<IProps, IState> {
                         {user._id ? (
                             <Checkout cartItems={cartItems} user={user} />
                         ) : (
-                            <div className="absolute w-full bottom-1/2 flex flex-col items-center">
+                            <div className="absolute w-full flex flex-col items-center mt-20">
+                                <img src="/images/undraw_secure_login_pdn4.svg" className="h-64" />
                                 <Link
                                     to={{ pathname: '/login', state: { redirectPath: '/cart' } }}
                                     className="w-40 px-2 bg-blue-400 hover:bg-blue-800 text text-white flex items-center justify-center border rounded"
