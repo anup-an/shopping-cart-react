@@ -117,7 +117,7 @@ class Cart extends React.Component<IProps, IState> {
                         )}
                     </div>
                 ) : (
-                    <div className="w-full flex items-center justify-center fixed top-1/3">
+                    <div className="w-full h-screen flex items-center justify-center">
                         <EmptyCart />
                     </div>
                 )}
