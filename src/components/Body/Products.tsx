@@ -190,12 +190,12 @@ class Products extends React.Component<IProps, IState> {
                         )}
                     </ul>
                 ) : (
-                    <div>
+                    <div className="absolute top-1/3">
                         {isFailure(productsFetch) ? (
                             <Error fetch={this.fetch} message="Unable to load products" />
                         ) : (
                             <div className="flex justify-center">
-                                <Loader message="Loading e-shop. Please wait ....." />
+                                <Loader message="Loading e-shop. Please wait" />
                             </div>
                         )}
                     </div>
