@@ -44,7 +44,9 @@ export const parseError = <T>(error: any): MapData<T, ApiError> => {
   return Failure(new ApiError(title, description, status));
 };
 
-const axiosInstance: AxiosInstance = axios.create();
+const axiosInstance: AxiosInstance = axios.create({
+  withCredentials: true,
+});
 
 axiosInstance.interceptors.response.use(
   (response) => response,
