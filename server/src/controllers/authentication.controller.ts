@@ -17,10 +17,10 @@ const generateToken = (user: VerifiedUser) => {
     if (secretKey) {
         return {
             accessToken: jwt.sign({ email: user.email }, secretKey, {
-                expiresIn: 60000,
+                expiresIn: 3600000,
             }),
             refreshToken: jwt.sign({ email: user.email }, secretKey, {
-                expiresIn: 864000,
+                expiresIn: 86400000,
             }),
         };
     }
@@ -51,7 +51,7 @@ export const loginUser = async (req: Request, res: Response, next: NextFunction)
                     secure: true,
                     httpOnly: true,
                     sameSite: 'none',
-                    maxAge: 864000,
+                    maxAge: 86400000,
                 });
                 return res.status(200).json({ data: _.omit(user, ['password', 'refreshToken', '__v']) });
             }
@@ -85,7 +85,7 @@ export const reIssueTokens = async (req: Request, res: Response, next: NextFunct
                     { $set: { refreshToken: tokens.refreshToken || '' } },
                 );
                 return res
-                    .cookie('token', tokens, { secure: true, httpOnly: true, sameSite: 'none', maxAge: 864000 })
+                    .cookie('token', tokens, { secure: true, httpOnly: true, sameSite: 'none', maxAge: 86400000 })
                     .send();
             } else {
                 throw new ErrorException(ErrorCode.ServerError, 'Unable to generate tokens');
