@@ -16,7 +16,7 @@ const app = express();
 app.use(
     cors({
         credentials: true,
-        origin: 'https://lucid-lewin-704e07.netlify.app',
+        origin: ['https://lucid-lewin-704e07.netlify.app', 'http://localhost:3000'],
         methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'HEAD', 'OPTIONS'],
         allowedHeaders: [
             'Content-Type',
@@ -38,7 +38,7 @@ app.use(passport.initialize());
 passport.use(strategy);
 app.get('/', (req, res) => res.send('This is the server homepage'));
 app.use(routes());
-app.use(errorHandler);
+app.use(errorHandler)
 
 export const server = connectServer(app);
 
