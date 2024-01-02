@@ -1,9 +1,6 @@
 import React from 'react';
-import Modal from 'react-modal';
 import { IUser } from '../../ActionTypes';
-import Login from '../Header/login';
 import Checkout from './Checkout';
-import { Link } from 'react-router-dom';
 
 type ICart = {
   _id: string;
@@ -49,7 +46,7 @@ class CartSummary extends React.Component<IProps, IState> {
     return (
       <div>
         <div className="border rounded shadow flex flex-col p-5">
-          <h2 className="text-gray-800 text-lg border text-center font-semibold">Cart Summary</h2>
+          <h2 className="text-blue-800 text-lg border text-center font-semibold">Cart Summary</h2>
           <div className="flex flex-col space-y-8 m-2 mt-4">
             <div>
               <div className="flex flex-row justify-between">
@@ -61,45 +58,10 @@ class CartSummary extends React.Component<IProps, IState> {
                 <p>{this.getTotalPrice()}€</p>
               </div>
             </div>
-            <button
-              className="flex items-center justify-center boreder rounded bg-blue-400 hover:bg-blue-800 text-white p-2 focus:outline-none"
-              type="button"
-              onClick={this.openModal}
-            >
-              <p>Checkout</p>
-            </button>
           </div>
         </div>
-        <div>
-          <div className="p-1">
-            <div className="flex justify-end">
-              <button onClick={this.closeModal} type="button">
-                <svg
-                  className="w-6 h-6"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-          </div>
-          {user._id ? (
-            <Checkout cartItems={cartItems} user={user} />
-          ) : (
-            <div className="absolute w-full flex flex-col items-center mt-20">
-              <img src="/images/undraw_secure_login_pdn4.svg" className="h-64" />
-              <Link
-                to={{ pathname: '/login', state: { redirectPath: '/cart' } }}
-                className="w-40 px-2 bg-blue-400 hover:bg-blue-800 text text-white flex items-center justify-center border rounded"
-              >
-                Go to login
-              </Link>
-              <p className="text-center text-semibold mt-2">Please login to continue...</p>
-            </div>
-          )}
+        <div className="mt-4">
+          <Checkout cartItems={cartItems} user={user} />
         </div>
       </div>
     );
