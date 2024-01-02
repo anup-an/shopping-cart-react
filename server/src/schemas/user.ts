@@ -58,7 +58,7 @@ const UserSchema = createSchema<IUser>({
                 });
             },
             message:
-                'Password must be greater than 8 and contain at least one uppercase letter, one lowercase letter, one number and one symbol',
+                'Password must have greater than 8 characters and contain at least one uppercase letter, one lowercase letter, one number and one symbol',
         },
     },
     firstName: { type: String, required: true },

@@ -60,7 +60,7 @@ axiosInstance.interceptors.response.use(
         if (isSuccess(tokenResponse)) {
           return await axios.request(error.config);
         }
-        window.location.replace(`${frontendUrl}/login`);
+        window.location.pathname !== '/login' ? window.location.replace(`${frontendUrl}/login`) : '';
       } catch (error) {
         throw error;
       }

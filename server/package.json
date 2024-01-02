@@ -64,10 +64,11 @@
         "eslint-config-airbnb-typescript-prettier": "^5.0.0",
         "mongodb-memory-server": "^8.12.1",
         "prettier": "^2.8.7",
-        "ts-jest": "^29.1.0"
+        "ts-jest": "^29.1.0",
+        "tsx": "^4.7.0"
     },
     "nodemonConfig": {
-        "exec": "ts-node -r dotenv/config src/index.ts",
+        "exec": "npx tsx -r dotenv/config src/index.ts",
         "ext": "ts,js"
     },
     "type": "module"

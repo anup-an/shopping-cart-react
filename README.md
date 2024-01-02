@@ -1,12 +1,17 @@
-# About the app
-
+# About  app
+the
 This is a full-stack e-commerce web application. The user interface of the application can be accessed at [https://lucid-lewin-704e07.netlify.app/](https://lucid-lewin-704e07.netlify.app/). The server is hosted at [https://e-shop-express.com](https://e-shop-express.com) and uses [AWS cloud services](https://aws.amazon.com/). 
 
 # Table of contents
-  1. [About the project](#about-the-project)
-      - [Built with](#built-with)
-      - [Application features](#application-features)
-  2. [Getting started](#getting-started)
+- [About  app](#about--app)
+- [Table of contents](#table-of-contents)
+  - [About The Project](#about-the-project)
+    - [Built With](#built-with)
+    - [Application features](#application-features)
+      - [General](#general)
+      - [Authentication system](#authentication-system)
+      - [Password reset](#password-reset)
+  - [Getting started](#getting-started)
 
 ## About The Project
 ![Frontpage](public/images/frontpage.png)
@@ -51,6 +56,7 @@ To get the full-stack application running locally follow these steps:
 
 To run the frontend application:
 - `npm install` in the root folder
+- `docker compose build` to build the application
 - `docker compose up -d` to start the application
 - `docker compose down` to close the application
 
