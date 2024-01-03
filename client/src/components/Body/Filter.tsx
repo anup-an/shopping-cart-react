@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import _ from 'lodash';
 
 import { FilterState, IProduct, SortState } from '../../ActionTypes';
 import { filterProducts, searchProducts, sortProducts } from '../../actions/productAction';
@@ -29,20 +30,20 @@ class Filter extends React.Component<IProps, IState> {
     this.state = { searchState: null };
   }
 
-  handleProductSort = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, field: keyof IProduct): void => {
-    event.preventDefault();
-    const parameter = this.props.sort
-      ? { [field]: this.props.sort[field] === 'asc' ? 'desc' : 'asc' }
-      : { [field]: 'asc' };
-    this.props.actions.sortProducts(parameter);
+  handleProductSort = (value: string): void => {
+    const splitString = value.split(':');
+    this.props.actions.sortProducts({ [splitString[0]]: [splitString[1]] });
   };
 
   handleProductFilter = (filterObj: FilterState<IProduct>): void => {
     this.props.actions.filterProducts(filterObj);
   };
 
-  handleSearch = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  debouncedSearch = _.debounce(() => {
+    this.handleSearch();
+  }, 300);
+
+  handleSearch = () => {
     this.props.actions.searchProducts(this.state.searchState || ({ title: '' } as SearchState<IProduct>));
   };
 
@@ -54,6 +55,7 @@ class Filter extends React.Component<IProps, IState> {
         [event.target.name]: event.target.value,
       },
     }));
+    this.debouncedSearch();
   };
 
   componentDidMount(): void {
@@ -64,7 +66,10 @@ class Filter extends React.Component<IProps, IState> {
     const { sort, filter } = this.props;
     return (
       <div className="md:flex flex-row justify-between items-center text-sm">
-        <form className="flex flex-row items-center border rounded border-gray-600 pr-2" onSubmit={this.handleSearch}>
+        <form
+          className="flex flex-row items-center border rounded border-gray-600 pr-2"
+          onSubmit={(e) => this.handleSearch}
+        >
           <button type="submit" className="mx-2 focus:outline-none">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -94,22 +99,19 @@ class Filter extends React.Component<IProps, IState> {
             />
           </label>
         </form>
-        <div className="flex bg-white bg-opacity-100 flex-row mt-3 md:mt-0 md:w-1/4 justify-between">
-          <div className="mr-6">
-            Price
-            <button
-              className={`mx-2 focus:outline-none hover:bg-blue-700 hover:text-white border border-gray-600 p-1 rounded ${
-                ['desc', 'asc'].includes(sort?.price || '') ? 'bg-blue-400 text-white' : ''
-              }}`}
-              onClick={(event) => this.handleProductSort(event, 'price')}
-              type="button"
+        <div className="flex justify-between md:space-x-20 bg-white bg-opacity-100 flex-row mt-3 md:mt-0">
+          <div>
+            Sort By{' '}
+            <select
+              className="border rounded p-1 border-gray-600"
+              onChange={(e) => this.handleProductSort(e.target.value)}
             >
-              {sort?.price === 'desc' ? (
-                <i className="fa-solid fa-chevron-up text-white" />
-              ) : (
-                <i className={`fa-solid fa-chevron-down ${sort?.price === 'asc' ? 'text-white' : ''} `} />
-              )}
-            </button>
+              <option value="" selected disabled>
+                Select an option
+              </option>
+              <option value="price:asc">Price: Low to high</option>
+              <option value="price:desc">Price: High to low</option>
+            </select>
           </div>
           <div>
             Size{' '}
