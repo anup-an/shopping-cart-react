@@ -84,7 +84,7 @@ class Login extends React.Component<IProps, IState> {
               <div className="text-2xl text-blue-800 text-left">Login</div>
 
               <form onSubmit={this.handleLogin} className="flex flex-col space-y-10 w-full">
-                <div>
+                <div className="flex flex-col space-y-4">
                   <label
                     className="flex flex-row w-full shadow-xl border-b border-gray-800 items-end justify-between"
                     htmlFor="email"
