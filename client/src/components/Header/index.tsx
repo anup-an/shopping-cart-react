@@ -44,10 +44,7 @@ class Header extends React.Component<IProps, IState> {
     const { user, focus } = this.props;
     return (
       <div className={`flex flex-row bg-blue-800 text-white text-md justify-between p-3 items-center`}>
-        <Link
-          to="/"
-          className={`p-1 border hover:border-white ${focus === 'home' ? 'border-white' : 'border-blue-800'}`}
-        >
+        <Link to="/" className="p-1">
           <img src="/logo-shoe-eshop.jpg" className="h-6" />
         </Link>
         <div className="flex flex-row justify-between items-center gap-x-14">
@@ -74,7 +71,7 @@ class Header extends React.Component<IProps, IState> {
                 }
                 className={`hidden lg:block lg:hover:border-white border ${
                   focus === 'profile' ? 'lg:border-white' : 'lg:border-blue-800'
-                } focus:outline-none p-2`}
+                } focus:outline-none p-1`}
               >
                 My account
               </button>
@@ -94,7 +91,7 @@ class Header extends React.Component<IProps, IState> {
             <button
               onClick={this.handleLogOut}
               type="button"
-              className="hidden lg:block lg:hover:border-white border border-blue-800 p-2"
+              className="hidden lg:block lg:hover:border-white border border-blue-800 p-1"
             >
               Logout
             </button>

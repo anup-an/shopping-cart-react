@@ -38,7 +38,6 @@ class Footer extends React.Component<IProps> {
             </Link>
           ) : (
             <div className="flex flex-row items-center space-x-4">
-              <p className="text text-sm">Welcome {user.firstName}!</p>
               <button
                 type="button"
                 onClick={() =>
