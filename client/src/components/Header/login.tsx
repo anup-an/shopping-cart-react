@@ -71,90 +71,90 @@ class Login extends React.Component<IProps, IState> {
       <div className="w-full h-full flex items-center lg:pt-14">
         {!user?._id ? (
           <div className="flex flex-row flex items-center justify-center w-full">
-            <div className="bg-white border rounded-lg shadow-xl w-full h-full lg:w-2/3 flex flex-row items-center lg:bg-blue-800 ">
-              <div className="hidden lg:block w-1/2 text-white p-4 flex items-center justify-center text-center flex-col">
-                <div className="text-xl">Welcome to the E-Shop!</div>
-                <div>Please log into your account to continue.</div>
+            <div className="w-full lg:w-1/3 bg-white flex flex-col items-center justify-center space-y-20 p-4">
+              <div className="flex flex-row space-x-2">
+                <div>If you are a new user, signup here</div>
+                <Link
+                  to="/register"
+                  className="bg-blue-400 hover:bg-blue-800 p-1 text-white border rounded shadow text-sm focus:outline-none"
+                >
+                  Sign Up
+                </Link>
               </div>
-              <div className="w-full lg:w-1/2 bg-white flex flex-col items-center justify-center space-y-12 p-4">
-                <div className="flex flex-row items-center space-x-2">
-                  <div>If you are a new user, signup here</div>
-                  <Link
-                    to="/register"
-                    className="bg-blue-400 hover:bg-blue-800 p-1 text-white border rounded shadow text-sm focus:outline-none"
+              <div className="text-2xl text-blue-800 text-left">Login</div>
+
+              <form onSubmit={this.handleLogin} className="flex flex-col space-y-10 w-full">
+                <div>
+                  <label
+                    className="flex flex-row w-full shadow-xl border-b border-gray-800 items-end justify-between"
+                    htmlFor="email"
                   >
-                    Sign Up
-                  </Link>
+                    <input
+                      className="focus:outline-none text-sm w-full"
+                      id="email"
+                      name="email"
+                      placeholder="Type your e-mail"
+                      required
+                      onChange={this.handleInput}
+                    />
+                    <svg
+                      className="h-5 w-5 text-blue-400"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                      />
+                    </svg>
+                  </label>
                 </div>
-                <div className="text-2xl text-blue-800 text-left">Login</div>
-
-                <form onSubmit={this.handleLogin} className="flex flex-col space-y-4 w-full">
-                  <div>
-                    <label className="flex flex-row w-full border-b items-end justify-between" htmlFor="email">
-                      <input
-                        className="focus:outline-none text-sm w-full"
-                        id="email"
-                        name="email"
-                        placeholder="Type your e-mail"
-                        required
-                        onChange={this.handleInput}
-                      />
-                      <svg
-                        className="h-5 w-5 text-blue-400"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                        />
-                      </svg>
-                    </label>
-                  </div>
-                  <div>
-                    <label htmlFor="password" className="flex flex-row w-full border-b items-end justify-between">
-                      <input
-                        className="w-full focus:outline-none text-sm"
-                        id="password"
-                        name="password"
-                        placeholder="Type your password"
-                        required
-                        onChange={this.handleInput}
-                        type="password"
-                      />
-                      <svg
-                        className="h-6 w-6 text-blue-400"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
-                        />
-                      </svg>
-                    </label>
-                  </div>
-
-                  <button
-                    type="button"
-                    className="text-sm text-right text-blue-400 focus:outline-none hover:text-blue-800"
-                    onClick={() => history.push('/forgot-password')}
+                <div>
+                  <label
+                    htmlFor="password"
+                    className="flex flex-row w-full border-b shadow-xl border-b border-gray-800 items-end justify-between"
                   >
-                    Forgot password ?
-                  </button>
-                  <button className="w-full p-2 hover:bg-blue-800 bg-blue-400 border rounded text-white" type="submit">
-                    <div>Login</div>
-                  </button>
-                </form>
-              </div>
+                    <input
+                      className="w-full focus:outline-none text-sm"
+                      id="password"
+                      name="password"
+                      placeholder="Type your password"
+                      required
+                      onChange={this.handleInput}
+                      type="password"
+                    />
+                    <svg
+                      className="h-6 w-6 text-blue-400"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                      />
+                    </svg>
+                  </label>
+                </div>
+
+                <button
+                  type="button"
+                  className="text-sm text-right text-blue-400 focus:outline-none hover:text-blue-800"
+                  onClick={() => history.push('/forgot-password')}
+                >
+                  Forgot password ?
+                </button>
+                <button className="w-full p-2 hover:bg-blue-800 bg-blue-400 border rounded text-white" type="submit">
+                  <div>Login</div>
+                </button>
+              </form>
             </div>
           </div>
         ) : (
