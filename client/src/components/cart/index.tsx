@@ -101,7 +101,7 @@ class Cart extends React.Component<IProps, IState> {
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col lg:flex-row lg:space-x-4 lg:items-start mx-10 items-center justify-center mb-16">
+              <div className="flex flex-col lg:flex-row lg:space-x-4 lg:items-start mx-6 items-center justify-center mb-16">
                 <div className="w-full lg:w-2/3 border shadow rounded">
                   <CartDisplay
                     handleRemoveFromCart={this.handleRemoveFromCart}
