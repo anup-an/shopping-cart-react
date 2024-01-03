@@ -72,18 +72,9 @@ class Login extends React.Component<IProps, IState> {
         {!user?._id ? (
           <div className="flex flex-row flex items-center justify-center w-full">
             <div className="w-full lg:w-1/3 bg-white flex flex-col items-center justify-center space-y-20 p-4">
-              <div className="flex flex-row space-x-2">
-                <div>If you are a new user, signup here</div>
-                <Link
-                  to="/register"
-                  className="bg-blue-400 hover:bg-blue-800 p-1 text-white border rounded shadow text-sm focus:outline-none"
-                >
-                  Sign Up
-                </Link>
-              </div>
               <div className="text-2xl text-blue-800 text-left">Login</div>
 
-              <form onSubmit={this.handleLogin} className="flex flex-col space-y-10 w-full">
+              <form onSubmit={this.handleLogin} className="flex flex-col space-y-8 w-full">
                 <div className="flex flex-col space-y-4">
                   <label
                     className="flex flex-row w-full shadow-xl border-b border-gray-800 items-end justify-between"
@@ -143,7 +134,6 @@ class Login extends React.Component<IProps, IState> {
                     </svg>
                   </label>
                 </div>
-
                 <button
                   type="button"
                   className="text-sm text-right text-blue-400 focus:outline-none hover:text-blue-800"
@@ -154,6 +144,15 @@ class Login extends React.Component<IProps, IState> {
                 <button className="w-full p-2 hover:bg-blue-800 bg-blue-400 border rounded text-white" type="submit">
                   <div>Login</div>
                 </button>
+                <div className="flex flex-row space-x-2">
+                  <div>If you are a new user, signup here</div>
+                  <Link
+                    to="/register"
+                    className="bg-blue-400 hover:bg-blue-800 p-1 text-white border rounded shadow text-sm focus:outline-none"
+                  >
+                    Sign Up
+                  </Link>
+                </div>
               </form>
             </div>
           </div>
