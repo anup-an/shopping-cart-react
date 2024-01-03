@@ -19,7 +19,7 @@ class ProductsPage extends React.Component {
               <Filter />
             </div>
             <div className="flex items-stretch">
-              <div className="flex-1 self-stretch mt-8 2xl:mt-8">
+              <div className="flex-1 self-stretch mt-12 md:mt-8">
                 <Products />
               </div>
               <div>
