@@ -13,7 +13,7 @@ class ProductsPage extends React.Component {
         <div className="fixed w-full z-10">
           <Header focus="home" />
         </div>
-        <div className="mt-16">
+        <div className="mt-12">
           <div>
             <div className="fixed w-full xl:w-3/4 p-4 mt-2 z-8 border-b-2 bg-white">
               <Filter />
