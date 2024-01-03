@@ -15,14 +15,14 @@ class ProductsPage extends React.Component {
         </div>
         <div className="mt-12">
           <div>
-            <div className="fixed w-full xl:w-3/4 p-4 mt-2 z-8 border-b-2 bg-white">
+            <div className="fixed w-full p-4 mt-2 z-8 border-b-2 bg-white">
               <Filter />
             </div>
-            <div className="xl:w-3/4 flex items-stretch">
-              <div className="flex-1 self-stretch">
+            <div className="flex items-stretch">
+              <div className="flex-1 self-stretch mt-8 2xl:mt-8">
                 <Products />
               </div>
-              <div className="xl:w-1/4 fixed right-0">
+              <div>
                 <Cart />
               </div>
             </div>
