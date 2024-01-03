@@ -74,16 +74,7 @@ class Register extends React.Component<IProps, IState> {
     return (
       <div className="flex flex-row flex items-center justify-center w-full h-full lg:pt-14">
         {!user?._id ? (
-          <div className="w-full lg:w-1/3 bg-white flex flex-col items-center justify-center space-y-20 p-4">
-            <div className="flex flex-row items-center space-x-2">
-              <div>Already registered, login to your account</div>
-              <Link
-                to="/login"
-                className="bg-blue-400 hover:bg-blue-800 p-1 text-white border rounded shadow text-sm focus:outline-none"
-              >
-                Login
-              </Link>
-            </div>
+          <div className="w-full lg:w-1/3 bg-white flex flex-col items-center justify-center space-y-8 p-4">
             <div className="text-2xl text-blue-800 text-left">Signup</div>
 
             <form onSubmit={this.handleRegister} className="flex flex-col space-y-10 w-full">
@@ -206,6 +197,15 @@ class Register extends React.Component<IProps, IState> {
               >
                 <div>Signup</div>
               </button>
+              <div className="flex flex-row items-center space-x-2">
+                <div>Already registered, login to your account</div>
+                <Link
+                  to="/login"
+                  className="bg-blue-400 hover:bg-blue-800 p-1 text-white border rounded shadow text-sm focus:outline-none"
+                >
+                  Login
+                </Link>
+              </div>
             </form>
           </div>
         ) : (
