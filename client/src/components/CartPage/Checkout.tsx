@@ -137,10 +137,7 @@ class Checkout extends React.Component<IProps, IState> {
     }
     return (
       <div className="mx-5 z-20">
-        <div className="text-lg mb-4 font-semibold text-blue-800">
-          {' '}
-          Fill in the details and click submit to place order
-        </div>
+        <div className="text-sm mb-4"> (Fill in the details and click submit to place order)</div>
         <form className="flex flex-col space-y-4" onSubmit={this.generateOrder}>
           <div>
             <label htmlFor="name" className=" flex flex-col">
@@ -272,7 +269,6 @@ class Checkout extends React.Component<IProps, IState> {
             </div>
           </Modal>
         </div>
-        ;
       </div>
     );
   }
