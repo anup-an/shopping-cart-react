@@ -50,7 +50,7 @@ class Footer extends React.Component<IProps> {
                   this.props.focus === 'profile' ? 'lg:border-white' : 'lg:border-blue-800'
                 } focus:outline-none p-2`}
               >
-                My account
+                <i className="fa fa-user w-6"></i>
               </button>
             </div>
           )}
