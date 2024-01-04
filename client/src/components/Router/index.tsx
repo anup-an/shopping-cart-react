@@ -52,7 +52,7 @@ const Routers = () => {
               <Profile focus="details" />
             </div>
           </div>
-          <div className="mt-28 md:mt-10 lg:mt-20 lg:w-full mx-4 mb-20">
+          <div className="mt-28 md:mt-10 lg:mt-20 lg:w-full mx-4 mb-20 lg:mx-10">
             <Details />
           </div>
         </div>
@@ -70,7 +70,7 @@ const Routers = () => {
               <Profile focus="address" />
             </div>
           </div>
-          <div className="mt-28 md:mt-10 lg:mt-20 lg:w-full mb-20 mx-4">
+          <div className="mt-28 md:mt-10 lg:mt-20 lg:w-full mb-20 mx-4 lg:mx-10">
             <Address />
           </div>
         </div>
