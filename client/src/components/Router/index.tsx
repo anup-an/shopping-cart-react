@@ -46,13 +46,13 @@ const Routers = () => {
         <div className="fixed w-full z-10">
           <Header focus="profile" />
         </div>
-        <div className="flex flex-col lg:flex-row lg:mt-20 mt-20 md:mt-24">
+        <div className="flex flex-col lg:flex-row lg:mt-20 mt-14 md:mt-24 border border-white">
           <div className="lg:w-1/3 flex justify-center mx-10">
             <div className="w-full lg:w-1/2 flex justify-center">
               <Profile focus="details" />
             </div>
           </div>
-          <div className="mt-28 md:mt-10 lg:mt-20 lg:w-full mx-10 mb-20">
+          <div className="mt-28 md:mt-10 lg:mt-20 lg:w-full mx-4 mb-20">
             <Details />
           </div>
         </div>
@@ -64,13 +64,13 @@ const Routers = () => {
         <div className="fixed w-full z-10">
           <Header focus="profile" />
         </div>
-        <div className="flex flex-col lg:flex-row mt-20 lg:mt-20 md:mt-24">
+        <div className="flex flex-col lg:flex-row mt-14 lg:mt-20 md:mt-24">
           <div className="lg:w-1/3 flex justify-center mx-10">
             <div className="w-full lg:w-1/2 flex justify-center">
               <Profile focus="address" />
             </div>
           </div>
-          <div className="mt-28 md:mt-10 lg:mt-20 lg:w-full mb-20 mx-10">
+          <div className="mt-28 md:mt-10 lg:mt-20 lg:w-full mb-20 mx-4">
             <Address />
           </div>
         </div>
@@ -82,13 +82,13 @@ const Routers = () => {
         <div className="fixed w-full z-10">
           <Header focus="profile" />
         </div>
-        <div className="flex flex-col lg:flex-row lg:mt-20 mt-20 md:mt-24">
+        <div className="flex flex-col lg:flex-row lg:mt-20 mt-14 md:mt-24">
           <div className="lg:w-1/3 flex justify-center mx-10">
             <div className="w-full lg:w-1/2 flex justify-center">
               <Profile focus="orders" />
             </div>
           </div>
-          <div className="mt-28 md:mt-10 lg:mt-20 lg:w-full mx-10 mb-20">
+          <div className="mt-28 md:mt-10 lg:mt-20 lg:w-full mx-4 lg:mx-10 mb-20">
             <Orders />
           </div>
         </div>
