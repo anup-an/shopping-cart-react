@@ -73,7 +73,7 @@ class Header extends React.Component<IProps, IState> {
                   focus === 'profile' ? 'lg:border-white' : 'lg:border-blue-800'
                 } focus:outline-none p-1`}
               >
-                My account
+                <i className="fa fa-user w-6"></i>
               </button>
             </div>
           )}
