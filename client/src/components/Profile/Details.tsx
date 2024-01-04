@@ -64,28 +64,28 @@ class Details extends React.Component<IProps, IState> {
           <p className="py-2 border-b w-full">Personal information</p>
           <div className="flex flex-col space-y-4 lg:flex-row items-start lg:space-x-10">
             <div>Edit the fields and click save to update your details.</div>
-            <div className="flex flex-col space-y-6">
-              <div className="flex flex-col md:flex-row space-y-6 md:space-y-0">
-                <div>
+            <div className="flex flex-col space-y-6 w-full">
+              <div className="flex flex-col md:flex-row space-y-6 md:space-y-0 w-full justify-between">
+                <div className="w-full md:mr-4">
                   <p>First Name</p>
                   <label htmlFor="firstName" className="md:mr-12">
                     <input
                       name="firstName"
                       id="firstName"
-                      className="p-2 bg-gray-200 border rounded"
+                      className="p-2 bg-gray-200 border rounded w-full"
                       defaultValue={firstName}
                       onChange={this.handleInput}
                       required
                     />
                   </label>
                 </div>
-                <div>
+                <div className="w-full">
                   <p>Last Name</p>
                   <label htmlFor="lastName">
                     <input
                       name="lastName"
                       id="lastName"
-                      className="p-2 bg-gray-200 border rounded"
+                      className="p-2 bg-gray-200 border rounded w-full"
                       defaultValue={lastName}
                       onChange={this.handleInput}
                       required
@@ -93,13 +93,13 @@ class Details extends React.Component<IProps, IState> {
                   </label>
                 </div>
               </div>
-              <div>
+              <div className="md:mr-4">
                 <p>Phone number</p>
                 <label htmlFor="phone">
                   <input
                     name="phone"
                     id="phone"
-                    className="p-2 bg-gray-200 border rounded"
+                    className="p-2 bg-gray-200 border rounded w-full md:w-1/2"
                     defaultValue={phone}
                     onChange={this.handleInput}
                   />
