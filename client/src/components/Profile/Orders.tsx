@@ -47,14 +47,14 @@ class Orders extends React.Component<IProps, IState> {
             <div>
               {this.getOrdersList().map((order: IOrder) => (
                 <div className="flex flex-col border mb-4" key={order._id}>
-                  <p className="py-4 border bg-gray-200 border-b">Order# {order._id}</p>
+                  <p className="p-4 border bg-gray-200 border-b break-words">Order# {order._id}</p>
                   <div className="flex flex-col space-y-4 p-2">
                     {order.cart.map((cart) => (
-                      <div className="flex flex-row space-x-4 border-b p-2" key={cart._id}>
-                        <img src={cart.image} className="w-1/4 h-auto" />
+                      <div className="flex flex-col sm:flex-row sm:space-x-4 border-b p-2" key={cart._id}>
+                        <img src={cart.image} className="w-full sm:w-1/4 h-auto" />
                         <div>
                           <p>{cart.title}</p>
-                          <p>€{cart.price}</p>
+                          <p>Price: €{cart.price}</p>
                           <p>Quantity: {cart.count}</p>
                         </div>
                       </div>
