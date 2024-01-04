@@ -55,7 +55,7 @@ class Address extends React.Component<IProps> {
           <p className="py-2 border-b w-full">Shipping address</p>
           <div className="flex flex-col space-y-4 lg:flex-row items-start lg:space-x-10">
             <div>Edit the fields and click save to update your details.</div>
-            <div className="flex flex-col space-y-6">
+            <div className="flex flex-col space-y-6 w-full">
               <div>
                 <p>Address</p>
                 <label htmlFor="address">
@@ -69,38 +69,38 @@ class Address extends React.Component<IProps> {
                 </label>
               </div>
               <div className="flex flex-col md:flex-row space-y-6 md:space-y-0">
-                <div>
+                <div className="w-full mr-4">
                   <p>Post code</p>
                   <label htmlFor="postcode" className="md:mr-12">
                     <input
                       name="postcode"
                       id="postcode"
-                      className="p-2 bg-gray-200 border rounded"
+                      className="p-2 bg-gray-200 border rounded w-full"
                       defaultValue={user.postcode}
                       onChange={this.handleInput}
                     />
                   </label>
                 </div>
-                <div>
+                <div className="w-full">
                   <p>City</p>
                   <label htmlFor="city">
                     <input
                       name="city"
                       id="city"
-                      className="p-2 bg-gray-200 border rounded"
+                      className="p-2 bg-gray-200 border rounded w-full"
                       defaultValue={user.city}
                       onChange={this.handleInput}
                     />
                   </label>
                 </div>
               </div>
-              <div>
+              <div className="mr-4">
                 <p>Country</p>
                 <label htmlFor="country">
                   <input
                     name="country"
                     id="country"
-                    className="p-2 bg-gray-200 border rounded"
+                    className="p-2 bg-gray-200 border rounded w-full md:w-1/2"
                     defaultValue={user.country}
                     onChange={this.handleInput}
                   />
