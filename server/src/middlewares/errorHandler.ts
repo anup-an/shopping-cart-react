@@ -16,7 +16,7 @@ const errorHandler = (error: any, req: Request, res: Response, next: NextFunctio
     const responseObject = {
         title: error.name || 'ServerError',
         description:
-            error.name === 'ValidationError' ? getValidationErrors(error) : error.message || 'Something went wrong',
+            error.name === 'ValidationError' ? getValidationErrors(error) : error.message || 'Something went wrong. Please try again.',
         stack: process.env.NODE_ENV === 'development' ? error.stack : {},
     };
     return res.status(error.status || codeToStatusMapping[error.name] || 500).json(responseObject);

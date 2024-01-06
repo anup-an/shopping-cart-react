@@ -118,9 +118,20 @@ export const sendPasswordResetLink = async (req: Request, res: Response, next: N
         await sendEmail(
             email,
             'Reset your password',
-            `You have asked to reset your password. Open then link, ${
-                process.env.HOST || 'http://localhost:3000'
-            }/reset-password?token=${tokenHash} and follow the instructions. The link can be used only once`,
+            `<div>
+                <p>Dear ${user.firstName}!</p>
+                <br />
+                <p>You have asked to reset the password to your account. Open the link below and follow the instructions.</p>
+                <br />
+                <p>
+                    <a target="_blank" href=${process.env.HOST||'http://localhost:3000'}/reset-password?token=${tokenHash}>${process.env.HOST||'http://localhost:3000'}/reset-password?token=${tokenHash}</a>
+                </p>
+                <br />
+                <p>If the above link is not clickable, please copy the whole link    and paste it in your browser. You can use the link only once.     </p>
+                <br />
+                <p>Best regards,</p>
+                <p>E-commerce team</p>
+            </div>`,
         );
         res.status(200).send('Password reset link sent');
     } catch (error) {
