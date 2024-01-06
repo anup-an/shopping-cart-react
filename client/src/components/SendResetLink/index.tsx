@@ -1,6 +1,6 @@
 import React from 'react';
 import { sendPasswordResetLink } from '../../api/user';
-import { isSuccess, useMapData } from '../../types/mapDataTypes';
+import { useMapData } from '../../types/mapDataTypes';
 import { AppNotification } from '../../types/notifications/ActionTypes';
 import { displayNotification } from '../../actions/notificationAction';
 import { RouteComponentProps, withRouter } from 'react-router';
@@ -40,7 +40,7 @@ class SendResetLink extends React.Component<IProps, IState> {
         this.props.actions.displayNotification({
           id: uuid(),
           title: 'Reset password link sent',
-          description: 'Check your email for futher instructions.',
+          description: 'Check your email for futher details.',
           type: 'success',
         });
       },
@@ -48,7 +48,7 @@ class SendResetLink extends React.Component<IProps, IState> {
         this.props.actions.displayNotification({
           id: uuid(),
           title: 'Sending reset password link failed',
-          description: 'The reset password service is down at the moment. Please try again later',
+          description: getErrorMessage(error),
           type: 'failure',
         });
       },
