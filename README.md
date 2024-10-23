@@ -1,5 +1,4 @@
-# About  app
-the
+# About the app
 This is a full-stack e-commerce web application. The user interface of the application can be accessed at [https://lucid-lewin-704e07.netlify.app/](https://lucid-lewin-704e07.netlify.app/). The server is hosted at [https://e-shop-express.com](https://e-shop-express.com) and uses [AWS cloud services](https://aws.amazon.com/). 
 
 # Table of contents
